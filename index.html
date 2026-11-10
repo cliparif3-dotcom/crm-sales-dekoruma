@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CRM Sales Dekoruma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<style>
+:root{
+  --cream:#FAF6EE;
+  --navy:#14232E;
+  --navy2:#16323F;
+  --teal:#0E7C7B;
+  --teal2:#00918C;
+  --mustard:#FFC531;
+  --slate:#5B6B76;
+  --red:#D64545;
+  --border:2.5px solid var(--navy);
+  --shadow:0 4px 0 var(--navy);
+  --shadow-sm:0 2.5px 0 var(--navy);
+  --radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background-color:var(--cream);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132' viewBox='0 0 132 132'%3E%3Cg fill='none' stroke='%2314232E' stroke-opacity='0.055' stroke-width='2'%3E%3Crect x='10' y='34' width='36' height='20' rx='5'/%3E%3Cpath d='M10 34v-7a7 7 0 0 1 7-7h22a7 7 0 0 1 7 7v7'/%3E%3Cpath d='M16 54v8M40 54v8'/%3E%3Ccircle cx='94' cy='28' r='11'/%3E%3Crect x='72' y='74' width='44' height='28' rx='5'/%3E%3Cpath d='M82 74v28M106 74v28M72 88h44'/%3E%3Cpath d='M14 88h26M14 98h26M14 108h18'/%3E%3Cpath d='M96 52l4 8h-8z'/%3E%3C/g%3E%3C/svg%3E");
+  color:var(--navy);
+  min-height:100vh;
+}
+.hidden{display:none !important}
+h1,h2,h3{font-weight:800;color:var(--navy);line-height:1.2}
+.muted{color:var(--slate)}
+.small{font-size:.82rem}
+.wfull{width:100%}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:1rem;color:var(--navy)}
+a{color:var(--teal);font-weight:700}
+
+/* ---------- kartu & tombol ---------- */
+.card{
+  background:#fff;border:var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:18px;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:var(--border);border-radius:999px;box-shadow:var(--shadow-sm);
+  padding:10px 18px;font-weight:800;font-size:.95rem;background:#fff;color:var(--navy);
+  text-decoration:none;transition:transform .06s ease, box-shadow .06s ease;
+}
+.btn:active{transform:translateY(2px);box-shadow:0 0 0 var(--navy)}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-teal2{background:var(--teal2);color:#fff}
+.btn-mustard{background:var(--mustard);color:var(--navy)}
+.btn-danger{background:#fff;color:var(--red);border-color:var(--navy)}
+.btn-sm{padding:7px 13px;font-size:.85rem}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.pill{
+  display:inline-flex;align-items:center;gap:5px;
+  border:2px solid var(--navy);border-radius:999px;
+  padding:2px 10px;font-size:.68rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;background:#fff;color:var(--navy);white-space:nowrap;
+}
+.pill-mustard{background:var(--mustard)}
+.pill-teal{background:var(--teal);color:#fff}
+.pill-cold{background:#CDEBF7}
+.pill-hot{background:#FFD3AE}
+.pill-sukses{background:#BDE8CE}
+.pill-tidak{background:#E4E7EA;color:var(--slate)}
+.pill-soft{background:#EAF4F3}
+
+/* ---------- login ---------- */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px 14px}
+.login-card{width:100%;max-width:400px;padding:26px 22px}
+.login-logo{
+  width:58px;height:58px;border:var(--border);border-radius:18px;box-shadow:var(--shadow-sm);
+  background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.05rem;margin-bottom:14px;
+}
+.login-card h1{font-size:1.45rem;margin-bottom:4px}
+.notice{
+  border:var(--border);border-radius:16px;background:#FFF3D1;box-shadow:var(--shadow-sm);
+  padding:12px 14px;font-size:.88rem;margin:14px 0;line-height:1.5;
+}
+.error{
+  border:2px solid var(--navy);border-radius:14px;background:#FDE3E3;color:#8F2323;
+  padding:10px 12px;font-size:.88rem;font-weight:600;margin:10px 0;line-height:1.45;
+}
+.field{margin-bottom:14px}
+.field label{
+  display:block;font-size:.72rem;font-weight:800;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--navy2);margin-bottom:6px;
+}
+.field label .opt{color:var(--slate);letter-spacing:.02em}
+.field input,.field select,.field textarea{
+  width:100%;border:var(--border);border-radius:16px;background:#fff;
+  padding:13px 15px;font-size:1rem;outline:none;
+}
+.field textarea{resize:vertical;min-height:88px}
+.field input:focus,.field select:focus,.field textarea:focus{box-shadow:0 0 0 3px rgba(14,124,123,.28)}
+
+/* ---------- layout aplikasi ---------- */
+.wrap{max-width:760px;margin:0 auto;padding:14px 14px 90px}
+.app-header{
+  background:var(--teal);border:var(--border);border-radius:var(--radius);box-shadow:var(--shadow);
+  color:#fff;padding:18px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+}
+.app-header h1{color:#fff;font-size:1.35rem;margin-top:8px}
+.app-header .muted{color:#D9F0EE}
+.app-header .btn{background:#fff}
+.tabs{display:flex;gap:8px;margin:16px 0 14px;flex-wrap:wrap;align-items:center}
+.tab{
+  border:var(--border);border-radius:999px;background:#fff;color:var(--navy);
+  padding:10px 16px;font-weight:800;font-size:.92rem;box-shadow:var(--shadow-sm);
+}
+.tab:active{transform:translateY(2px);box-shadow:0 0 0 var(--navy)}
+.tab.active{background:var(--teal);color:#fff}
+#addLeadBtn{margin-left:auto;font-size:1rem;padding:11px 20px}
+
+/* ---------- ringkasan & daftar ---------- */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.summary-box{background:#fff;border:var(--border);border-radius:18px;box-shadow:var(--shadow-sm);padding:13px 12px;text-align:center}
+.summary-box .num{font-size:1.25rem;font-weight:800}
+.summary-box .lbl{font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);margin-top:3px}
+.section-title{display:flex;align-items:center;gap:9px;margin:20px 0 10px;font-size:1.05rem}
+.section-title .count{background:var(--mustard);border:2px solid var(--navy);border-radius:999px;padding:0 9px;font-size:.8rem}
+.lead-list{display:flex;flex-direction:column;gap:11px}
+.lead-card{
+  background:#fff;border:var(--border);border-radius:20px;box-shadow:var(--shadow-sm);
+  padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;text-align:left;width:100%;
+}
+.lead-card:active{transform:translateY(1px)}
+.lead-main{flex:1;min-width:0}
+.lead-name{font-weight:800;font-size:1.02rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lead-meta{font-size:.85rem;color:var(--slate);margin-top:3px;line-height:1.5;word-wrap:break-word}
+.lead-meta b{color:var(--navy)}
+.fu-date{font-weight:800}
+.fu-overdue{color:var(--red)}
+.thumb{
+  width:56px;height:56px;flex:0 0 56px;border:2px solid var(--navy);border-radius:14px;
+  overflow:hidden;background:#F1EAD9;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.2rem;color:var(--navy2);
+}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.empty{
+  border:2.5px dashed rgba(20,35,46,.4);border-radius:18px;padding:16px;text-align:center;
+  color:var(--slate);font-size:.9rem;background:rgba(255,255,255,.55);
+}
+
+/* ---------- toolbar pipeline ---------- */
+.toolbar{padding:14px;margin-bottom:14px}
+.toolbar .row{display:flex;gap:9px;flex-wrap:wrap}
+.toolbar input[type="search"]{
+  flex:1;min-width:170px;border:var(--border);border-radius:999px;padding:11px 16px;outline:none;background:#fff;
+}
+.toolbar select{border:var(--border);border-radius:999px;padding:11px 14px;background:#fff;font-weight:700;outline:none}
+
+/* ---------- template ---------- */
+.tpl-card{margin-bottom:14px}
+.tpl-card h3{margin-bottom:4px}
+.tpl-card textarea{
+  width:100%;border:var(--border);border-radius:16px;padding:13px 15px;min-height:132px;
+  resize:vertical;outline:none;background:#fff;margin-top:8px;line-height:1.55;
+}
+.tpl-card textarea:focus{box-shadow:0 0 0 3px rgba(14,124,123,.28)}
+
+/* ---------- modal ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(20,35,46,.55);z-index:50;
+  display:flex;align-items:flex-end;justify-content:center;padding:0;
+}
+.sheet{
+  background:var(--cream);border-top:var(--border);border-radius:26px 26px 0 0;
+  width:100%;max-width:760px;max-height:92vh;overflow-y:auto;padding:20px 16px 34px;
+  animation:up .18s ease;
+}
+@keyframes up{from{transform:translateY(24px);opacity:.5}to{transform:translateY(0);opacity:1}}
+@media(min-width:640px){.overlay{align-items:center;padding:18px}.sheet{border:var(--border);border-radius:26px;box-shadow:var(--shadow)}}
+.sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:14px}
+.sheet-head h2{font-size:1.25rem}
+.close-x{
+  border:var(--border);background:#fff;border-radius:999px;width:38px;height:38px;flex:0 0 38px;
+  font-size:1.05rem;font-weight:800;box-shadow:var(--shadow-sm);
+}
+.detail-block{background:#fff;border:var(--border);border-radius:20px;box-shadow:var(--shadow-sm);padding:15px;margin-bottom:13px}
+.detail-block h3{font-size:.95rem;margin-bottom:10px}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:5px 10px;font-size:.92rem}
+.kv dt{color:var(--slate);font-weight:700}
+.kv dd{font-weight:600;word-wrap:break-word}
+.status-row{display:flex;gap:8px;flex-wrap:wrap}
+.status-btn{border:var(--border);border-radius:999px;padding:8px 14px;font-weight:800;font-size:.85rem;background:#fff;box-shadow:var(--shadow-sm)}
+.status-btn.current{background:var(--navy);color:#fff}
+.inline-form{display:flex;gap:8px;flex-wrap:wrap}
+.inline-form input[type="date"],.inline-form input[type="text"],.inline-form input[type="url"]{
+  border:var(--border);border-radius:14px;padding:10px 12px;background:#fff;outline:none;flex:1;min-width:150px;
+}
+.inline-form textarea{
+  border:var(--border);border-radius:14px;padding:10px 12px;background:#fff;outline:none;
+  width:100%;min-height:70px;resize:vertical;line-height:1.5;
+}
+.history-item{border-top:2px dashed rgba(20,35,46,.18);padding:9px 0;font-size:.9rem}
+.history-item:first-of-type{border-top:none}
+.history-item .h-date{font-weight:800;font-size:.8rem;color:var(--teal)}
+.prod-item{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-top:2px dashed rgba(20,35,46,.18)}
+.prod-item:first-of-type{border-top:none}
+.prod-info{flex:1;min-width:0}
+.prod-name{font-weight:700;font-size:.92rem;line-height:1.4;word-wrap:break-word}
+.price{font-weight:800;color:var(--teal)}
+.price-list{color:var(--slate);text-decoration:line-through;font-weight:600;font-size:.83rem;margin-right:6px}
+.prod-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.search-status{font-size:.88rem;margin-top:9px;line-height:1.5}
+.footer-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px}
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:99;
+  background:var(--navy);color:#fff;border:2.5px solid #fff;border-radius:999px;
+  padding:11px 20px;font-weight:700;font-size:.9rem;box-shadow:0 6px 18px rgba(0,0,0,.3);
+  max-width:92vw;text-align:center;
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LAYAR LOGIN ================= -->
+<div id="loginScreen">
+  <div class="card login-card">
+    <div class="login-logo">CRM</div>
+    <span class="pill pill-mustard">Sales Dekoruma</span>
+    <h1 style="margin-top:10px">CRM Sales Dekoruma</h1>
+    <p class="muted" style="line-height:1.55">Kelola lead Cold, Hot, sampai Sukses Transaksi, plus pengingat follow-up. Masuk dulu ya.</p>
+
+    <div id="configNotice" class="notice hidden">
+      <b>Konfigurasi Firebase belum diisi.</b><br>
+      Aplikasi ini belum terhubung ke database. Isi dulu <b>firebaseConfig</b> di bagian atas
+      script file ini dengan konfigurasi project Firebase barumu (Firebase Console &rarr;
+      Project settings &rarr; Your apps &rarr; Web app), buat satu akun pengguna di
+      Authentication &rarr; Users, lalu muat ulang halaman ini.
+    </div>
+
+    <div id="loginError" class="error hidden"></div>
+
+    <form id="loginForm" style="margin-top:16px">
+      <div class="field">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" autocomplete="username" placeholder="nama@email.com" required>
+      </div>
+      <div class="field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" autocomplete="current-password" placeholder="Password kamu" required>
+      </div>
+      <button type="submit" id="loginBtn" class="btn btn-teal wfull" style="padding:13px 18px;font-size:1rem">Masuk</button>
+    </form>
+    <p class="muted small" style="margin-top:14px;line-height:1.5">Satu akun khusus untuk kamu. Akun dibuat lewat Firebase Console (Authentication &rarr; Users &rarr; Add user).</p>
+  </div>
+</div>
+
+<!-- ================= APLIKASI ================= -->
+<div id="appScreen" class="hidden">
+  <div class="wrap">
+    <header class="app-header">
+      <div>
+        <span class="pill pill-mustard">Sales Dekoruma</span>
+        <h1>CRM Sales</h1>
+        <p class="muted small" id="userEmail"></p>
+      </div>
+      <button id="logoutBtn" class="btn btn-sm">Keluar</button>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="today">Hari Ini</button>
+      <button class="tab" data-tab="pipeline">Pipeline</button>
+      <button class="tab" data-tab="templates">Template WA</button>
+      <button id="addLeadBtn" class="btn btn-mustard">+ Lead</button>
+    </nav>
+
+    <!-- TAB HARI INI -->
+    <section id="tab-today">
+      <div class="summary-grid">
+        <div class="summary-box"><div class="num" id="sumActive">0</div><div class="lbl">Lead Aktif</div></div>
+        <div class="summary-box"><div class="num" id="sumPipeline" style="font-size:1rem">Rp0</div><div class="lbl">Nilai Pipeline</div></div>
+        <div class="summary-box"><div class="num" id="sumDeals">0</div><div class="lbl">Deal Bulan Ini</div></div>
+      </div>
+      <div id="todayLists"></div>
+    </section>
+
+    <!-- TAB PIPELINE -->
+    <section id="tab-pipeline" class="hidden">
+      <div class="card toolbar">
+        <div class="row">
+          <input type="search" id="pipeSearch" placeholder="Cari nama, kebutuhan, sumber...">
+          <select id="pipeFilter">
+            <option value="">Semua Status</option>
+            <option value="Cold">Cold</option>
+            <option value="Hot">Hot</option>
+            <option value="Sukses Transaksi">Sukses Transaksi</option>
+            <option value="Tidak Lanjut">Tidak Lanjut</option>
+          </select>
+        </div>
+      </div>
+      <div id="pipelineList" class="lead-list"></div>
+    </section>
+
+    <!-- TAB TEMPLATE WA -->
+    <section id="tab-templates" class="hidden">
+      <div class="card tpl-card">
+        <h3>Template FU 1 <span class="pill pill-soft">Sapaan ringan</span></h3>
+        <p class="muted small">Placeholder yang didukung: {nama}, {kebutuhan}, {produk}. Baris yang menyebut {produk} otomatis hilang kalau lead belum punya produk incaran.</p>
+        <textarea id="tplFu1"></textarea>
+      </div>
+      <div class="card tpl-card">
+        <h3>Template FU 2 <span class="pill pill-soft">Dorongan + produk</span></h3>
+        <textarea id="tplFu2"></textarea>
+      </div>
+      <div class="card tpl-card">
+        <h3>Template FU 3 <span class="pill pill-soft">Penutup / urgensi sopan</span></h3>
+        <textarea id="tplFu3"></textarea>
+      </div>
+      <button id="saveTplBtn" class="btn btn-teal wfull" style="padding:13px 18px">Simpan Template</button>
+      <p class="muted small" style="margin-top:10px;text-align:center">Template tersimpan di Firestore dan ikut di semua perangkat.</p>
+    </section>
+  </div>
+</div>
+
+<!-- ================= MODAL FORM LEAD ================= -->
+<div id="leadModal" class="overlay hidden">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div>
+        <span class="pill pill-teal" id="leadFormBadge">Lead Baru</span>
+        <h2 id="leadFormTitle" style="margin-top:7px">Tambah Lead</h2>
+      </div>
+      <button class="close-x" data-close="leadModal" aria-label="Tutup">&times;</button>
+    </div>
+    <form id="leadForm">
+      <input type="hidden" id="fId">
+      <div class="field">
+        <label for="fNama">Nama *</label>
+        <input type="text" id="fNama" placeholder="Nama pelanggan" required>
+      </div>
+      <div class="field">
+        <label for="fWa">Nomor WA *</label>
+        <input type="tel" id="fWa" placeholder="08xxxxxxxxxx" required>
+      </div>
+      <div class="field">
+        <label for="fSumber">Sumber <span class="opt">(opsional)</span></label>
+        <input type="text" id="fSumber" placeholder="Walk-in, Instagram, WhatsApp, Referensi...">
+      </div>
+      <div class="field">
+        <label for="fKebutuhan">Kebutuhan <span class="opt">(opsional)</span></label>
+        <textarea id="fKebutuhan" placeholder="Contoh: Kitchen set dapur 3x4, sofa ruang keluarga, interior apartemen 2BR..."></textarea>
+      </div>
+      <div class="field">
+        <label for="fEstimasi">Estimasi Nilai Proyek (Rp) <span class="opt">(opsional)</span></label>
+        <input type="number" id="fEstimasi" min="0" step="1000" placeholder="0">
+      </div>
+      <div class="field">
+        <label for="fStatus">Status</label>
+        <select id="fStatus">
+          <option value="Cold">Cold</option>
+          <option value="Hot">Hot</option>
+          <option value="Sukses Transaksi">Sukses Transaksi</option>
+          <option value="Tidak Lanjut">Tidak Lanjut</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fNext">Follow-up Berikutnya <span class="opt">(opsional)</span></label>
+        <input type="date" id="fNext">
+      </div>
+      <div class="footer-actions">
+        <button type="submit" class="btn btn-teal" style="flex:1;padding:13px 18px">Simpan</button>
+        <button type="button" class="btn" data-close="leadModal">Batal</button>
+        <button type="button" id="deleteLeadBtn" class="btn btn-danger hidden">Hapus Lead</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= MODAL DETAIL LEAD ================= -->
+<div id="detailModal" class="overlay hidden">
+  <div class="sheet" id="detailSheet"></div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   CRM Sales Dekoruma — aplikasi satu file
+   Backend: Firebase Authentication + Firestore (compat SDK)
+   ------------------------------------------------------------
+   CARA PENYIAPAN:
+   1. Buat project baru di Firebase Console.
+   2. Aktifkan Authentication > Sign-in method > Email/Password,
+      lalu buat satu user di Authentication > Users.
+   3. Buat Firestore Database.
+   4. Salin konfigurasi Web App (Project settings > Your apps)
+      ke firebaseConfig di bawah ini, ganti semua nilai GANTI_*.
+   Contoh aturan Firestore (hanya pemilik akun yang bisa akses):
+     rules_version = '2';
+     service cloud.firestore {
+       match /databases/{database}/documents {
+         match /{document=**} {
+           allow read, write: if request.auth != null;
+         }
+       }
+     }
+   ============================================================ */
+
+// ===== KONFIGURASI FIREBASE (GANTI DENGAN PROJECT BARUMU) =====
+const firebaseConfig = {
+  apiKey: "GANTI_API_KEY",
+  authDomain: "GANTI_PROJECT.firebaseapp.com",
+  projectId: "GANTI_PROJECT_ID",
+  storageBucket: "GANTI_PROJECT.appspot.com",
+  messagingSenderId: "GANTI_SENDER_ID",
+  appId: "GANTI_APP_ID"
+};
+// ===== AKHIR KONFIGURASI =====
+
+const CONFIGURED = firebaseConfig.apiKey.indexOf("GANTI") !== 0;
+
+/* ---------------- Template WA bawaan ---------------- */
+const DEFAULT_TEMPLATES = {
+  fu1: "Halo Kak {nama}, apa kabar? Semoga sehat selalu ya Kak.\nSaya Arif dari Dekoruma, mau menyapa lagi soal rencana {kebutuhan} Kakak kemarin.\nKalau masih dipertimbangkan, saya siap bantu carikan pilihan yang paling cocok dengan kebutuhan dan budget Kakak. Tinggal balas chat ini saja ya Kak.",
+  fu2: "Halo Kak {nama}, saya Arif dari Dekoruma.\nMau infoin, {produk} yang kemarin Kakak incar masih tersedia nih Kak, dan harganya lagi bagus.\nBuat {kebutuhan} Kakak, produk ini salah satu yang paling pas menurut saya.\nKalau Kakak berkenan, saya bantu hitungkan simulasinya sekarang. Mau saya hitungkan, Kak?",
+  fu3: "Halo Kak {nama}, Arif dari Dekoruma lagi ya Kak.\nSaya follow up terakhir soal rencana {kebutuhan} Kakak.\nKalau memang belum sempat atau masih mikir-mikir, santai saja Kak, tidak apa-apa.\nTapi kalau masih berminat, kabari saya ya Kak, biar saya bantu amankan pilihan terbaiknya sebelum promonya berakhir."
+};
+
+/* ---------------- Helper umum ---------------- */
+function $(id){ return document.getElementById(id); }
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+function fmtRp(n){
+  const v = Math.round(Number(n) || 0);
+  return "Rp" + String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+function normWa(raw){
+  let d = String(raw || "").replace(/\D/g, "");
+  if (d.charAt(0) === "0") d = "62" + d.slice(1);
+  else if (d.charAt(0) === "8") d = "62" + d;
+  return d;
+}
+function dstr(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return y + "-" + m + "-" + dd;
+}
+function todayStr(){ return dstr(new Date()); }
+function addDaysStr(baseStr, n){
+  const d = new Date(baseStr + "T00:00:00");
+  d.setDate(d.getDate() + n);
+  return dstr(d);
+}
+function fmtDate(s){
+  if (!s) return "-";
+  const d = new Date(String(s).slice(0, 10) + "T00:00:00");
+  if (isNaN(d.getTime())) return esc(s);
+  const bulan = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  return d.getDate() + " " + bulan[d.getMonth()] + " " + d.getFullYear();
+}
+function fmtDateTime(iso){
+  if (!iso) return "-";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return fmtDate(iso);
+  return fmtDate(dstr(d)) + ", " + String(d.getHours()).padStart(2, "0") + "." + String(d.getMinutes()).padStart(2, "0");
+}
+function daysSince(iso){
+  if (!iso) return 0;
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return 0;
+  return Math.floor((Date.now() - d.getTime()) / 86400000);
+}
+let toastTimer = null;
+function toast(msg){
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.remove("hidden");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.add("hidden"); }, 2600);
+}
+function statusPill(status){
+  const map = {
+    "Cold": "pill-cold",
+    "Hot": "pill-hot",
+    "Sukses Transaksi": "pill-sukses",
+    "Tidak Lanjut": "pill-tidak"
+  };
+  return '<span class="pill ' + (map[status] || "pill-soft") + '">' + esc(status) + "</span>";
+}
+function relDay(s){
+  const t = todayStr();
+  if (!s) return "";
+  if (s === t) return "hari ini";
+  if (s === addDaysStr(t, 1)) return "besok";
+  if (s === addDaysStr(t, -1)) return "kemarin";
+  if (s < t) {
+    const diff = Math.round((new Date(t + "T00:00:00") - new Date(s + "T00:00:00")) / 86400000);
+    return diff + " hari lalu";
+  }
+  const diff = Math.round((new Date(s + "T00:00:00") - new Date(t + "T00:00:00")) / 86400000);
+  return diff + " hari lagi";
+}
+function thumbHtml(p, size){
+  if (!p) return "";
+  const letter = esc((p.name || "?").trim().charAt(0).toUpperCase() || "?");
+  const style = size ? ' style="width:' + size + "px;height:" + size + "px;flex-basis:" + size + 'px"' : "";
+  if (p.image) {
+    return '<div class="thumb"' + style + '><img src="' + esc(p.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.textContent=\'' + letter + '\'"></div>';
+  }
+  return '<div class="thumb"' + style + ">" + letter + "</div>";
+}
+
+/* ---------------- State ---------------- */
+let auth = null, db = null;
+let leads = [];
+let templates = { fu1: DEFAULT_TEMPLATES.fu1, fu2: DEFAULT_TEMPLATES.fu2, fu3: DEFAULT_TEMPLATES.fu3 };
+let templatesLoaded = false;
+let detailId = null;
+let prodResults = [];
+let prodBusy = false;
+let pastePreview = null;
+let unsubLeads = null, unsubTpl = null;
+
+/* ---------------- Inisialisasi Firebase ---------------- */
+if (!CONFIGURED) {
+  $("configNotice").classList.remove("hidden");
+  $("loginBtn").disabled = true;
+  $("loginBtn").textContent = "Konfigurasi Belum Diisi";
+} else {
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  db = firebase.firestore();
+
+  auth.onAuthStateChanged(function(user){
+    if (user) {
+      $("loginScreen").classList.add("hidden");
+      $("appScreen").classList.remove("hidden");
+      $("userEmail").textContent = "Masuk sebagai " + (user.email || "");
+      subscribeData();
+    } else {
+      if (unsubLeads) { unsubLeads(); unsubLeads = null; }
+      if (unsubTpl) { unsubTpl(); unsubTpl = null; }
+      leads = [];
+      $("appScreen").classList.add("hidden");
+      $("loginScreen").classList.remove("hidden");
+    }
+  });
+}
+
+$("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  if (!CONFIGURED || !auth) return;
+  const err = $("loginError");
+  err.classList.add("hidden");
+  const btn = $("loginBtn");
+  btn.disabled = true; btn.textContent = "Memproses...";
+  auth.signInWithEmailAndPassword($("loginEmail").value.trim(), $("loginPassword").value)
+    .catch(function(error){
+      err.textContent = "Login gagal. Periksa lagi email dan password kamu. (" + (error.code || "error") + ")";
+      err.classList.remove("hidden");
+    })
+    .finally(function(){
+      btn.disabled = false; btn.textContent = "Masuk";
+    });
+});
+
+$("logoutBtn").addEventListener("click", function(){
+  if (auth) auth.signOut();
+});
+
+/* ---------------- Langganan data Firestore ---------------- */
+function subscribeData(){
+  if (!db || unsubLeads) return;
+  unsubLeads = db.collection("leads").onSnapshot(function(snap){
+    const arr = [];
+    snap.forEach(function(doc){ arr.push(Object.assign({ id: doc.id }, doc.data())); });
+    arr.sort(function(a, b){ return String(b.createdAt || "").localeCompare(String(a.createdAt || "")); });
+    leads = arr;
+    renderToday();
+    renderPipeline();
+    if (detailId && !$("detailModal").classList.contains("hidden") && !detailEditing()) renderDetail();
+  }, function(error){
+    toast("Gagal memuat data lead: " + (error.code || error.message || "error"));
+  });
+
+  unsubTpl = db.collection("templates").doc("wa").onSnapshot(function(doc){
+    if (doc.exists) {
+      const d = doc.data() || {};
+      templates = {
+        fu1: d.fu1 || DEFAULT_TEMPLATES.fu1,
+        fu2: d.fu2 || DEFAULT_TEMPLATES.fu2,
+        fu3: d.fu3 || DEFAULT_TEMPLATES.fu3
+      };
+    } else {
+      templates = { fu1: DEFAULT_TEMPLATES.fu1, fu2: DEFAULT_TEMPLATES.fu2, fu3: DEFAULT_TEMPLATES.fu3 };
+      db.collection("templates").doc("wa").set(templates).catch(function(){});
+    }
+    templatesLoaded = true;
+    fillTemplateForm();
+  }, function(){});
+}
+function detailEditing(){
+  const a = document.activeElement;
+  if (!a) return false;
+  return $("detailSheet").contains(a) && (a.tagName === "TEXTAREA" || a.tagName === "INPUT");
+}
+function fillTemplateForm(){
+  const map = { tplFu1: "fu1", tplFu2: "fu2", tplFu3: "fu3" };
+  Object.keys(map).forEach(function(id){
+    const el = $(id);
+    if (document.activeElement !== el) el.value = templates[map[id]];
+  });
+}
+$("saveTplBtn").addEventListener("click", function(){
+  if (!db) return;
+  templates = { fu1: $("tplFu1").value, fu2: $("tplFu2").value, fu3: $("tplFu3").value };
+  db.collection("templates").doc("wa").set(templates, { merge: true })
+    .then(function(){ toast("Template tersimpan."); })
+    .catch(function(e){ toast("Gagal menyimpan template: " + (e.code || "error")); });
+});
+
+/* ---------------- Tab ---------------- */
+document.querySelectorAll(".tab").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    document.querySelectorAll(".tab").forEach(function(b){ b.classList.remove("active"); });
+    btn.classList.add("active");
+    const t = btn.getAttribute("data-tab");
+    $("tab-today").classList.toggle("hidden", t !== "today");
+    $("tab-pipeline").classList.toggle("hidden", t !== "pipeline");
+    $("tab-templates").classList.toggle("hidden", t !== "templates");
+  });
+});
+
+/* ---------------- Render: kartu lead ---------------- */
+function leadCardHtml(lead){
+  const p = (lead.products && lead.products.length) ? lead.products[0] : null;
+  let fu = "";
+  if (lead.nextFollowUp) {
+    const cls = (lead.nextFollowUp < todayStr() && lead.status !== "Sukses Transaksi" && lead.status !== "Tidak Lanjut") ? "fu-date fu-overdue" : "fu-date";
+    fu = '<br>Follow-up: <span class="' + cls + '">' + fmtDate(lead.nextFollowUp) + " (" + relDay(lead.nextFollowUp) + ")</span>";
+  }
+  const prodLine = p ? "<br>Produk incaran: <b>" + esc(p.name) + "</b>" : "";
+  return '<button type="button" class="lead-card" onclick="openDetail(\'' + lead.id + '\')">' +
+    (p ? thumbHtml(p) : "") +
+    '<span class="lead-main">' +
+      '<span class="lead-name">' + esc(lead.nama) + " " + statusPill(lead.status) + "</span>" +
+      '<span class="lead-meta">' +
+        (lead.sumber ? esc(lead.sumber) + " &middot; " : "") +
+        (lead.estimasi ? "<b>" + fmtRp(lead.estimasi) + "</b>" : "") +
+        (lead.kebutuhan ? "<br>" + esc(lead.kebutuhan) : "") +
+        prodLine + fu +
+      "</span>" +
+    "</span></button>";
+}
+
+/* ---------------- Render: tab Hari Ini ---------------- */
+function isActiveLead(l){ return l.status === "Cold" || l.status === "Hot"; }
+function renderToday(){
+  const t = todayStr();
+  const week = addDaysStr(t, 7);
+  const sumActive = leads.filter(isActiveLead);
+  const pipelineVal = sumActive.reduce(function(s, l){ return s + (Number(l.estimasi) || 0); }, 0);
+  const now = new Date();
+  const deals = leads.filter(function(l){
+    if (l.status !== "Sukses Transaksi") return false;
+    const ref = l.dealAt || l.updatedAt || "";
+    const d = new Date(ref);
+    return !isNaN(d.getTime()) && d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  });
+  $("sumActive").textContent = sumActive.length;
+  $("sumPipeline").textContent = fmtRp(pipelineVal);
+  $("sumDeals").textContent = deals.length;
+
+  const overdue = leads.filter(function(l){ return isActiveLead(l) && l.nextFollowUp && l.nextFollowUp < t; });
+  const dueToday = leads.filter(function(l){ return isActiveLead(l) && l.nextFollowUp === t; });
+  const upcoming = leads.filter(function(l){ return isActiveLead(l) && l.nextFollowUp && l.nextFollowUp > t && l.nextFollowUp <= week; });
+  const stale = leads.filter(function(l){
+    return l.status === "Cold" && daysSince(l.updatedAt || l.createdAt) > 14;
+  });
+  overdue.sort(function(a, b){ return String(a.nextFollowUp).localeCompare(String(b.nextFollowUp)); });
+  upcoming.sort(function(a, b){ return String(a.nextFollowUp).localeCompare(String(b.nextFollowUp)); });
+
+  function block(title, pillCls, arr, emptyMsg){
+    let h = '<h2 class="section-title">' + title + ' <span class="count">' + arr.length + "</span></h2>";
+    if (!arr.length) h += '<div class="empty">' + emptyMsg + "</div>";
+    else h += '<div class="lead-list">' + arr.map(leadCardHtml).join("") + "</div>";
+    return h;
+  }
+  $("todayLists").innerHTML =
+    block("Terlambat", "", overdue, "Tidak ada follow-up yang terlambat. Kerja bagus!") +
+    block("Hari Ini", "", dueToday, "Belum ada follow-up yang jatuh tempo hari ini.") +
+    block("7 Hari Ke Depan", "", upcoming, "Tidak ada follow-up terjadwal dalam 7 hari ke depan.") +
+    block("Cold Basi (&gt;14 hari)", "", stale, "Tidak ada lead Cold yang terbengkalai lebih dari 14 hari.");
+}
+
+/* ---------------- Render: tab Pipeline ---------------- */
+function renderPipeline(){
+  const q = ($("pipeSearch").value || "").toLowerCase();
+  const f = $("pipeFilter").value;
+  const arr = leads.filter(function(l){
+    if (f && l.status !== f) return false;
+    if (!q) return true;
+    const hay = [l.nama, l.kebutuhan, l.sumber, l.wa].join(" ").toLowerCase();
+    return hay.indexOf(q) !== -1;
+  });
+  $("pipelineList").innerHTML = arr.length
+    ? arr.map(leadCardHtml).join("")
+    : '<div class="empty">Tidak ada lead yang cocok. Coba kata kunci atau filter lain, atau tambah lead baru.</div>';
+}
+$("pipeSearch").addEventListener("input", renderPipeline);
+$("pipeFilter").addEventListener("change", renderPipeline);
+</script>
+
+<script>
+"use strict";
+/* ============================================================
+   Bagian 2: form lead, detail lead, follow-up, Chat WA,
+   pencarian produk dekoruma.com
+   ============================================================ */
+function getLead(id){ return leads.find(function(l){ return l.id === id; }) || null; }
+function openModal(id){ $(id).classList.remove("hidden"); document.body.style.overflow = "hidden"; }
+function closeModal(id){ $(id).classList.add("hidden"); if ($("leadModal").classList.contains("hidden") && $("detailModal").classList.contains("hidden")) document.body.style.overflow = ""; }
+document.querySelectorAll("[data-close]").forEach(function(el){
+  el.addEventListener("click", function(){ closeModal(el.getAttribute("data-close")); });
+});
+document.querySelectorAll(".overlay").forEach(function(ov){
+  ov.addEventListener("click", function(e){ if (e.target === ov) closeModal(ov.id); });
+});
+
+/* ---------------- Form tambah / edit lead ---------------- */
+$("addLeadBtn").addEventListener("click", function(){
+  $("leadForm").reset();
+  $("fId").value = "";
+  $("fStatus").value = "Cold";
+  $("leadFormBadge").textContent = "Lead Baru";
+  $("leadFormTitle").textContent = "Tambah Lead";
+  $("deleteLeadBtn").classList.add("hidden");
+  openModal("leadModal");
+});
+function openEditLead(id){
+  const l = getLead(id);
+  if (!l) return;
+  $("fId").value = l.id;
+  $("fNama").value = l.nama || "";
+  $("fWa").value = l.wa || "";
+  $("fSumber").value = l.sumber || "";
+  $("fKebutuhan").value = l.kebutuhan || "";
+  $("fEstimasi").value = l.estimasi || "";
+  $("fStatus").value = l.status || "Cold";
+  $("fNext").value = l.nextFollowUp || "";
+  $("leadFormBadge").textContent = "Edit Lead";
+  $("leadFormTitle").textContent = "Edit Lead";
+  $("deleteLeadBtn").classList.remove("hidden");
+  closeModal("detailModal");
+  openModal("leadModal");
+}
+$("leadForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  if (!db) return;
+  const id = $("fId").value;
+  const nowIso = new Date().toISOString();
+  const status = $("fStatus").value;
+  const data = {
+    nama: $("fNama").value.trim(),
+    wa: $("fWa").value.trim(),
+    sumber: $("fSumber").value.trim(),
+    kebutuhan: $("fKebutuhan").value.trim(),
+    estimasi: Number($("fEstimasi").value) || 0,
+    status: status,
+    nextFollowUp: $("fNext").value || null,
+    updatedAt: nowIso
+  };
+  if (!data.nama || !data.wa) { toast("Nama dan nomor WA wajib diisi."); return; }
+  if (id) {
+    const old = getLead(id);
+    if (old) {
+      if (status === "Sukses Transaksi" && old.status !== "Sukses Transaksi") data.dealAt = todayStr();
+      if (status !== "Sukses Transaksi" && old.status === "Sukses Transaksi") data.dealAt = null;
+    }
+    db.collection("leads").doc(id).update(data)
+      .then(function(){ toast("Lead tersimpan."); closeModal("leadModal"); })
+      .catch(function(err){ toast("Gagal menyimpan: " + (err.code || "error")); });
+  } else {
+    data.products = [];
+    data.followUps = [];
+    data.createdAt = nowIso;
+    data.dealAt = status === "Sukses Transaksi" ? todayStr() : null;
+    db.collection("leads").add(data)
+      .then(function(){ toast("Lead baru ditambahkan."); closeModal("leadModal"); })
+      .catch(function(err){ toast("Gagal menambah lead: " + (err.code || "error")); });
+  }
+});
+$("deleteLeadBtn").addEventListener("click", function(){
+  const id = $("fId").value;
+  if (!id || !db) return;
+  const l = getLead(id);
+  if (!window.confirm("Hapus lead " + (l ? l.nama : "") + "? Data yang terhapus tidak bisa dikembalikan.")) return;
+  db.collection("leads").doc(id).delete()
+    .then(function(){ toast("Lead dihapus."); closeModal("leadModal"); if (detailId === id) { detailId = null; closeModal("detailModal"); } })
+    .catch(function(err){ toast("Gagal menghapus: " + (err.code || "error")); });
+});
+
+/* ---------------- Ubah status ---------------- */
+function setStatus(id, status){
+  if (!db) return;
+  const l = getLead(id);
+  if (!l) return;
+  const data = { status: status, updatedAt: new Date().toISOString() };
+  if (status === "Sukses Transaksi" && l.status !== "Sukses Transaksi") data.dealAt = todayStr();
+  if (status !== "Sukses Transaksi" && l.status === "Sukses Transaksi") data.dealAt = null;
+  db.collection("leads").doc(id).update(data)
+    .then(function(){ toast("Status diubah ke " + status + "."); })
+    .catch(function(err){ toast("Gagal mengubah status: " + (err.code || "error")); });
+}
+
+/* ---------------- Detail lead ---------------- */
+function openDetail(id){
+  detailId = id;
+  prodResults = [];
+  pastePreview = null;
+  renderDetail();
+  openModal("detailModal");
+}
+function closeDetail(){ detailId = null; closeModal("detailModal"); }
+
+function fillTemplate(tpl, lead){
+  const p = (lead.products && lead.products.length) ? lead.products[0] : null;
+  let text = String(tpl || "");
+  if (!p) {
+    text = text.split("\n").filter(function(line){ return line.indexOf("{produk}") === -1; }).join("\n");
+    text = text.split(/(?<=[.!?])\s+/).filter(function(s){ return s.indexOf("{produk}") === -1; }).join(" ");
+  }
+  text = text.replace(/\{nama\}/g, lead.nama || "");
+  text = text.replace(/\{kebutuhan\}/g, lead.kebutuhan || "kebutuhan interiornya");
+  text = text.replace(/\{produk\}/g, p ? p.name : "");
+  return text.replace(/\n{3,}/g, "\n\n").trim();
+}
+function chatWa(id, which){
+  const l = getLead(id);
+  if (!l) return;
+  const num = normWa(l.wa);
+  if (!num || num.length < 9) { toast("Nomor WA lead ini tidak valid."); return; }
+  const text = fillTemplate(templates[which] || "", l);
+  window.open("https://wa.me/" + num + "?text=" + encodeURIComponent(text), "_blank");
+}
+
+function renderDetail(){
+  const l = getLead(detailId);
+  const sheet = $("detailSheet");
+  if (!l) { sheet.innerHTML = '<div class="empty">Lead tidak ditemukan.</div>'; return; }
+  const STATUSES = ["Cold", "Hot", "Sukses Transaksi", "Tidak Lanjut"];
+  const statusBtns = STATUSES.map(function(s){
+    return '<button type="button" class="status-btn' + (l.status === s ? " current" : "") + '" onclick="setStatus(\'' + l.id + '\',\'' + s + '\')">' + s + "</button>";
+  }).join("");
+  const history = (l.followUps || []).slice().reverse();
+  const historyHtml = history.length ? history.map(function(f){
+    return '<div class="history-item"><span class="h-date">' + esc(fmtDateTime(f.date)) + "</span><br>" +
+      esc(f.note || "") +
+      (f.nextDate ? '<br><span class="muted">Jadwal berikutnya: <b>' + fmtDate(f.nextDate) + "</b></span>" : "") + "</div>";
+  }).join("") : '<p class="muted small">Belum ada riwayat follow-up.</p>';
+  const prods = l.products || [];
+  const prodsHtml = prods.length ? prods.map(function(p, i){
+    return '<div class="prod-item">' + thumbHtml(p) +
+      '<div class="prod-info"><div class="prod-name">' + esc(p.name) + "</div>" +
+      '<div>' + (p.listPrice ? '<span class="price-list">' + fmtRp(p.listPrice) + "</span>" : "") + '<span class="price">' + (p.price ? fmtRp(p.price) : "Harga belum terbaca") + "</span></div>" +
+      '<div class="prod-actions">' +
+        (p.url ? '<a class="btn btn-sm" href="' + esc(p.url) + '" target="_blank" rel="noopener">Buka Produk</a>' : "") +
+        '<button type="button" class="btn btn-sm btn-danger" onclick="removeProduct(' + i + ')">Hapus</button>' +
+      "</div></div></div>";
+  }).join("") : '<p class="muted small">Belum ada produk incaran. Cari dari dekoruma.com di bawah ini.</p>';
+
+  sheet.innerHTML =
+    '<div class="sheet-head"><div><span class="pill pill-mustard">Detail Lead</span>' +
+    '<h2 style="margin-top:7px">' + esc(l.nama) + '</h2><div style="margin-top:6px">' + statusPill(l.status) + "</div></div>" +
+    '<button class="close-x" onclick="closeDetail()" aria-label="Tutup">&times;</button></div>' +
+
+    '<div class="detail-block"><dl class="kv">' +
+      "<dt>Nomor WA</dt><dd>" + esc(l.wa || "-") + "</dd>" +
+      "<dt>Sumber</dt><dd>" + esc(l.sumber || "-") + "</dd>" +
+      "<dt>Kebutuhan</dt><dd>" + esc(l.kebutuhan || "-") + "</dd>" +
+      "<dt>Estimasi</dt><dd>" + (l.estimasi ? fmtRp(l.estimasi) : "-") + "</dd>" +
+      "<dt>Follow-up</dt><dd>" + (l.nextFollowUp ? fmtDate(l.nextFollowUp) + " (" + relDay(l.nextFollowUp) + ")" : "Belum dijadwalkan") + "</dd>" +
+      "<dt>Dibuat</dt><dd>" + fmtDateTime(l.createdAt) + "</dd>" +
+    "</dl>" +
+    '<div class="footer-actions" style="margin-top:13px">' +
+      '<button type="button" class="btn btn-teal" onclick="chatWa(\'' + l.id + '\',\'fu1\')">Chat WA &middot; FU 1</button>' +
+      '<button type="button" class="btn btn-teal2" onclick="chatWa(\'' + l.id + '\',\'fu2\')">FU 2</button>' +
+      '<button type="button" class="btn" onclick="chatWa(\'' + l.id + '\',\'fu3\')">FU 3</button>' +
+      '<button type="button" class="btn" onclick="openEditLead(\'' + l.id + '\')">Edit Lead</button>' +
+    "</div></div>" +
+
+    '<div class="detail-block"><h3>Ubah Status</h3><div class="status-row">' + statusBtns + "</div></div>" +
+
+    '<div class="detail-block"><h3>Jadwalkan Follow-up</h3>' +
+      '<div class="inline-form"><input type="date" id="schedDate" value="' + esc(l.nextFollowUp || "") + '">' +
+      '<button type="button" class="btn btn-teal btn-sm" onclick="saveSchedule()">Simpan Jadwal</button></div></div>' +
+
+    '<div class="detail-block"><h3>Catat Follow-up</h3>' +
+      '<div class="inline-form"><textarea id="fuNote" placeholder="Hasil follow-up, contoh: sudah dibalas, minta katalog sofa, masih pikir-pikir..."></textarea></div>' +
+      '<div class="inline-form" style="margin-top:9px"><input type="date" id="fuNext" aria-label="Tanggal follow-up berikutnya">' +
+      '<button type="button" class="btn btn-teal btn-sm" onclick="saveFollowUp()">Simpan Catatan</button></div>' +
+      '<div style="margin-top:10px">' + historyHtml + "</div></div>" +
+
+    '<div class="detail-block"><h3>Produk Incaran</h3>' + prodsHtml +
+      '<h3 style="margin-top:16px">Cari di dekoruma.com</h3>' +
+      '<div class="inline-form"><input type="text" id="prodQuery" placeholder="Kata kunci, contoh: sofa bed, meja makan, lemari">' +
+      '<button type="button" class="btn btn-teal btn-sm" id="prodSearchBtn" onclick="runProductSearch()">Cari Produk</button></div>' +
+      '<div id="prodStatus" class="search-status muted"></div><div id="prodResults"></div>' +
+      '<h3 style="margin-top:16px">Atau Tempel Tautan Produk</h3>' +
+      '<div class="inline-form"><input type="url" id="prodUrl" placeholder="https://www.dekoruma.com/p/...">' +
+      '<button type="button" class="btn btn-sm" onclick="runPasteUrl()">Ambil dari Tautan</button></div>' +
+      '<div id="pasteArea"></div>' +
+    "</div>";
+}
+function detailBusy(b){
+  prodBusy = b;
+  const btn = $("prodSearchBtn");
+  if (btn) { btn.disabled = b; btn.textContent = b ? "Mencari..." : "Cari Produk"; }
+}
+function saveSchedule(){
+  if (!db || !detailId) return;
+  const v = $("schedDate").value || null;
+  db.collection("leads").doc(detailId).update({ nextFollowUp: v, updatedAt: new Date().toISOString() })
+    .then(function(){ toast(v ? "Jadwal follow-up disimpan." : "Jadwal follow-up dikosongkan."); })
+    .catch(function(e){ toast("Gagal menyimpan jadwal: " + (e.code || "error")); });
+}
+function saveFollowUp(){
+  if (!db || !detailId) return;
+  const l = getLead(detailId);
+  if (!l) return;
+  const note = $("fuNote").value.trim();
+  if (!note) { toast("Isi dulu catatan follow-up-nya."); return; }
+  const nextDate = $("fuNext").value || null;
+  const entry = { date: new Date().toISOString(), note: note, nextDate: nextDate };
+  const arr = (l.followUps || []).concat([entry]);
+  db.collection("leads").doc(detailId).update({ followUps: arr, nextFollowUp: nextDate, updatedAt: new Date().toISOString() })
+    .then(function(){ toast("Catatan follow-up tersimpan."); })
+    .catch(function(e){ toast("Gagal menyimpan catatan: " + (e.code || "error")); });
+}
+function removeProduct(idx){
+  if (!db || !detailId) return;
+  const l = getLead(detailId);
+  if (!l) return;
+  const arr = (l.products || []).slice();
+  arr.splice(idx, 1);
+  db.collection("leads").doc(detailId).update({ products: arr, updatedAt: new Date().toISOString() })
+    .then(function(){ toast("Produk incaran dihapus."); })
+    .catch(function(e){ toast("Gagal menghapus produk: " + (e.code || "error")); });
+}
+function saveProductToLead(p){
+  if (!db || !detailId) return;
+  const l = getLead(detailId);
+  if (!l) return;
+  const arr = (l.products || []).slice();
+  const dup = arr.some(function(x){ return (p.sku && x.sku && x.sku === p.sku) || (p.url && x.url === p.url); });
+  if (dup) { toast("Produk ini sudah tersimpan di lead ini."); return; }
+  arr.push({ name: p.name || "", price: p.price || 0, listPrice: p.listPrice || null, image: p.image || "", url: p.url || "", sku: p.sku || "" });
+  db.collection("leads").doc(detailId).update({ products: arr, updatedAt: new Date().toISOString() })
+    .then(function(){ toast("Produk incaran tersimpan."); })
+    .catch(function(e){ toast("Gagal menyimpan produk: " + (e.code || "error")); });
+}
+
+/* ============================================================
+   Pencarian produk dekoruma.com dari browser (tanpa server)
+   Halaman publik dekoruma.com diambil lewat rantai proxy CORS
+   publik, lalu produk diparse dari JSON tertanam
+   (window.__data / __NEXT_DATA__ / server-app-state) dan/atau
+   dari HTML (tautan /p/<SKU>/<slug> + harga Rp di sekitarnya).
+   Hanya data yang benar-benar terparse yang ditampilkan.
+   ============================================================ */
+const PROXIES = [
+  function(u){ return "https://api.allorigins.win/raw?url=" + encodeURIComponent(u); },
+  function(u){ return "https://corsproxy.io/?url=" + encodeURIComponent(u); },
+  function(u){ return "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(u); }
+];
+function fetchWithTimeout(url, ms){
+  const ctrl = new AbortController();
+  const t = setTimeout(function(){ ctrl.abort(); }, ms || 18000);
+  return fetch(url, { signal: ctrl.signal }).then(function(r){
+    clearTimeout(t);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.text();
+  }).catch(function(e){ clearTimeout(t); throw e; });
+}
+async function fetchViaProxies(target){
+  for (let i = 0; i < PROXIES.length; i++) {
+    try {
+      const txt = await fetchWithTimeout(PROXIES[i](target), 18000);
+      if (txt && txt.length > 800) return txt;
+    } catch (e) { /* coba proxy berikutnya */ }
+  }
+  return null;
+}
+function skuFromUrl(u){
+  const m = String(u || "").match(/\/p\/([A-Za-z0-9\-]+)\//);
+  return m ? m[1] : "";
+}
+function toPriceNum(v){
+  if (typeof v === "number") return v > 0 ? Math.round(v) : null;
+  if (typeof v === "string") {
+    const digits = v.replace(/[^\d]/g, "");
+    if (!digits) return null;
+    const n = parseInt(digits, 10);
+    return n > 0 ? n : null;
+  }
+  return null;
+}
+function extractJsonAfter(html, marker){
+  const i = html.indexOf(marker);
+  if (i < 0) return null;
+  const start = html.indexOf("{", i);
+  if (start < 0) return null;
+  let depth = 0, inStr = false, escCh = false;
+  for (let j = start; j < html.length; j++) {
+    const c = html.charAt(j);
+    if (inStr) {
+      if (escCh) escCh = false;
+      else if (c === "\\") escCh = true;
+      else if (c === '"') inStr = false;
+    } else {
+      if (c === '"') inStr = true;
+      else if (c === "{") depth++;
+      else if (c === "}") {
+        depth--;
+        if (depth === 0) {
+          try { return JSON.parse(html.slice(start, j + 1)); } catch (e) { return null; }
+        }
+      }
+    }
+  }
+  return null;
+}
+function collectFromJson(root){
+  const out = [];
+  const seen = new Set();
+  let visited = 0;
+  function pickImg(node){
+    const cands = [node.image, node.thumbnail, node.imageUrl, node.img, node.picture];
+    for (let k = 0; k < cands.length; k++) if (typeof cands[k] === "string" && cands[k]) return cands[k];
+    if (Array.isArray(node.images) && node.images.length) {
+      const f = node.images[0];
+      if (typeof f === "string") return f;
+      if (f && typeof f === "object") return f.url || f.src || "";
+    }
+    if (Array.isArray(node.gallery) && node.gallery.length && typeof node.gallery[0] === "string") return node.gallery[0];
+    return "";
+  }
+  function walk(node, depth){
+    if (!node || typeof node !== "object" || depth > 14 || visited > 30000) return;
+    visited++;
+    if (Array.isArray(node)) { node.forEach(function(n){ walk(n, depth + 1); }); return; }
+    const name = node.name || node.title || node.productName;
+    const url = node.url || node.link || node.href || node.path || "";
+    const sku = node.sku || node.productSku || node.code || "";
+    let price = null;
+    const pk = ["finalPrice", "salePrice", "specialPrice", "currentPrice", "discountedPrice", "price"];
+    for (let k = 0; k < pk.length; k++) { if (node[pk[k]] != null) { price = toPriceNum(node[pk[k]]); if (price) break; } }
+    if (!price && node.price && typeof node.price === "object") {
+      price = toPriceNum(node.price.final || node.price.sale || node.price.value || node.price.amount);
+    }
+    const img = pickImg(node);
+    const looks = typeof name === "string" && name.trim().length > 3 && !!price &&
+      ((typeof url === "string" && url.indexOf("/p/") !== -1) || !!sku || (typeof img === "string" && img.indexOf("dekoruma") !== -1));
+    if (looks) {
+      let fullUrl = "";
+      if (typeof url === "string" && url.indexOf("/p/") !== -1) {
+        fullUrl = url.indexOf("http") === 0 ? url : "https://www.dekoruma.com" + (url.charAt(0) === "/" ? url : "/" + url);
+      }
+      const realSku = sku ? String(sku) : (fullUrl ? skuFromUrl(fullUrl) : "");
+      const key = realSku || fullUrl || name;
+      if (!seen.has(key)) {
+        seen.add(key);
+        let listPrice = null;
+        const lk = ["listPrice", "normalPrice", "originalPrice", "retailPrice", "regularPrice", "priceBeforeDiscount"];
+        for (let k = 0; k < lk.length; k++) { if (node[lk[k]] != null) { const lp = toPriceNum(node[lk[k]]); if (lp && lp > price) { listPrice = lp; break; } } }
+        out.push({ name: String(name).trim(), price: price, listPrice: listPrice, image: img || "", url: fullUrl, sku: realSku });
+      }
+    }
+    for (const key in node) { walk(node[key], depth + 1); }
+  }
+  walk(root, 0);
+  return out;
+}
+function collectFromHtml(html){
+  const map = new Map();
+  const re = /\/p\/([A-Za-z0-9\-]+)\/([A-Za-z0-9\-\+%._]+)/g;
+  let m;
+  while ((m = re.exec(html)) !== null && map.size < 40) {
+    const sku = m[1];
+    if (map.has(sku)) continue;
+    const slug = m[2];
+    const idx = m.index;
+    const ctx = html.slice(Math.max(0, idx - 1600), Math.min(html.length, idx + 2600));
+    let name = "";
+    const nm = ctx.match(/"name"\s*:\s*"([^"]{4,140})"/);
+    if (nm) name = nm[1].replace(/\\u0026/g, "&").replace(/\\"/g, '"');
+    if (!name) name = decodeURIComponent(slug).replace(/-/g, " ").replace(/\s+/g, " ").trim();
+    const im = ctx.match(/https:\/\/media\.dekoruma\.com\/[^"'\\\s)]+/);
+    const image = im ? im[0] : "";
+    const prices = [];
+    const pr = /Rp\s?([\d]{1,3}(?:\.[\d]{3})+|[\d]+)/g;
+    let pm;
+    while ((pm = pr.exec(ctx)) !== null) {
+      const v = parseInt(pm[1].replace(/\./g, ""), 10);
+      if (v >= 10000 && v < 2000000000) prices.push(v);
+    }
+    if (!prices.length) continue;
+    const price = Math.min.apply(null, prices);
+    const mx = Math.max.apply(null, prices);
+    map.set(sku, {
+      name: name, price: price, listPrice: mx > price ? mx : null,
+      image: image, url: "https://www.dekoruma.com/p/" + sku + "/" + slug, sku: sku
+    });
+  }
+  return Array.from(map.values());
+}
+function parseProducts(html){
+  const merged = [];
+  const seen = new Set();
+  const markers = ["__NEXT_DATA__", "window.__data", "server-app-state", "__data"];
+  for (let i = 0; i < markers.length; i++) {
+    const json = extractJsonAfter(html, markers[i]);
+    if (json) {
+      collectFromJson(json).forEach(function(p){ const k = p.sku || p.url || p.name; if (!seen.has(k)) { seen.add(k); merged.push(p); } });
+    }
+    if (merged.length >= 12) return merged.slice(0, 12);
+  }
+  collectFromHtml(html).forEach(function(p){ const k = p.sku || p.url || p.name; if (!seen.has(k)) { seen.add(k); merged.push(p); } });
+  return merged.slice(0, 12);
+}
+async function searchDekoruma(keyword){
+  const kw = keyword.trim();
+  if (!kw) return [];
+  const targets = ["https://www.dekoruma.com/search/" + encodeURIComponent(kw)];
+  const cat = kw.split(/\s+/).map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1); }).join("-");
+  targets.push("https://www.dekoruma.com/" + cat);
+  for (let i = 0; i < targets.length; i++) {
+    const html = await fetchViaProxies(targets[i]);
+    if (!html) continue;
+    const res = parseProducts(html);
+    if (res.length) return res;
+  }
+  return [];
+}
+function productResultHtml(p, idx){
+  return '<div class="prod-item">' + thumbHtml(p) +
+    '<div class="prod-info"><div class="prod-name">' + esc(p.name) + "</div>" +
+    "<div>" + (p.listPrice ? '<span class="price-list">' + fmtRp(p.listPrice) + "</span>" : "") + '<span class="price">' + (p.price ? fmtRp(p.price) : "Harga belum terbaca") + "</span></div>" +
+    '<div class="prod-actions">' +
+      '<button type="button" class="btn btn-sm btn-teal" onclick="saveResultProduct(' + idx + ')">Simpan</button>' +
+      (p.url ? '<a class="btn btn-sm" href="' + esc(p.url) + '" target="_blank" rel="noopener">Buka</a>' : "") +
+    "</div></div></div>";
+}
+function saveResultProduct(idx){
+  const p = prodResults[idx];
+  if (p) saveProductToLead(p);
+}
+async function runProductSearch(){
+  const q = $("prodQuery").value.trim();
+  const statusEl = $("prodStatus");
+  const resEl = $("prodResults");
+  if (!q) { statusEl.textContent = "Isi dulu kata kuncinya, contoh: sofa bed."; return; }
+  detailBusy(true);
+  statusEl.textContent = "Mencari \"" + q + "\" di dekoruma.com...";
+  resEl.innerHTML = "";
+  try {
+    const res = await searchDekoruma(q);
+    prodResults = res;
+    if (res.length) {
+      statusEl.textContent = "Ditemukan " + res.length + " produk dari dekoruma.com:";
+      resEl.innerHTML = res.map(productResultHtml).join("");
+    } else {
+      statusEl.textContent = "Pencarian dekoruma.com sedang tidak bisa dijangkau atau tidak ada hasil yang terbaca. Coba lagi sebentar, atau pakai cara tempel tautan produk di bawah.";
+    }
+  } catch (e) {
+    statusEl.textContent = "Pencarian dekoruma.com sedang tidak bisa dijangkau. Coba lagi sebentar, atau pakai cara tempel tautan produk di bawah.";
+  }
+  detailBusy(false);
+}
+function decodeEntities(s){
+  return String(s || "").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+}
+function parseProductPage(html, pageUrl){
+  const sku = skuFromUrl(pageUrl);
+  let name = "";
+  const ogT = html.match(/<meta[^>]+property=["']og:title["'][^>]*content=["']([^"']+)["']/i) || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]*property=["']og:title["']/i);
+  if (ogT) name = decodeEntities(ogT[1]).replace(/\s*[|\u2013-]\s*Dekoruma.*$/i, "").trim();
+  if (!name) {
+    const t = html.match(/<title>([^<]+)<\/title>/i);
+    if (t) name = decodeEntities(t[1]).replace(/\s*[|\u2013-]\s*Dekoruma.*$/i, "").trim();
+  }
+  let image = "";
+  const ogI = html.match(/<meta[^>]+property=["']og:image["'][^>]*content=["']([^"']+)["']/i) || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]*property=["']og:image["']/i);
+  if (ogI) image = decodeEntities(ogI[1]);
+  let price = null, listPrice = null;
+  const prods = parseProducts(html);
+  const hit = prods.find(function(p){ return sku && p.sku === sku; }) || (prods.length ? prods[0] : null);
+  if (hit) { price = hit.price; listPrice = hit.listPrice; if (!name) name = hit.name; if (!image) image = hit.image || ""; }
+  if (!price) {
+    const prices = [];
+    const pr = /Rp\s?([\d]{1,3}(?:\.[\d]{3})+|[\d]+)/g;
+    let pm;
+    const body = html.slice(0, 500000);
+    while ((pm = pr.exec(body)) !== null && prices.length < 80) {
+      const v = parseInt(pm[1].replace(/\./g, ""), 10);
+      if (v >= 10000 && v < 2000000000) prices.push(v);
+    }
+    if (prices.length) {
+      listPrice = prices[0];
+      price = prices.length > 1 ? prices[1] : prices[0];
+      if (price > listPrice) { const tmp = listPrice; listPrice = price; price = tmp; }
+      if (price === listPrice) listPrice = null;
+    }
+  }
+  return { name: name || "Produk Dekoruma", price: price, listPrice: listPrice, image: image, url: pageUrl, sku: sku };
+}
+async function runPasteUrl(){
+  const url = $("prodUrl").value.trim();
+  const area = $("pasteArea");
+  if (!url || url.indexOf("dekoruma.com") === -1) {
+    area.innerHTML = '<p class="search-status" style="color:var(--red)">Tempel tautan produk dekoruma.com yang valid dulu ya.</p>';
+    return;
+  }
+  area.innerHTML = '<p class="search-status muted">Mengambil data produk dari tautan...</p>';
+  const html = await fetchViaProxies(url);
+  if (!html) {
+    area.innerHTML = '<p class="search-status" style="color:var(--red)">Tautan sedang tidak bisa dijangkau lewat proxy. Coba lagi sebentar.</p>';
+    return;
+  }
+  pastePreview = parseProductPage(html, url);
+  area.innerHTML = '<div class="prod-item">' + thumbHtml(pastePreview) +
+    '<div class="prod-info"><div class="prod-name">' + esc(pastePreview.name) + "</div>" +
+    "<div>" + (pastePreview.listPrice ? '<span class="price-list">' + fmtRp(pastePreview.listPrice) + "</span>" : "") + '<span class="price">' + (pastePreview.price ? fmtRp(pastePreview.price) : "Harga belum terbaca") + "</span></div>" +
+    '<div class="prod-actions"><button type="button" class="btn btn-sm btn-teal" onclick="savePastePreview()">Simpan Produk Ini</button>' +
+    '<a class="btn btn-sm" href="' + esc(pastePreview.url) + '" target="_blank" rel="noopener">Buka</a></div></div></div>';
+}
+function savePastePreview(){
+  if (pastePreview) { saveProductToLead(pastePreview); pastePreview = null; $("pasteArea").innerHTML = ""; }
+}
+</script>
+</body>
+</html>
