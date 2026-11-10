@@ -1136,19 +1136,68 @@ function parseProducts(html){
   collectFromHtml(html).forEach(function(p){ const k = p.sku || p.url || p.name; if (!seen.has(k)) { seen.add(k); merged.push(p); } });
   return merged.slice(0, 12);
 }
+/* ============================================================
+   Pencarian produk memakai layanan pencarian publik yang sama
+   dengan yang dipakai situs dekoruma.com sendiri (Algolia,
+   kunci pencarian publik khusus baca yang tertanam di situs
+   mereka). Cepat, tanpa proxy, dan paham kata umum maupun
+   nama produk (mis. "sofa", "meja tamu", "camden", "cameron").
+   Field hit terverifikasi dari respons asli: title, upc,
+   priceNumber, productOffer.salePrice, image, url.
+   ============================================================ */
+const ALGOLIA_APP_ID = "D2VY06YP2A";
+const ALGOLIA_API_KEY = "5bbda829365ba015eb6fcec10cccdf72";
+const ALGOLIA_INDEX = "goblin_products3";
+function mapAlgoliaHit(h){
+  const sku = String(h.upc || h.objectID || "");
+  const name = String(h.title || h.name || "").trim();
+  const listPrice = toPriceNum(h.priceNumber != null ? h.priceNumber : h.price);
+  let price = null;
+  if (h.productOffer && h.productOffer.salePrice) price = toPriceNum(h.productOffer.salePrice);
+  if (!price) price = listPrice;
+  const lp = (listPrice && price && listPrice > price) ? listPrice : null;
+  let url = "";
+  if (typeof h.url === "string" && h.url.indexOf("/p/") !== -1) url = h.url;
+  if (!url && sku) url = "https://www.dekoruma.com/p/" + sku + "/" + name.replace(/\s+/g, "-");
+  return { name: name, price: price, listPrice: lp, image: (typeof h.image === "string" ? h.image : ""), url: url, sku: sku };
+}
+async function algoliaSearch(query, perPage){
+  const ctrl = new AbortController();
+  const t = setTimeout(function(){ ctrl.abort(); }, 12000);
+  try {
+    const r = await fetch("https://" + ALGOLIA_APP_ID + "-dsn.algolia.net/1/indexes/" + ALGOLIA_INDEX + "/query", {
+      method: "POST",
+      headers: {
+        "X-Algolia-API-Key": ALGOLIA_API_KEY,
+        "X-Algolia-Application-Id": ALGOLIA_APP_ID,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        query: query,
+        hitsPerPage: perPage || 12,
+        attributesToRetrieve: ["title", "upc", "objectID", "price", "priceNumber", "productOffer", "image", "url", "brand", "color"]
+      }),
+      signal: ctrl.signal
+    });
+    clearTimeout(t);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const j = await r.json();
+    return (j.hits || []).map(mapAlgoliaHit).filter(function(p){ return p.name; });
+  } catch (e) { clearTimeout(t); throw e; }
+}
 async function searchDekoruma(keyword){
   const kw = keyword.trim();
   if (!kw) return [];
-  const targets = ["https://www.dekoruma.com/search/" + encodeURIComponent(kw)];
-  const cat = kw.split(/\s+/).map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1); }).join("-");
-  targets.push("https://www.dekoruma.com/" + cat);
-  for (let i = 0; i < targets.length; i++) {
-    const html = await fetchViaProxies(targets[i]);
-    if (!html) continue;
-    const res = parseProducts(html);
-    if (res.length) return res;
-  }
-  return [];
+  return await algoliaSearch(kw, 12);
+}
+async function fetchViaProxiesFast(target){
+  const attempts = PROXIES.map(function(px){
+    return fetchWithTimeout(px(target), 12000).then(function(txt){
+      if (!txt || txt.length < 800) throw new Error("kosong");
+      return txt;
+    });
+  });
+  try { return await Promise.any(attempts); } catch (e) { return null; }
 }
 function productResultHtml(p, idx){
   return '<div class="prod-item">' + thumbHtml(p) +
@@ -1178,7 +1227,7 @@ async function runProductSearch(){
       statusEl.textContent = "Ditemukan " + res.length + " produk dari dekoruma.com:";
       resEl.innerHTML = res.map(productResultHtml).join("");
     } else {
-      statusEl.textContent = "Pencarian dekoruma.com sedang tidak bisa dijangkau atau tidak ada hasil yang terbaca. Coba lagi sebentar, atau pakai cara tempel tautan produk di bawah.";
+      statusEl.textContent = "Tidak ada produk yang cocok dengan \"" + q + "\". Coba kata lain, misalnya nama produknya (camden, cameron) atau jenisnya (sofa bed, meja tamu).";
     }
   } catch (e) {
     statusEl.textContent = "Pencarian dekoruma.com sedang tidak bisa dijangkau. Coba lagi sebentar, atau pakai cara tempel tautan produk di bawah.";
@@ -1230,9 +1279,25 @@ async function runPasteUrl(){
     return;
   }
   area.innerHTML = '<p class="search-status muted">Mengambil data produk dari tautan...</p>';
-  const html = await fetchViaProxies(url);
+  const sku = skuFromUrl(url);
+  if (sku) {
+    try {
+      const hits = await algoliaSearch(sku, 5);
+      const exact = hits.find(function(p){ return p.sku === sku; });
+      if (exact) {
+        pastePreview = exact;
+        area.innerHTML = '<div class="prod-item">' + thumbHtml(pastePreview) +
+          '<div class="prod-info"><div class="prod-name">' + esc(pastePreview.name) + "</div>" +
+          "<div>" + (pastePreview.listPrice ? '<span class="price-list">' + fmtRp(pastePreview.listPrice) + "</span>" : "") + '<span class="price">' + (pastePreview.price ? fmtRp(pastePreview.price) : "Harga belum terbaca") + "</span></div>" +
+          '<div class="prod-actions"><button type="button" class="btn btn-sm btn-teal" onclick="savePastePreview()">Simpan Produk Ini</button>' +
+          '<a class="btn btn-sm" href="' + esc(pastePreview.url) + '" target="_blank" rel="noopener">Buka</a></div></div></div>';
+        return;
+      }
+    } catch (e) { /* lanjut ke cara baca halaman */ }
+  }
+  const html = await fetchViaProxiesFast(url);
   if (!html) {
-    area.innerHTML = '<p class="search-status" style="color:var(--red)">Tautan sedang tidak bisa dijangkau lewat proxy. Coba lagi sebentar.</p>';
+    area.innerHTML = '<p class="search-status" style="color:var(--red)">Tautan sedang tidak bisa dijangkau. Coba lagi sebentar, atau cari produknya lewat pencarian di atas.</p>';
     return;
   }
   pastePreview = parseProductPage(html, url);
