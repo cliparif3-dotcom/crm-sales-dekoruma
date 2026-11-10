@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CRM Sales Dekoruma</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0E7C7B">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="CRM Sales">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -269,6 +277,12 @@ a{color:var(--teal);font-weight:700}
       </div>
       <button id="logoutBtn" class="btn btn-sm">Keluar</button>
     </header>
+
+    <div id="installBar" style="display:none;background:#FFC531;border:2.5px solid #14232E;border-radius:16px;box-shadow:4px 4px 0 #14232E;padding:10px 14px;margin:14px 0;align-items:center;gap:10px;flex-wrap:wrap">
+      <span id="installText" style="font-weight:700;flex:1;min-width:180px">Pasang CRM ini sebagai aplikasi di HP kamu</span>
+      <button id="installBtn" class="btn btn-sm" style="background:#0E7C7B;color:#fff">Pasang Aplikasi</button>
+      <button id="installClose" class="btn btn-sm">Nanti</button>
+    </div>
 
     <nav class="tabs">
       <button class="tab active" data-tab="today">Hari Ini</button>
@@ -1312,6 +1326,43 @@ async function runPasteUrl(){
 function savePastePreview(){
   if (pastePreview) { saveProductToLead(pastePreview); pastePreview = null; $("pasteArea").innerHTML = ""; }
 }
+</script>
+<script>
+/* PWA: daftarkan service worker + tombol pasang aplikasi */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
+(function () {
+  var bar = document.getElementById("installBar");
+  if (!bar) return;
+  var standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  if (standalone) return;
+  if (sessionStorage.getItem("crmInstallDismissed") === "1") return;
+  var deferred = null;
+  function show() { bar.style.display = "flex"; }
+  document.getElementById("installClose").addEventListener("click", function () {
+    bar.style.display = "none";
+    try { sessionStorage.setItem("crmInstallDismissed", "1"); } catch (e) {}
+  });
+  document.getElementById("installBtn").addEventListener("click", function () {
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.then(function () { deferred = null; bar.style.display = "none"; });
+  });
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault();
+    deferred = e;
+    show();
+  });
+  var isIOS = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+  if (isIOS) {
+    document.getElementById("installText").textContent = "Pasang sebagai aplikasi: ketuk tombol Bagikan di browser, lalu pilih \"Tambah ke Layar Utama\"";
+    document.getElementById("installBtn").style.display = "none";
+    show();
+  }
+})();
 </script>
 </body>
 </html>
