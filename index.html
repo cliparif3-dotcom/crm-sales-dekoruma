@@ -282,7 +282,7 @@ a{color:var(--teal);font-weight:700}
       <div class="summary-grid">
         <div class="summary-box"><div class="num" id="sumActive">0</div><div class="lbl">Lead Aktif</div></div>
         <div class="summary-box"><div class="num" id="sumPipeline" style="font-size:1rem">Rp0</div><div class="lbl">Nilai Pipeline</div></div>
-        <div class="summary-box"><div class="num" id="sumDeals">0</div><div class="lbl">Deal Bulan Ini</div></div>
+        <div class="summary-box"><div class="num" id="sumDeals">0</div><div class="lbl" id="sumDealsLbl">Deal Bulan Ini</div></div>
       </div>
       <div id="todayLists"></div>
     </section>
@@ -643,7 +643,7 @@ document.querySelectorAll(".tab").forEach(function(btn){
 function leadCardHtml(lead){
   const p = (lead.products && lead.products.length) ? lead.products[0] : null;
   let fu = "";
-  if (lead.nextFollowUp) {
+  if (lead.nextFollowUp && isActiveLead(lead)) {
     const cls = (lead.nextFollowUp < todayStr() && lead.status !== "Sukses Transaksi" && lead.status !== "Tidak Lanjut") ? "fu-date fu-overdue" : "fu-date";
     fu = '<br>Follow-up: <span class="' + cls + '">' + fmtDate(lead.nextFollowUp) + " (" + relDay(lead.nextFollowUp) + ")</span>";
   }
@@ -678,6 +678,8 @@ function renderToday(){
   $("sumActive").textContent = sumActive.length;
   $("sumPipeline").textContent = fmtRp(pipelineVal);
   $("sumDeals").textContent = deals.length;
+  const dealsVal = deals.reduce(function(s, l){ return s + (Number(l.estimasi) || 0); }, 0);
+  $("sumDealsLbl").textContent = deals.length ? "Deal Bulan Ini · " + fmtRp(dealsVal) : "Deal Bulan Ini";
 
   const overdue = leads.filter(function(l){ return isActiveLead(l) && l.nextFollowUp && l.nextFollowUp < t; });
   const dueToday = leads.filter(function(l){ return isActiveLead(l) && l.nextFollowUp === t; });
