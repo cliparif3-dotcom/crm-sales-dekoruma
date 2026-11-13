@@ -1,6 +1,6 @@
 /* Service worker CRM Sales Dekoruma — shell aplikasi saja.
    Data Firestore & panggilan eksternal tidak pernah di-cache di sini. */
-const CACHE = "crm-sales-shell-v1";
+const CACHE = "crm-sales-shell-v2";
 const SHELL = [
   "./",
   "./index.html",
@@ -42,5 +42,60 @@ self.addEventListener("fetch", function (e) {
   }
   e.respondWith(
     caches.match(e.request).then(function (hit) { return hit || fetch(e.request); })
+  );
+});
+
+/* ---------- Notifikasi push (Firebase Cloud Messaging) ----------
+   Pengirim terjadwal mengirim pesan data-only; service worker ini
+   yang menampilkan notifikasinya. Bentuk payload dipertahankan
+   defensif: dukung pesan data-only maupun notification. */
+function pushContent(e) {
+  var raw = null;
+  try { raw = e.data ? e.data.json() : null; } catch (err) { raw = null; }
+  if (!raw && e.data) {
+    try { raw = { body: e.data.text() }; } catch (err2) { raw = null; }
+  }
+  raw = raw || {};
+  var d = raw.data || {};
+  var n = raw.notification || {};
+  return {
+    title: d.title || n.title || raw.title || "CRM Sales Dekoruma",
+    body: d.body || n.body || raw.body || "Ada follow-up yang perlu dihubungi.",
+    url: d.url || n.click_action || "./index.html",
+    tag: d.tag || "crm-followup"
+  };
+}
+function resolvePushUrl(u) {
+  try { return new URL(u, self.location.href).href; }
+  catch (err) { return new URL("./index.html", self.location.href).href; }
+}
+
+self.addEventListener("push", function (e) {
+  var c = pushContent(e);
+  e.waitUntil(
+    self.registration.showNotification(c.title, {
+      body: c.body,
+      icon: "./icon-192.png",
+      badge: "./icon-192.png",
+      tag: c.tag,
+      renotify: true,
+      data: { url: resolvePushUrl(c.url) }
+    })
+  );
+});
+
+self.addEventListener("notificationclick", function (e) {
+  e.notification.close();
+  var url = (e.notification.data && e.notification.data.url) || resolvePushUrl("./index.html");
+  e.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].url.indexOf(self.location.origin) === 0 && "focus" in list[i]) {
+          if (list[i].navigate) { try { list[i].navigate(url); } catch (err) {} }
+          return list[i].focus();
+        }
+      }
+      if (clients.openWindow) return clients.openWindow(url);
+    })
   );
 });

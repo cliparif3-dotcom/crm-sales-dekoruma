@@ -17,6 +17,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 <style>
 :root{
   --cream:#FAF6EE;
@@ -195,6 +196,13 @@ a{color:var(--teal);font-weight:700}
   border:var(--border);background:#fff;border-radius:999px;width:38px;height:38px;flex:0 0 38px;
   font-size:1.05rem;font-weight:800;box-shadow:var(--shadow-sm);
 }
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:88px}
+.pw-toggle{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  border:2px solid var(--navy);background:#fff;border-radius:999px;
+  padding:6px 11px;font-weight:800;font-size:.8rem;box-shadow:2px 2px 0 var(--navy);
+}
 .detail-block{background:#fff;border:var(--border);border-radius:20px;box-shadow:var(--shadow-sm);padding:15px;margin-bottom:13px}
 .detail-block h3{font-size:.95rem;margin-bottom:10px}
 .kv{display:grid;grid-template-columns:110px 1fr;gap:5px 10px;font-size:.92rem}
@@ -275,13 +283,22 @@ a{color:var(--teal);font-weight:700}
         <h1>CRM Sales</h1>
         <p class="muted small" id="userEmail"></p>
       </div>
-      <button id="logoutBtn" class="btn btn-sm">Keluar</button>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;flex:0 0 auto">
+        <button id="changePwBtn" class="btn btn-sm">Ubah Password</button>
+        <button id="logoutBtn" class="btn btn-sm">Keluar</button>
+      </div>
     </header>
 
     <div id="installBar" style="display:none;background:#FFC531;border:2.5px solid #14232E;border-radius:16px;box-shadow:4px 4px 0 #14232E;padding:10px 14px;margin:14px 0;align-items:center;gap:10px;flex-wrap:wrap">
       <span id="installText" style="font-weight:700;flex:1;min-width:180px">Pasang CRM ini sebagai aplikasi di HP kamu</span>
       <button id="installBtn" class="btn btn-sm" style="background:#0E7C7B;color:#fff">Pasang Aplikasi</button>
       <button id="installClose" class="btn btn-sm">Nanti</button>
+    </div>
+
+    <div id="notifBar" style="display:none;background:#EAF4F3;border:2.5px solid #14232E;border-radius:16px;box-shadow:4px 4px 0 #14232E;padding:10px 14px;margin:14px 0;align-items:center;gap:10px;flex-wrap:wrap">
+      <span style="font-weight:700;flex:1;min-width:180px">Aktifkan notifikasi HP supaya pengingat follow-up muncul langsung di layar</span>
+      <button id="notifBtn" class="btn btn-sm" style="background:#0E7C7B;color:#fff">Aktifkan Notifikasi</button>
+      <button id="notifClose" class="btn btn-sm">Nanti</button>
     </div>
 
     <nav class="tabs">
@@ -398,6 +415,48 @@ a{color:var(--teal);font-weight:700}
   <div class="sheet" id="detailSheet"></div>
 </div>
 
+<!-- ================= MODAL UBAH PASSWORD ================= -->
+<div id="passwordModal" class="overlay hidden">
+  <div class="sheet">
+    <div class="sheet-head">
+      <div>
+        <span class="pill pill-teal">Akun</span>
+        <h2 style="margin-top:7px">Ubah Password</h2>
+      </div>
+      <button class="close-x" data-close="passwordModal" aria-label="Tutup">&times;</button>
+    </div>
+    <p class="muted" style="line-height:1.55;margin-bottom:14px">Password baru langsung berlaku untuk login berikutnya. Kamu tetap masuk di perangkat ini; perangkat lain mungkin perlu masuk lagi.</p>
+    <form id="pwForm" autocomplete="off">
+      <div class="field">
+        <label for="pwOld">Password Lama *</label>
+        <div class="pw-wrap">
+          <input type="password" id="pwOld" autocomplete="current-password" placeholder="Password kamu saat ini" required>
+          <button type="button" class="pw-toggle" data-target="pwOld">Lihat</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="pwNew">Password Baru *</label>
+        <div class="pw-wrap">
+          <input type="password" id="pwNew" autocomplete="new-password" placeholder="Minimal 6 karakter" required>
+          <button type="button" class="pw-toggle" data-target="pwNew">Lihat</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="pwConfirm">Konfirmasi Password Baru *</label>
+        <div class="pw-wrap">
+          <input type="password" id="pwConfirm" autocomplete="new-password" placeholder="Ketik ulang password baru" required>
+          <button type="button" class="pw-toggle" data-target="pwConfirm">Lihat</button>
+        </div>
+      </div>
+      <div id="pwError" class="error hidden"></div>
+      <div class="footer-actions">
+        <button type="submit" id="pwSubmitBtn" class="btn btn-teal" style="flex:1;padding:13px 18px">Simpan Password Baru</button>
+        <button type="button" class="btn" data-close="passwordModal">Batal</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div id="toast" class="toast hidden"></div>
 
 <script>
@@ -436,6 +495,14 @@ const firebaseConfig = {
 // ===== AKHIR KONFIGURASI =====
 
 const CONFIGURED = firebaseConfig.apiKey.indexOf("GANTI") !== 0;
+
+/* ----- Kunci publik Web Push (VAPID) untuk notifikasi HP -----
+   Diisi dari Firebase Console > Project settings > Cloud Messaging >
+   Web Push certificates (kunci PUBLIK saja). Selama masih
+   placeholder, fitur notifikasi nonaktif sendiri tanpa
+   mengganggu aplikasi. */
+const VAPID_PUBLIC_KEY = "BBnMQ0CemnbkFr2OYlwuBrGczvNVd-1vwnf5RqiOR8DeacLEKd0pg8mLXD7tjmlMfELnFfztFHmpiN5hbUsZSO4";
+const PUSH_CONFIGURED = VAPID_PUBLIC_KEY.indexOf("GANTI") !== 0;
 
 /* ---------------- Template WA bawaan ---------------- */
 const DEFAULT_TEMPLATES = {
@@ -590,6 +657,219 @@ $("logoutBtn").addEventListener("click", function(){
   if (auth) auth.signOut();
 });
 
+/* ---------------- Ubah Password ----------------
+   Perubahan password sungguhan via Firebase Auth:
+   re-autentikasi dengan password lama, lalu updatePassword.
+   Semua kegagalan ditangkap agar tidak mengganggu aplikasi. */
+function pwShowError(msg){
+  const err = $("pwError");
+  err.textContent = msg;
+  err.classList.remove("hidden");
+}
+function pwClearError(){
+  const err = $("pwError");
+  err.classList.add("hidden");
+  err.textContent = "";
+}
+function pwResetForm(){
+  ["pwOld", "pwNew", "pwConfirm"].forEach(function(id){
+    const el = $(id);
+    el.value = "";
+    el.type = "password";
+  });
+  document.querySelectorAll(".pw-toggle").forEach(function(b){ b.textContent = "Lihat"; });
+  pwClearError();
+}
+function openPasswordModal(){
+  try {
+    pwResetForm();
+    openModal("passwordModal");
+  } catch (e) {}
+}
+$("changePwBtn").addEventListener("click", function(){
+  openPasswordModal();
+});
+document.querySelectorAll(".pw-toggle").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    try {
+      const input = $(btn.getAttribute("data-target"));
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      btn.textContent = show ? "Sembunyi" : "Lihat";
+    } catch (e) {}
+  });
+});
+$("pwForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const btn = $("pwSubmitBtn");
+  try {
+    pwClearError();
+    const oldPw = $("pwOld").value;
+    const newPw = $("pwNew").value;
+    const confirmPw = $("pwConfirm").value;
+    if (!oldPw || !newPw || !confirmPw) { pwShowError("Isi semua kolom dulu ya."); return; }
+    if (newPw.length < 6) { pwShowError("Password baru minimal 6 karakter."); return; }
+    if (newPw !== confirmPw) { pwShowError("Konfirmasi password baru tidak cocok."); return; }
+    if (newPw === oldPw) { pwShowError("Password baru harus berbeda dari password lama."); return; }
+    const user = auth && auth.currentUser;
+    if (!user || !user.email) { pwShowError("Sesi kamu sudah berakhir. Masuk lagi, lalu coba ubah password."); return; }
+    btn.disabled = true; btn.textContent = "Memproses...";
+    const cred = firebase.auth.EmailAuthProvider.credential(user.email, oldPw);
+    user.reauthenticateWithCredential(cred)
+      .then(function(){ return user.updatePassword(newPw); })
+      .then(function(){
+        pwResetForm();
+        closeModal("passwordModal");
+        toast("Password berhasil diubah.");
+      })
+      .catch(function(error){
+        const code = (error && error.code) || "";
+        if (code === "auth/wrong-password" || code === "auth/invalid-credential") {
+          pwShowError("Password lama salah. Periksa lagi password kamu saat ini.");
+        } else if (code === "auth/weak-password") {
+          pwShowError("Password baru terlalu lemah. Pakai minimal 6 karakter.");
+        } else if (code === "auth/requires-recent-login") {
+          pwShowError("Sesi kamu sudah lama. Keluar lalu masuk lagi, baru ubah password.");
+        } else if (code === "auth/too-many-requests") {
+          pwShowError("Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.");
+        } else {
+          pwShowError("Gagal mengubah password. Coba lagi sebentar. (" + (code || "error") + ")");
+        }
+      })
+      .finally(function(){
+        btn.disabled = false; btn.textContent = "Simpan Password Baru";
+      });
+  } catch (err) {
+    try { pwShowError("Terjadi kesalahan. Coba lagi sebentar."); } catch (e2) {}
+    btn.disabled = false; btn.textContent = "Simpan Password Baru";
+  }
+});
+
+/* ---------------- Notifikasi push HP (FCM) ----------------
+   Token perangkat disimpan di Firestore (koleksi pushTokens,
+   satu dokumen per UID) agar pengirim terjadwal bisa mengirim
+   pengingat follow-up langsung ke layar HP. Semua kegagalan
+   di sini ditangkap agar tidak mengganggu aplikasi. */
+let messaging = null;
+let pushWired = false;
+let pushListenersWired = false;
+let pushWasAuthed = false;
+
+function pushSupported(){
+  if (!PUSH_CONFIGURED) return false;
+  if (typeof firebase === "undefined" || typeof firebase.messaging !== "function") return false;
+  try {
+    if (typeof firebase.messaging.isSupported === "function" && !firebase.messaging.isSupported()) return false;
+  } catch (e) { return false; }
+  return ("Notification" in window) && ("serviceWorker" in navigator) && !!db;
+}
+function pushMessaging(){
+  if (!messaging) messaging = firebase.messaging();
+  return messaging;
+}
+function swReadyWithTimeout(ms){
+  return Promise.race([
+    navigator.serviceWorker.ready,
+    new Promise(function (res) { setTimeout(function () { res(null); }, ms); })
+  ]);
+}
+function savePushToken(user, token){
+  return db.collection("pushTokens").doc(user.uid).set({
+    tokens: firebase.firestore.FieldValue.arrayUnion(token),
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge: true });
+}
+function registerPushToken(user){
+  const m = pushMessaging();
+  return swReadyWithTimeout(10000).then(function (reg) {
+    if (!reg) throw new Error("service worker belum siap");
+    return m.getToken({ vapidKey: VAPID_PUBLIC_KEY, serviceWorkerRegistration: reg });
+  }).then(function (token) {
+    if (!token) throw new Error("token kosong");
+    return savePushToken(user, token);
+  });
+}
+function showNotifBar(){
+  if (Notification.permission !== "default") return;
+  try { if (sessionStorage.getItem("crmNotifDismissed") === "1") return; } catch (e) {}
+  const bar = $("notifBar");
+  if (bar) bar.style.display = "flex";
+}
+function hideNotifBar(){
+  const bar = $("notifBar");
+  if (bar) bar.style.display = "none";
+}
+function wirePushUi(){
+  if (pushWired) return;
+  pushWired = true;
+  $("notifBtn").addEventListener("click", function(){
+    hideNotifBar();
+    Notification.requestPermission().then(function (perm) {
+      if (perm !== "granted") {
+        toast("Notifikasi belum aktif. Izin bisa diubah lewat pengaturan situs di browser HP.");
+        return;
+      }
+      const user = auth && auth.currentUser;
+      if (!user) return;
+      registerPushToken(user).then(function(){
+        toast("Notifikasi HP aktif. Pengingat follow-up akan muncul di layar.");
+      }).catch(function(){
+        toast("Gagal mengaktifkan notifikasi. Coba lagi sebentar.");
+      });
+    }).catch(function(){});
+  });
+  $("notifClose").addEventListener("click", function(){
+    hideNotifBar();
+    try { sessionStorage.setItem("crmNotifDismissed", "1"); } catch (e) {}
+  });
+}
+function initPush(user){
+  if (!pushSupported()) return;
+  wirePushUi();
+  const m = pushMessaging();
+  if (!pushListenersWired) {
+    pushListenersWired = true;
+    // Pesan saat aplikasi sedang dibuka: tampilkan sebagai toast.
+    try {
+      m.onMessage(function (payload) {
+        const d = (payload && payload.data) || {};
+        const n = (payload && payload.notification) || {};
+        toast((d.title || n.title || "Pengingat follow-up") + " — " + (d.body || n.body || ""));
+      });
+    } catch (e) {}
+    // Bila token dirotasi, simpan yang baru.
+    try {
+      if (typeof m.onTokenRefresh === "function") {
+        m.onTokenRefresh(function(){
+          registerPushToken(user).catch(function(){});
+        });
+      }
+    } catch (e) {}
+  }
+  // Token bisa berganti; ambil ulang setiap login bila izin sudah ada.
+  if (Notification.permission === "granted") {
+    registerPushToken(user).catch(function(){});
+  } else if (Notification.permission === "default") {
+    showNotifBar();
+  }
+}
+if (CONFIGURED && auth) {
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      pushWasAuthed = true;
+      try { initPush(user); } catch (e) {}
+    } else if (pushWasAuthed) {
+      // Keluar: hapus token perangkat ini supaya tidak ada lagi push.
+      pushWasAuthed = false;
+      try {
+        if (messaging && typeof messaging.deleteToken === "function") {
+          messaging.deleteToken().catch(function(){});
+        }
+      } catch (e) {}
+    }
+  });
+}
+
 /* ---------------- Langganan data Firestore ---------------- */
 function subscribeData(){
   if (!db || unsubLeads) return;
@@ -743,7 +1023,7 @@ $("pipeFilter").addEventListener("change", renderPipeline);
    ============================================================ */
 function getLead(id){ return leads.find(function(l){ return l.id === id; }) || null; }
 function openModal(id){ $(id).classList.remove("hidden"); document.body.style.overflow = "hidden"; }
-function closeModal(id){ $(id).classList.add("hidden"); if ($("leadModal").classList.contains("hidden") && $("detailModal").classList.contains("hidden")) document.body.style.overflow = ""; }
+function closeModal(id){ $(id).classList.add("hidden"); if ($("leadModal").classList.contains("hidden") && $("detailModal").classList.contains("hidden") && $("passwordModal").classList.contains("hidden")) document.body.style.overflow = ""; }
 document.querySelectorAll("[data-close]").forEach(function(el){
   el.addEventListener("click", function(){ closeModal(el.getAttribute("data-close")); });
 });
