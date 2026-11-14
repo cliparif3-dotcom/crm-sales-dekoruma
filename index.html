@@ -114,14 +114,16 @@ a{color:var(--teal);font-weight:700}
 .field input:focus,.field select:focus,.field textarea:focus{box-shadow:0 0 0 3px rgba(14,124,123,.28)}
 
 /* ---------- layout aplikasi ---------- */
-.wrap{max-width:760px;margin:0 auto;padding:14px 14px 90px}
+.wrap{max-width:760px;margin:0 auto;padding:14px 20px 90px}
 .app-header{
   background:var(--teal);border:var(--border);border-radius:var(--radius);box-shadow:var(--shadow);
-  color:#fff;padding:18px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+  color:#fff;padding:22px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
 }
 .app-header h1{color:#fff;font-size:1.35rem;margin-top:8px}
 .app-header .muted{color:#D9F0EE}
 .app-header .btn{background:#fff}
+.app-header>div:first-child{min-width:0}
+#userEmail{overflow-wrap:anywhere;line-height:1.45;margin-top:4px}
 .tabs{display:flex;gap:8px;margin:16px 0 14px;flex-wrap:wrap;align-items:center}
 .tab{
   border:var(--border);border-radius:999px;background:#fff;color:var(--navy);
@@ -141,7 +143,7 @@ a{color:var(--teal);font-weight:700}
 .lead-list{display:flex;flex-direction:column;gap:11px}
 .lead-card{
   background:#fff;border:var(--border);border-radius:20px;box-shadow:var(--shadow-sm);
-  padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;text-align:left;width:100%;
+  padding:16px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;text-align:left;width:100%;
 }
 .lead-card:active{transform:translateY(1px)}
 .lead-main{flex:1;min-width:0}
@@ -239,13 +241,13 @@ a{color:var(--teal);font-weight:700}
 }
 
 /* ---------- navigasi bawah ---------- */
-.wrap{padding-bottom:132px}
+.wrap{padding-bottom:140px}
 .app-header{position:relative}
 #bottomNav{
   position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:40;
   width:100%;max-width:760px;background:#FFFDF6;border-top:var(--border);
   display:flex;align-items:flex-end;justify-content:space-around;
-  padding:8px 6px calc(10px + env(safe-area-inset-bottom));gap:2px;
+  padding:10px 10px calc(12px + env(safe-area-inset-bottom));gap:2px;
 }
 .nav-btn{
   flex:1;border:none;background:none;color:var(--navy);font-weight:800;font-size:.68rem;
@@ -285,7 +287,7 @@ a{color:var(--teal);font-weight:700}
 .pill-basi{background:#E3D7F7;color:#5B3E9E}
 
 /* ---------- dasbor & laporan ---------- */
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 .dash-box{background:#fff;border:var(--border);border-radius:18px;box-shadow:var(--shadow-sm);padding:14px 12px}
 .dash-box.wide{grid-column:1/-1}
 .dash-box .num{font-size:1.35rem;font-weight:800}
@@ -308,7 +310,7 @@ a{color:var(--teal);font-weight:700}
 .logout-pill .btn{border:none;box-shadow:none;padding:7px 12px}
 .logout-pill .gear-btn{font-size:1rem;padding:7px 10px}
 .gear-menu{
-  position:absolute;right:14px;top:calc(100% + 6px);z-index:60;background:#fff;
+  position:absolute;right:22px;top:calc(100% + 6px);z-index:60;background:#fff;
   border:var(--border);border-radius:16px;box-shadow:var(--shadow);padding:6px;min-width:190px;
 }
 .gear-menu button{
