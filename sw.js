@@ -32,7 +32,7 @@ self.addEventListener("fetch", function (e) {
   if (url.origin !== self.location.origin) return;
   if (e.request.mode === "navigate") {
     e.respondWith(
-      fetch(e.request).then(function (r) {
+      fetch(e.request, { cache: "no-store" }).then(function (r) {
         const copy = r.clone();
         caches.open(CACHE).then(function (c) { c.put("./index.html", copy); });
         return r;
