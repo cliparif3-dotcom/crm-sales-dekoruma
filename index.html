@@ -116,31 +116,61 @@ a{color:var(--teal);font-weight:700}
 /* ---------- layout aplikasi ---------- */
 .wrap{max-width:760px;margin:0 auto;padding:14px 20px 90px}
 .app-header{
+  position:relative;overflow:hidden;
   background:var(--teal);border:var(--border);border-radius:var(--radius);box-shadow:var(--shadow);
   color:#fff;padding:22px 22px 26px;margin-bottom:18px;
-  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  display:grid;grid-template-columns:minmax(0,1fr) max-content;
   grid-template-areas:"title actions" "identity actions";
-  gap:16px;align-items:start;
+  gap:14px 16px;align-items:start;
 }
-.app-header h1{color:#fff;font-size:1.35rem;margin-top:8px}
+.app-header::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 78% 125% at 94% -18%, rgba(255,255,255,.14), rgba(255,255,255,0) 58%),
+    radial-gradient(ellipse 55% 85% at 4% 118%, rgba(255,255,255,.07), rgba(255,255,255,0) 62%);
+}
+.app-header>*{position:relative;z-index:1}
+.app-header h1{color:#fff;font-size:1.55rem;margin-top:8px}
 .hdr-title{grid-area:title;min-width:0}
-.hdr-actions{grid-area:actions;display:flex;flex-direction:column;gap:10px;width:216px}
+.hdr-actions{grid-area:actions;align-self:center;display:flex;flex-direction:column;gap:10px;width:216px;min-width:0}
 .hdr-pill{
-  width:100%;justify-content:flex-start;background:#fff;color:var(--navy);
-  padding:12px 16px;font-size:.92rem;
+  width:100%;justify-content:flex-start;gap:10px;background:#fff;color:var(--navy);
+  border:none;box-shadow:0 8px 18px rgba(4,43,42,.28);
+  padding:13px 16px;font-size:.92rem;line-height:1.25;
 }
+.hdr-pill:active{transform:translateY(1px);box-shadow:0 4px 10px rgba(4,43,42,.24)}
 .hdr-pill-label{flex:1;text-align:left;min-width:0}
-.hdr-ic{width:19px;height:19px;flex:0 0 auto}
-.hdr-chev{width:17px;height:17px}
+.hdr-ic{width:20px;height:20px;flex:0 0 auto}
+.hdr-chev{width:17px;height:17px;flex:0 0 auto}
 .hdr-identity{grid-area:identity;display:flex;align-items:center;gap:14px;min-width:0}
 .hdr-divider{width:1.5px;align-self:stretch;background:rgba(255,255,255,.45);flex:0 0 auto}
 .hdr-id-text{min-width:0;flex:1}
-.hdr-role{font-size:.78rem;font-weight:600;color:#D9F0EE;line-height:1.35}
-.hdr-name{font-size:1.12rem;font-weight:800;color:#fff;line-height:1.3;overflow-wrap:anywhere}
-.hdr-email{font-size:.8rem;color:#D9F0EE;line-height:1.4;overflow-wrap:anywhere}
+.hdr-label{font-size:.8rem;color:#D9F0EE;line-height:1.35}
+.hdr-email{font-size:.95rem;font-weight:800;color:#fff;line-height:1.35;overflow-wrap:anywhere}
 @media (max-width:559px){
-  .app-header{grid-template-columns:minmax(0,1fr);grid-template-areas:"title" "actions" "identity";gap:14px;padding:20px 18px 24px}
-  .hdr-actions{width:100%}
+  .app-header{padding:18px 14px 22px;gap:12px}
+  .app-header h1{font-size:1.42rem}
+  .hdr-actions{width:128px;gap:8px}
+  .hdr-pill{padding:10px 11px;font-size:.8rem;gap:6px}
+  .hdr-ic{width:16px;height:16px}
+  .hdr-chev{width:14px;height:14px}
+  .hdr-identity{gap:9px}
+  .profile-photo-btn{width:50px;height:50px;flex:0 0 50px}
+  .photo-circle{width:50px;height:50px}
+  .photo-initial{font-size:1.1rem}
+  .hdr-label{font-size:.72rem}
+  .hdr-email{font-size:.8rem}
+}
+@media (max-width:379px){
+  .app-header{padding:16px 14px 20px;gap:10px}
+  .app-header h1{font-size:1.25rem}
+  .hdr-actions{width:116px}
+  .hdr-pill{padding:9px 8px;font-size:.78rem;gap:5px}
+  .hdr-ic{width:15px;height:15px}
+  .hdr-chev{width:13px;height:13px}
+  .profile-photo-btn{width:48px;height:48px;flex:0 0 48px}
+  .photo-circle{width:48px;height:48px}
+  .hdr-email{font-size:.76rem}
 }
 .tabs{display:flex;gap:8px;margin:16px 0 14px;flex-wrap:wrap;align-items:center}
 .tab{
@@ -316,12 +346,12 @@ a{color:var(--teal);font-weight:700}
 
 /* ---------- header: foto profil & identitas ---------- */
 .profile-photo-btn{
-  position:relative;width:64px;height:64px;flex:0 0 64px;padding:0;
+  position:relative;width:60px;height:60px;flex:0 0 60px;padding:0;
   border:none;background:transparent;border-radius:50%;
 }
 .profile-photo-btn:active{transform:translateY(2px)}
 .photo-circle{
-  display:block;width:64px;height:64px;border-radius:50%;overflow:hidden;
+  display:block;width:60px;height:60px;border-radius:50%;overflow:hidden;
   border:3px solid #fff;box-shadow:var(--shadow-sm);background:#F1EAD9;
 }
 .photo-circle img{width:100%;height:100%;object-fit:cover;display:block}
@@ -407,7 +437,7 @@ a{color:var(--teal);font-weight:700}
 [data-theme="dark"] .nav-btn{color:#C7D2D8}
 [data-theme="dark"] .nav-btn.active{color:#35B3B0}
 [data-theme="dark"] .nav-fab{border-color:#3D4F5B;box-shadow:0 2.5px 0 #000}
-[data-theme="dark"] .app-header .hdr-pill{background:#fff;color:#14232E;border-color:#14232E;box-shadow:0 2.5px 0 #000}
+[data-theme="dark"] .app-header .hdr-pill{background:#fff;color:#14232E;border:none;box-shadow:0 8px 18px rgba(0,0,0,.4)}
 [data-theme="dark"] .notice{background:#3A3320;color:#F2EEE3;border-color:#3D4F5B}
 [data-theme="dark"] .error{background:#4A2323;color:#FFCFCF}
 [data-theme="dark"] .fu-overdue{color:#FF8A80}
@@ -464,15 +494,14 @@ a{color:var(--teal);font-weight:700}
         <h1>CRM Sales</h1>
       </div>
       <div class="hdr-actions">
-        <button id="changePwBtn" class="btn hdr-pill" type="button"><svg class="hdr-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75"/><path d="M5.25 10.5h13.5a1.5 1.5 0 0 1 1.5 1.5v6.75a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V12a1.5 1.5 0 0 1 1.5-1.5Z"/></svg><span class="hdr-pill-label">Ubah Password</span><svg class="hdr-ic hdr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
-        <button id="logoutBtn" class="btn hdr-pill" type="button"><span class="hdr-pill-label">Keluar</span><svg class="hdr-ic hdr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
+        <button id="changePwBtn" class="btn hdr-pill" type="button"><svg class="hdr-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg><span class="hdr-pill-label">Ubah Password</span><svg class="hdr-ic hdr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
+        <button id="logoutBtn" class="btn hdr-pill" type="button"><svg class="hdr-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg><span class="hdr-pill-label">Keluar</span><svg class="hdr-ic hdr-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
       </div>
       <div class="hdr-identity">
         <button id="profilePhotoBtn" class="profile-photo-btn" type="button" aria-label="Buka Pengaturan" title="Pengaturan profil"><span class="photo-circle"><img id="profilePhotoImg" class="hidden" alt=""><span id="profilePhotoInitial" class="photo-initial">A</span></span><span class="photo-dot" aria-hidden="true"></span></button>
         <div class="hdr-divider" aria-hidden="true"></div>
         <div class="hdr-id-text">
-          <div class="hdr-role" id="hdrRole"></div>
-          <div class="hdr-name" id="hdrName"></div>
+          <div class="hdr-label">Masuk sebagai</div>
           <div class="hdr-email" id="hdrEmail"></div>
         </div>
       </div>
@@ -1734,16 +1763,6 @@ function renderProfileHeader(){
       initial.classList.remove("hidden");
     }
   }
-  const role = (p.jabatan || "").trim();
-  const store = (p.store || "").trim();
-  const roleEl = $("hdrRole");
-  if (roleEl) {
-    const roleText = role + (role && store ? " • " : "") + store;
-    roleEl.textContent = roleText;
-    roleEl.classList.toggle("hidden", !roleText);
-  }
-  const nameEl = $("hdrName");
-  if (nameEl) nameEl.textContent = (p.nama || "").trim() || "Arif Hidayat";
   const emailEl = $("hdrEmail");
   if (emailEl) emailEl.textContent = (p.email || "").trim() || authEmail || "";
 }
