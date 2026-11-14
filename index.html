@@ -117,10 +117,10 @@ a{color:var(--teal);font-weight:700}
 .wrap{max-width:760px;margin:0 auto;padding:14px 20px 90px}
 .app-header{
   background:var(--teal);border:var(--border);border-radius:var(--radius);box-shadow:var(--shadow);
-  color:#fff;padding:22px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  color:#fff;padding:22px 22px 26px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
 }
 .app-header h1{color:#fff;font-size:1.35rem;margin-top:8px}
-.app-header .muted{color:#D9F0EE}
+.app-header .muted{color:#D9F0EE;line-height:1.4;overflow-wrap:anywhere}
 .app-header .btn{background:#fff}
 .app-header>div:first-child{min-width:0}
 #userEmail{overflow-wrap:anywhere;line-height:1.45;margin-top:4px}
@@ -287,10 +287,10 @@ a{color:var(--teal);font-weight:700}
 .pill-basi{background:#E3D7F7;color:#5B3E9E}
 
 /* ---------- dasbor & laporan ---------- */
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.dash-box{background:#fff;border:var(--border);border-radius:18px;box-shadow:var(--shadow-sm);padding:14px 12px}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.dash-box{background:#fff;border:var(--border);border-radius:18px;box-shadow:var(--shadow-sm);padding:16px 14px}
 .dash-box.wide{grid-column:1/-1}
-.dash-box .num{font-size:1.35rem;font-weight:800}
+.dash-box .num{font-size:1.35rem;font-weight:800;line-height:1.25}
 .dash-box .lbl{font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);margin-top:3px}
 .rep-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-top:2px dashed rgba(20,35,46,.15);font-size:.92rem}
 .rep-row:first-of-type{border-top:none}
