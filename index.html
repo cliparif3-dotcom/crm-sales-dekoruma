@@ -2787,6 +2787,33 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(function () {});
   });
 }
+/* Pemeriksaan versi otomatis: saat aplikasi dibuka kembali (tab terlihat
+   atau jendela fokus) dan server sudah punya versi baru, muat ulang agar
+   tampilan tidak tertinggal versi lama. Gagal baca = diam, tidak blokir. */
+const APP_VERSION = "2026-11-14T05:44Z";
+var lastVersionCheck = 0;
+function checkAppVersion() {
+  if (document.hidden) return;
+  var now = Date.now();
+  if (now - lastVersionCheck < 60000) return;
+  lastVersionCheck = now;
+  fetch("./version.json", { cache: "no-store" }).then(function (r) {
+    if (!r.ok) return null;
+    return r.json();
+  }).then(function (data) {
+    if (!data || data.version === APP_VERSION) return;
+    if (document.hidden) return;
+    var overlays = document.querySelectorAll(".overlay");
+    for (var i = 0; i < overlays.length; i++) {
+      if (!overlays[i].classList.contains("hidden")) return;
+    }
+    location.reload();
+  }).catch(function () {});
+}
+document.addEventListener("visibilitychange", function () {
+  if (!document.hidden) checkAppVersion();
+});
+window.addEventListener("focus", checkAppVersion);
 (function () {
   var bar = document.getElementById("installBar");
   if (!bar) return;
