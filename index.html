@@ -237,6 +237,174 @@ a{color:var(--teal);font-weight:700}
   padding:11px 20px;font-weight:700;font-size:.9rem;box-shadow:0 6px 18px rgba(0,0,0,.3);
   max-width:92vw;text-align:center;
 }
+
+/* ---------- navigasi bawah ---------- */
+.wrap{padding-bottom:132px}
+.app-header{position:relative}
+#bottomNav{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:40;
+  width:100%;max-width:760px;background:#FFFDF6;border-top:var(--border);
+  display:flex;align-items:flex-end;justify-content:space-around;
+  padding:8px 6px calc(10px + env(safe-area-inset-bottom));gap:2px;
+}
+.nav-btn{
+  flex:1;border:none;background:none;color:var(--navy);font-weight:800;font-size:.68rem;
+  display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px 2px;
+  position:relative;border-radius:14px;
+}
+.nav-btn .nav-ico{font-size:1.25rem;line-height:1}
+.nav-btn.active{color:var(--teal)}
+.nav-badge{
+  position:absolute;top:0;right:calc(50% - 26px);background:var(--red);color:#fff;
+  border:2px solid var(--navy);border-radius:999px;min-width:20px;height:20px;
+  font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;
+}
+.nav-fab{
+  width:58px;height:58px;flex:0 0 58px;border:var(--border);border-radius:50%;
+  background:var(--mustard);color:var(--navy);font-size:2rem;font-weight:800;line-height:1;
+  box-shadow:var(--shadow-sm);margin-top:-26px;
+}
+.nav-fab:active{transform:translateY(2px);box-shadow:0 0 0 var(--navy)}
+
+/* ---------- filter tersegmentasi & kategori laporan ---------- */
+.seg-row{display:flex;gap:8px;flex-wrap:wrap}
+.seg-btn{
+  border:2px solid var(--navy);border-radius:999px;padding:8px 14px;
+  font-weight:800;font-size:.85rem;background:#fff;color:var(--navy);box-shadow:var(--shadow-sm);
+}
+.seg-btn.active{background:var(--teal);color:#fff}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.cat-btn{
+  border:var(--border);border-radius:16px;padding:12px 10px;font-weight:800;font-size:.9rem;
+  background:#fff;color:var(--navy);box-shadow:var(--shadow-sm);
+}
+.cat-btn.active{background:var(--teal);color:#fff}
+
+/* ---------- pil status tambahan ---------- */
+.pill-warm{background:#FFE9A8}
+.pill-basi{background:#E3D7F7;color:#5B3E9E}
+
+/* ---------- dasbor & laporan ---------- */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.dash-box{background:#fff;border:var(--border);border-radius:18px;box-shadow:var(--shadow-sm);padding:14px 12px}
+.dash-box.wide{grid-column:1/-1}
+.dash-box .num{font-size:1.35rem;font-weight:800}
+.dash-box .lbl{font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);margin-top:3px}
+.rep-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-top:2px dashed rgba(20,35,46,.15);font-size:.92rem}
+.rep-row:first-of-type{border-top:none}
+.rep-row .rv{font-weight:800;white-space:nowrap;text-align:right}
+.rep-sub{font-size:.82rem;color:var(--slate);margin-top:2px;line-height:1.5}
+
+/* ---------- header: foto profil, pil keluar, menu gear ---------- */
+.profile-photo-btn{
+  width:46px;height:46px;flex:0 0 46px;border:var(--border);border-radius:50%;
+  overflow:hidden;background:#F1EAD9;padding:0;box-shadow:var(--shadow-sm);
+}
+.profile-photo-btn img{width:100%;height:100%;object-fit:cover;display:block}
+.logout-pill{
+  display:flex;align-items:center;gap:2px;background:#fff;border:var(--border);
+  border-radius:999px;box-shadow:var(--shadow-sm);padding:3px;
+}
+.logout-pill .btn{border:none;box-shadow:none;padding:7px 12px}
+.logout-pill .gear-btn{font-size:1rem;padding:7px 10px}
+.gear-menu{
+  position:absolute;right:14px;top:calc(100% + 6px);z-index:60;background:#fff;
+  border:var(--border);border-radius:16px;box-shadow:var(--shadow);padding:6px;min-width:190px;
+}
+.gear-menu button{
+  display:block;width:100%;text-align:left;border:none;background:none;color:var(--navy);
+  font-weight:700;font-size:.92rem;padding:10px 12px;border-radius:10px;
+}
+.gear-menu button:hover{background:#F1EAD9}
+
+/* ---------- pengaturan ---------- */
+.check-row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:2px dashed rgba(20,35,46,.15);font-size:.92rem;line-height:1.45;cursor:pointer}
+.check-row:first-of-type{border-top:none}
+.check-row input{width:20px;height:20px;flex:0 0 auto;margin-top:2px;accent-color:var(--teal)}
+
+/* ---------- editor template di detail ---------- */
+.chip-row{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}
+.chip{
+  border:2px solid var(--navy);border-radius:999px;padding:6px 12px;
+  font-size:.8rem;font-weight:800;background:#fff;color:var(--navy);
+}
+.chip.active{background:var(--navy);color:#fff}
+.tpl-editor{margin-top:12px}
+.tpl-editor label{display:block;font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--navy2);margin-bottom:2px}
+.tpl-editor textarea{
+  width:100%;border:var(--border);border-radius:16px;padding:12px 14px;min-height:110px;
+  resize:vertical;outline:none;background:#fff;line-height:1.55;
+}
+.tpl-editor textarea:focus{box-shadow:0 0 0 3px rgba(14,124,123,.28)}
+.tpl-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.as-card{border-top:2px dashed rgba(20,35,46,.18);padding-top:12px;margin-top:12px}
+.as-card:first-of-type{border-top:none;padding-top:0;margin-top:0}
+
+/* ---------- tema gelap: palet eksplisit, teks terang di kartu gelap ---------- */
+[data-theme="dark"] body{
+  background-color:#0F1B23;color:#F2EEE3;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132' viewBox='0 0 132 132'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-opacity='0.05' stroke-width='2'%3E%3Crect x='10' y='34' width='36' height='20' rx='5'/%3E%3Cpath d='M10 34v-7a7 7 0 0 1 7-7h22a7 7 0 0 1 7 7v7'/%3E%3Cpath d='M16 54v8M40 54v8'/%3E%3Ccircle cx='94' cy='28' r='11'/%3E%3Crect x='72' y='74' width='44' height='28' rx='5'/%3E%3Cpath d='M82 74v28M106 74v28M72 88h44'/%3E%3Cpath d='M14 88h26M14 98h26M14 108h18'/%3E%3Cpath d='M96 52l4 8h-8z'/%3E%3C/g%3E%3C/svg%3E");
+}
+[data-theme="dark"] h1,[data-theme="dark"] h2,[data-theme="dark"] h3{color:#F2EEE3}
+[data-theme="dark"] .muted{color:#A9B8C0}
+[data-theme="dark"] a{color:#35B3B0}
+[data-theme="dark"] .card,[data-theme="dark"] .summary-box,[data-theme="dark"] .dash-box,
+[data-theme="dark"] .lead-card,[data-theme="dark"] .detail-block,[data-theme="dark"] .sheet{
+  background:#1A2833;border-color:#3D4F5B;box-shadow:0 4px 0 #000;color:#F2EEE3;
+}
+[data-theme="dark"] .lead-name{color:#F5F1E6}
+[data-theme="dark"] .lead-meta{color:#A9B8C0}
+[data-theme="dark"] .lead-meta b{color:#F5F1E6}
+[data-theme="dark"] .summary-box .lbl,[data-theme="dark"] .dash-box .lbl{color:#A9B8C0}
+[data-theme="dark"] .btn{background:#22333F;color:#F2EEE3;border-color:#3D4F5B;box-shadow:0 2.5px 0 #000}
+[data-theme="dark"] .btn-teal,[data-theme="dark"] .btn-teal2{background:#0E7C7B;color:#fff;border-color:#3D4F5B}
+[data-theme="dark"] .btn-mustard{background:#FFC531;color:#14232E;border-color:#3D4F5B}
+[data-theme="dark"] .btn-danger{background:#22333F;color:#FF8A80}
+[data-theme="dark"] .pill{background:#22333F;color:#F2EEE3;border-color:#3D4F5B}
+[data-theme="dark"] .pill-mustard{background:#FFC531;color:#14232E}
+[data-theme="dark"] .pill-teal{background:#0E7C7B;color:#fff}
+[data-theme="dark"] .pill-cold{background:#CDEBF7;color:#14232E}
+[data-theme="dark"] .pill-hot{background:#FFD3AE;color:#14232E}
+[data-theme="dark"] .pill-sukses{background:#BDE8CE;color:#14232E}
+[data-theme="dark"] .pill-tidak{background:#3A4A55;color:#C7D2D8}
+[data-theme="dark"] .pill-soft{background:#22333F;color:#F2EEE3}
+[data-theme="dark"] .pill-warm{background:#FFE9A8;color:#14232E}
+[data-theme="dark"] .pill-basi{background:#E3D7F7;color:#5B3E9E}
+[data-theme="dark"] .field label{color:#D8DEDD}
+[data-theme="dark"] .field input,[data-theme="dark"] .field select,[data-theme="dark"] .field textarea,
+[data-theme="dark"] .toolbar input[type="search"],[data-theme="dark"] .toolbar select,
+[data-theme="dark"] .inline-form input,[data-theme="dark"] .inline-form textarea,
+[data-theme="dark"] .tpl-card textarea,[data-theme="dark"] .tpl-editor textarea{
+  background:#22333F;color:#F2EEE3;border-color:#3D4F5B;
+}
+[data-theme="dark"] .thumb{background:#22333F;color:#F2EEE3;border-color:#3D4F5B}
+[data-theme="dark"] .empty{background:rgba(255,255,255,.04);color:#A9B8C0;border-color:rgba(242,238,227,.35)}
+[data-theme="dark"] .kv dt{color:#A9B8C0}
+[data-theme="dark"] .status-btn{background:#22333F;color:#F2EEE3;border-color:#3D4F5B;box-shadow:0 2.5px 0 #000}
+[data-theme="dark"] .status-btn.current{background:#F2EEE3;color:#14232E}
+[data-theme="dark"] .close-x,[data-theme="dark"] .pw-toggle{background:#22333F;color:#F2EEE3;border-color:#3D4F5B}
+[data-theme="dark"] .seg-btn,[data-theme="dark"] .cat-btn,[data-theme="dark"] .chip{background:#22333F;color:#F2EEE3;border-color:#3D4F5B}
+[data-theme="dark"] .seg-btn.active,[data-theme="dark"] .cat-btn.active{background:#0E7C7B;color:#fff}
+[data-theme="dark"] .chip.active{background:#F2EEE3;color:#14232E}
+[data-theme="dark"] #bottomNav{background:#16232C;border-color:#3D4F5B}
+[data-theme="dark"] .nav-btn{color:#C7D2D8}
+[data-theme="dark"] .nav-btn.active{color:#35B3B0}
+[data-theme="dark"] .nav-fab{border-color:#3D4F5B;box-shadow:0 2.5px 0 #000}
+[data-theme="dark"] .gear-menu{background:#22333F;border-color:#3D4F5B;box-shadow:0 4px 0 #000}
+[data-theme="dark"] .gear-menu button{color:#F2EEE3}
+[data-theme="dark"] .gear-menu button:hover{background:#2C3F4C}
+[data-theme="dark"] .logout-pill{background:#22333F;border-color:#3D4F5B;box-shadow:0 2.5px 0 #000}
+[data-theme="dark"] .logout-pill .btn{background:transparent;color:#F2EEE3}
+[data-theme="dark"] .notice{background:#3A3320;color:#F2EEE3;border-color:#3D4F5B}
+[data-theme="dark"] .error{background:#4A2323;color:#FFCFCF}
+[data-theme="dark"] .fu-overdue{color:#FF8A80}
+[data-theme="dark"] .price{color:#35B3B0}
+[data-theme="dark"] .price-list{color:#A9B8C0}
+[data-theme="dark"] .history-item .h-date{color:#35B3B0}
+[data-theme="dark"] .rep-row{border-color:rgba(242,238,227,.15)}
+[data-theme="dark"] .rep-sub{color:#A9B8C0}
+[data-theme="dark"] .section-title .count{color:#14232E}
+[data-theme="dark"] .overlay{background:rgba(0,0,0,.6)}
 </style>
 </head>
 <body>
@@ -283,9 +451,19 @@ a{color:var(--teal);font-weight:700}
         <h1>CRM Sales</h1>
         <p class="muted small" id="userEmail"></p>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;flex:0 0 auto">
+      <div style="display:flex;gap:10px;align-items:flex-start;flex:0 0 auto">
+        <button id="profilePhotoBtn" class="profile-photo-btn hidden" aria-label="Buka Pengaturan" title="Pengaturan profil"><img id="profilePhotoImg" alt=""></button>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;flex:0 0 auto">
         <button id="changePwBtn" class="btn btn-sm">Ubah Password</button>
+        <div class="logout-pill">
         <button id="logoutBtn" class="btn btn-sm">Keluar</button>
+          <button id="gearBtn" class="btn btn-sm gear-btn" aria-label="Menu pengaturan">&#9881;</button>
+        </div>
+        </div>
+      </div>
+      <div id="gearMenu" class="gear-menu hidden">
+        <button type="button" id="gearSettings">Pengaturan</button>
+        <button type="button" id="gearAbout">Tentang Aplikasi</button>
       </div>
     </header>
 
@@ -301,59 +479,58 @@ a{color:var(--teal);font-weight:700}
       <button id="notifClose" class="btn btn-sm">Nanti</button>
     </div>
 
-    <nav class="tabs">
-      <button class="tab active" data-tab="today">Hari Ini</button>
-      <button class="tab" data-tab="pipeline">Pipeline</button>
-      <button class="tab" data-tab="templates">Template WA</button>
-      <button id="addLeadBtn" class="btn btn-mustard">+ Lead</button>
-    </nav>
-
-    <!-- TAB HARI INI -->
-    <section id="tab-today">
-      <div class="summary-grid">
-        <div class="summary-box"><div class="num" id="sumActive">0</div><div class="lbl">Lead Aktif</div></div>
-        <div class="summary-box"><div class="num" id="sumPipeline" style="font-size:1rem">Rp0</div><div class="lbl">Nilai Pipeline</div></div>
-        <div class="summary-box"><div class="num" id="sumDeals">0</div><div class="lbl" id="sumDealsLbl">Deal Bulan Ini</div></div>
-      </div>
-      <div id="todayLists"></div>
+    <!-- DASHBOARD -->
+    <section id="view-dashboard">
+      <div id="dashStats"></div>
+      <div id="dashToday"></div>
     </section>
 
-    <!-- TAB PIPELINE -->
-    <section id="tab-pipeline" class="hidden">
+    <!-- FOLLOW-UP -->
+    <section id="view-followup" class="hidden">
+      <div id="fuLists"></div>
+    </section>
+
+    <!-- CUSTOMER -->
+    <section id="view-customers" class="hidden">
       <div class="card toolbar">
-        <div class="row">
-          <input type="search" id="pipeSearch" placeholder="Cari nama, kebutuhan, sumber...">
-          <select id="pipeFilter">
+        <div id="custMonthSeg" class="seg-row"></div>
+        <div class="row" style="margin-top:10px">
+          <input type="search" id="custSearch" placeholder="Cari nama, progres, sumber, produk...">
+          <select id="custFilter" aria-label="Filter status">
             <option value="">Semua Status</option>
             <option value="Cold">Cold</option>
+            <option value="Warm">Warm</option>
             <option value="Hot">Hot</option>
             <option value="Sukses Transaksi">Sukses Transaksi</option>
             <option value="Tidak Lanjut">Tidak Lanjut</option>
+            <option value="__basi">Cold Basi</option>
           </select>
         </div>
       </div>
-      <div id="pipelineList" class="lead-list"></div>
+      <div id="custLists"></div>
     </section>
 
-    <!-- TAB TEMPLATE WA -->
-    <section id="tab-templates" class="hidden">
-      <div class="card tpl-card">
-        <h3>Template FU 1 <span class="pill pill-soft">Sapaan ringan</span></h3>
-        <p class="muted small">Placeholder yang didukung: {nama}, {kebutuhan}, {produk}. Baris yang menyebut {produk} otomatis hilang kalau lead belum punya produk incaran.</p>
-        <textarea id="tplFu1"></textarea>
+    <!-- LAPORAN -->
+    <section id="view-laporan" class="hidden">
+      <div class="card toolbar">
+        <div id="repPeriodSeg" class="seg-row"></div>
+        <div id="repCats" class="cat-grid">
+          <button type="button" class="cat-btn active" data-cat="leads">Leads</button>
+          <button type="button" class="cat-btn" data-cat="minat">Minat Produk</button>
+          <button type="button" class="cat-btn" data-cat="transaksi">Transaksi &amp; Closing</button>
+          <button type="button" class="cat-btn" data-cat="database">Database Customer</button>
+        </div>
       </div>
-      <div class="card tpl-card">
-        <h3>Template FU 2 <span class="pill pill-soft">Dorongan + produk</span></h3>
-        <textarea id="tplFu2"></textarea>
-      </div>
-      <div class="card tpl-card">
-        <h3>Template FU 3 <span class="pill pill-soft">Penutup / urgensi sopan</span></h3>
-        <textarea id="tplFu3"></textarea>
-      </div>
-      <button id="saveTplBtn" class="btn btn-teal wfull" style="padding:13px 18px">Simpan Template</button>
-      <p class="muted small" style="margin-top:10px;text-align:center">Template tersimpan di Firestore dan ikut di semua perangkat.</p>
+      <div id="repContent"></div>
     </section>
   </div>
+  <nav id="bottomNav" aria-label="Navigasi utama">
+    <button type="button" class="nav-btn active" data-view="dashboard"><span class="nav-ico">&#8962;</span><span>Dashboard</span></button>
+    <button type="button" class="nav-btn" data-view="followup"><span class="nav-ico">&#128276;</span><span>Follow-Up</span><span id="navBadge" class="nav-badge hidden">0</span></button>
+    <button type="button" id="addLeadBtn" class="nav-fab" aria-label="Tambah Lead">+</button>
+    <button type="button" class="nav-btn" data-view="customers"><span class="nav-ico">&#128101;</span><span>Customer</span></button>
+    <button type="button" class="nav-btn" data-view="laporan"><span class="nav-ico">&#128202;</span><span>Laporan</span></button>
+  </nav>
 </div>
 
 <!-- ================= MODAL FORM LEAD ================= -->
@@ -381,25 +558,43 @@ a{color:var(--teal);font-weight:700}
         <input type="text" id="fSumber" placeholder="Walk-in, Instagram, WhatsApp, Referensi...">
       </div>
       <div class="field">
-        <label for="fKebutuhan">Kebutuhan <span class="opt">(opsional)</span></label>
-        <textarea id="fKebutuhan" placeholder="Contoh: Kitchen set dapur 3x4, sofa ruang keluarga, interior apartemen 2BR..."></textarea>
+        <label for="fProgres">Progres <span class="opt">(opsional)</span></label>
+        <textarea id="fProgres" placeholder="Catatan singkat pertemuan/progres, contoh: Sudah bertemu di store, tertarik sofa 3-seater, minta katalog dan simulasi harga..."></textarea>
       </div>
       <div class="field">
         <label for="fEstimasi">Estimasi Nilai Proyek (Rp) <span class="opt">(opsional)</span></label>
         <input type="number" id="fEstimasi" min="0" step="1000" placeholder="0">
       </div>
       <div class="field">
-        <label for="fStatus">Status</label>
-        <select id="fStatus">
-          <option value="Cold">Cold</option>
-          <option value="Hot">Hot</option>
-          <option value="Sukses Transaksi">Sukses Transaksi</option>
-          <option value="Tidak Lanjut">Tidak Lanjut</option>
-        </select>
+        <label>Status</label>
+        <div class="status-row" id="fStatusPills">
+          <button type="button" class="status-btn" data-status="Cold">Cold</button>
+          <button type="button" class="status-btn" data-status="Warm">Warm</button>
+          <button type="button" class="status-btn" data-status="Hot">Hot</button>
+          <button type="button" class="status-btn" data-status="Sukses Transaksi">Sukses Transaksi</button>
+          <button type="button" class="status-btn" data-status="Tidak Lanjut">Tidak Lanjut</button>
+        </div>
+        <input type="hidden" id="fStatus" value="Cold">
       </div>
       <div class="field">
         <label for="fNext">Follow-up Berikutnya <span class="opt">(opsional)</span></label>
         <input type="date" id="fNext">
+        <p class="muted small" style="margin-top:6px;line-height:1.5">Lead baru otomatis dijadwalkan besok. Tanggal yang kamu ubah di sini tidak akan diubah otomatis.</p>
+      </div>
+      <div class="field">
+        <label>Produk Incaran <span class="opt">(opsional)</span></label>
+        <div id="fProdSelected"></div>
+        <div class="inline-form" style="margin-top:8px">
+          <input type="text" id="fProdQuery" placeholder="Cari di Katalog Dekoruma, contoh: sofa bed, meja makan">
+          <button type="button" class="btn btn-teal btn-sm" id="fProdSearchBtn">Cari Produk</button>
+        </div>
+        <div id="fProdStatus" class="search-status muted"></div>
+        <div id="fProdResults"></div>
+        <div class="inline-form" style="margin-top:10px">
+          <input type="url" id="fProdUrl" placeholder="Atau tempel tautan produk dekoruma.com">
+          <button type="button" class="btn btn-sm" id="fPasteBtn">Ambil dari Tautan</button>
+        </div>
+        <div id="fPasteArea"></div>
       </div>
       <div class="footer-actions">
         <button type="submit" class="btn btn-teal" style="flex:1;padding:13px 18px">Simpan</button>
@@ -459,6 +654,93 @@ a{color:var(--teal);font-weight:700}
 
 <div id="toast" class="toast hidden"></div>
 
+<!-- ================= MODAL PENGATURAN ================= -->
+<div id="settingsModal" class="overlay hidden">
+  <div class="sheet" id="settingsSheet">
+    <div class="sheet-head">
+      <div>
+        <span class="pill pill-teal">Pengaturan</span>
+        <h2 style="margin-top:7px">Pengaturan</h2>
+      </div>
+      <button class="close-x" data-close="settingsModal" aria-label="Tutup">&times;</button>
+    </div>
+
+    <div class="detail-block" id="setProfileSection">
+      <h3>Profil Saya</h3>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+        <div class="thumb" id="setPhotoThumb" style="width:64px;height:64px;flex-basis:64px">A</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <label class="btn btn-sm" for="setPhotoInput" style="cursor:pointer">Ganti Foto</label>
+          <input type="file" id="setPhotoInput" accept="image/*" class="hidden">
+          <button type="button" class="btn btn-sm" id="setPhotoRemove">Hapus Foto</button>
+        </div>
+      </div>
+      <div class="field"><label for="setNama">Nama Lengkap *</label><input type="text" id="setNama"></div>
+      <div class="field"><label for="setIdKaryawan">ID Karyawan</label><input type="text" id="setIdKaryawan"></div>
+      <div class="field"><label for="setEmail">Email</label><input type="email" id="setEmail"></div>
+      <div class="field"><label for="setHp">Nomor HP</label><input type="tel" id="setHp" placeholder="08xxxxxxxxxx"></div>
+      <div class="field"><label for="setJabatan">Jabatan</label><input type="text" id="setJabatan"></div>
+      <div class="field"><label for="setStore">Nama Store</label><input type="text" id="setStore"></div>
+      <div class="field"><label for="setGabung">Tanggal Bergabung</label><input type="date" id="setGabung"></div>
+      <div id="setProfileError" class="error hidden"></div>
+      <button type="button" class="btn btn-teal" id="setProfileSave">Simpan Profil</button>
+    </div>
+
+    <div class="detail-block">
+      <h3>Ubah Password</h3>
+      <p class="muted small" style="line-height:1.55;margin-bottom:10px">Password diubah langsung lewat akun Firebase kamu, dengan verifikasi password lama.</p>
+      <button type="button" class="btn" id="setChangePwBtn">Ubah Password</button>
+    </div>
+
+    <div class="detail-block">
+      <h3>Notifikasi</h3>
+      <p class="muted small" style="line-height:1.55;margin-bottom:10px">Pengingat terjadwal dikirim setiap hari sekitar pukul 07.40 WIB oleh pengirim terpisah. Pengaturan di bawah ini tersimpan sebagai preferensi akunmu.</p>
+      <label class="check-row"><input type="checkbox" id="ntfMaster"> <span><b>Notifikasi aktif</b><br><span class="muted small">Matikan untuk menghentikan semua pengingat.</span></span></label>
+      <label class="check-row"><input type="checkbox" id="ntfFollowup"> <span><b>Pengingat follow-up jatuh tempo</b></span></label>
+      <label class="check-row"><input type="checkbox" id="ntfDaily"> <span><b>Ringkasan harian</b></span></label>
+      <div class="field" style="margin-top:10px"><label for="ntfTime">Jam pengingat</label><input type="time" id="ntfTime" value="07:40"></div>
+      <div class="field"><label for="ntfType">Jenis pengingat</label>
+        <select id="ntfType"><option value="push">Push ke HP</option><option value="inapp">Hanya di dalam aplikasi</option></select>
+      </div>
+      <button type="button" class="btn btn-teal" id="ntfSaveBtn">Simpan Pengaturan Notifikasi</button>
+    </div>
+
+    <div class="detail-block">
+      <h3>Tema</h3>
+      <div class="status-row" id="themeRow">
+        <button type="button" class="status-btn" data-theme-opt="light">Terang</button>
+        <button type="button" class="status-btn" data-theme-opt="dark">Gelap</button>
+        <button type="button" class="status-btn" data-theme-opt="system">Ikuti Sistem</button>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Sinkronisasi Data</h3>
+      <p class="muted small" style="line-height:1.55">Sinkronisasi dari sheet database dijalankan oleh skrip terjadwal terpisah, bukan dari tombol ini. Tombol di bawah hanya mencatat permintaan sinkronisasi.</p>
+      <p class="small" style="margin:8px 0" id="syncStatus">Belum ada data sinkronisasi.</p>
+      <button type="button" class="btn btn-teal" id="syncBtn">Minta Sinkronisasi</button>
+    </div>
+
+    <div class="detail-block">
+      <h3>Bantuan &amp; Dukungan</h3>
+      <p class="small" style="line-height:1.6"><b>Tambah lead:</b> ketuk tombol + di tengah navigasi bawah, isi nama dan nomor WA, lalu simpan.<br><b>Follow-up:</b> buka Detail Lead, catat hasil follow-up dan jadwal berikutnya.<br><b>Produk incaran:</b> cari lewat Katalog Dekoruma di Detail Lead atau di formulir lead.<br><b>Cold Basi:</b> lead Cold/Warm tanpa aktivitas lebih dari 14 hari. Ubah statusnya ke Warm/Hot atau catat aktivitas untuk memulihkannya.</p>
+      <a class="btn" style="margin-top:10px" href="mailto:?subject=Laporan%20Bug%20CRM%20Sales%20Dekoruma&amp;body=Jelaskan%20masalahnya%3A%0A%0ALangkah%20yang%20dilakukan%3A%0A%0A">Laporkan Bug via Email</a>
+    </div>
+
+    <div class="detail-block" id="setVersionSection">
+      <h3>Versi Aplikasi</h3>
+      <p><b>CRM Sales Dekoruma v1.0.0</b></p>
+      <p class="muted small" style="line-height:1.6;margin-top:6px">Navigasi bawah dengan Dashboard, Follow-Up, Customer, dan Laporan. Status Warm dan kategori Cold Basi. Template WA di dalam Detail Lead, termasuk After Sales. Pengaturan profil, tema gelap, dan notifikasi HP.</p>
+    </div>
+
+    <div class="detail-block">
+      <h3>Keluar</h3>
+      <p class="muted small" style="line-height:1.55;margin-bottom:10px">Kamu akan kembali ke layar masuk.</p>
+      <button type="button" class="btn btn-danger" id="setLogoutBtn">Keluar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 "use strict";
 /* ============================================================
@@ -508,8 +790,25 @@ const PUSH_CONFIGURED = VAPID_PUBLIC_KEY.indexOf("GANTI") !== 0;
 const DEFAULT_TEMPLATES = {
   fu1: "Halo Kak {nama}, apa kabar? Semoga sehat selalu ya Kak.\nSaya Arif dari Dekoruma, mau menyapa lagi soal rencana {kebutuhan} Kakak kemarin.\nKalau masih dipertimbangkan, saya siap bantu carikan pilihan yang paling cocok dengan kebutuhan dan budget Kakak. Tinggal balas chat ini saja ya Kak.",
   fu2: "Halo Kak {nama}, saya Arif dari Dekoruma.\nMau infoin, {produk} yang kemarin Kakak incar masih tersedia nih Kak, dan harganya lagi bagus.\nBuat {kebutuhan} Kakak, produk ini salah satu yang paling pas menurut saya.\nKalau Kakak berkenan, saya bantu hitungkan simulasinya sekarang. Mau saya hitungkan, Kak?",
-  fu3: "Halo Kak {nama}, Arif dari Dekoruma lagi ya Kak.\nSaya follow up terakhir soal rencana {kebutuhan} Kakak.\nKalau memang belum sempat atau masih mikir-mikir, santai saja Kak, tidak apa-apa.\nTapi kalau masih berminat, kabari saya ya Kak, biar saya bantu amankan pilihan terbaiknya sebelum promonya berakhir."
+  fu3: "Halo Kak {nama}, Arif dari Dekoruma lagi ya Kak.\nSaya follow up terakhir soal rencana {kebutuhan} Kakak.\nKalau memang belum sempat atau masih mikir-mikir, santai saja Kak, tidak apa-apa.\nTapi kalau masih berminat, kabari saya ya Kak, biar saya bantu amankan pilihan terbaiknya sebelum promonya berakhir.",
+  reactivation: "Halo Kak {nama}, apa kabar? Sudah lama kita tidak ngobrol.\nSaya Arif dari Dekoruma, mau menyapa lagi. Siapa tahu Kakak masih mencari {produk} atau sudah ada rencana interior baru.\nKalau ada yang bisa saya bantu, tinggal balas chat ini saja ya Kak. Senang bisa membantu lagi.",
+  afterSales: [
+    { id: "as1", cat: "kepuasan", title: "Cek Kepuasan", text: "Halo Kak {nama}, terima kasih sudah berbelanja di Dekoruma. Bagaimana kabar {produk} yang sudah sampai? Semoga sesuai harapan ya Kak.\nKalau ada yang kurang pas atau perlu dibantu, kabari saya saja ya Kak." },
+    { id: "as2", cat: "pemasangan", title: "Konfirmasi Pemasangan", text: "Halo Kak {nama}, saya Arif dari Dekoruma. Mau memastikan, {produk} Kakak sudah terpasang dengan baik?\nKalau tim pemasangan sudah selesai dan semuanya rapi, kabari saya ya Kak. Kalau masih ada kendala, saya bantu tindak lanjuti." },
+    { id: "as3", cat: "perawatan", title: "Tips Perawatan", text: "Halo Kak {nama}, semoga {produk} barunya awet dan nyaman dipakai.\nSedikit tips perawatannya: bersihkan secara rutin dengan kain lembut, hindari paparan matahari langsung, dan segera lap kalau terkena cairan. Kalau Kakak mau panduan perawatan lengkapnya, saya kirimkan ya Kak." },
+    { id: "as4", cat: "review", title: "Minta Review", text: "Halo Kak {nama}, terima kasih sudah mempercayakan {produk} ke Dekoruma.\nKalau Kakak berkenan, boleh minta review singkat soal pengalaman belanjanya? Review Kakak sangat membantu pelanggan lain. Terima kasih banyak ya Kak." },
+    { id: "as5", cat: "repeat", title: "Kebutuhan Lanjutan", text: "Halo Kak {nama}, apa kabar? Semoga {produk} yang kemarin masih nyaman dipakai.\nKalau Kakak sedang merencanakan tambahan furnitur lain, saya siap bantu carikan pilihan yang cocok. Ada rencana interior berikutnya, Kak?" },
+    { id: "as6", cat: "garansi", title: "Garansi & Bantuan", text: "Halo Kak {nama}, saya Arif dari Dekoruma. Mau mengingatkan, {produk} Kakak masih dalam masa garansi.\nKalau ada kendala atau butuh bantuan klaim, jangan ragu hubungi saya ya Kak, saya bantu prosesnya sampai beres." }
+  ]
 };
+const AFTER_SALES_CATS = [
+  { id: "kepuasan", label: "Cek Kepuasan" },
+  { id: "pemasangan", label: "Pemasangan" },
+  { id: "perawatan", label: "Perawatan" },
+  { id: "review", label: "Review" },
+  { id: "repeat", label: "Repeat Order" },
+  { id: "garansi", label: "Garansi" }
+];
 
 /* ---------------- Helper umum ---------------- */
 function $(id){ return document.getElementById(id); }
@@ -528,13 +827,24 @@ function normWa(raw){
   else if (d.charAt(0) === "8") d = "62" + d;
   return d;
 }
-function dstr(d){
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return y + "-" + m + "-" + dd;
-}
+/* Semua tanggal "hari ini" memakai zona Asia/Jakarta, bukan zona perangkat. */
+const JKT_DATE_FMT = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jakarta", year: "numeric", month: "2-digit", day: "2-digit" });
+const JKT_PARTS_FMT = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Jakarta", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false, hourCycle: "h23" });
+function dstr(d){ return JKT_DATE_FMT.format(d); }
 function todayStr(){ return dstr(new Date()); }
+function jakartaParts(d){
+  const parts = JKT_PARTS_FMT.formatToParts(d);
+  const g = function(t){ const p = parts.find(function(x){ return x.type === t; }); return p ? p.value : ""; };
+  return { y: g("year"), m: g("month"), d: g("day"), hh: g("hour"), mm: g("minute") };
+}
+function monthFromIso(iso){
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return String(iso).slice(0, 7);
+  const p = jakartaParts(d);
+  return p.y + "-" + p.m;
+}
+function currentMonthStr(){ return todayStr().slice(0, 7); }
 function addDaysStr(baseStr, n){
   const d = new Date(baseStr + "T00:00:00");
   d.setDate(d.getDate() + n);
@@ -551,7 +861,9 @@ function fmtDateTime(iso){
   if (!iso) return "-";
   const d = new Date(iso);
   if (isNaN(d.getTime())) return fmtDate(iso);
-  return fmtDate(dstr(d)) + ", " + String(d.getHours()).padStart(2, "0") + "." + String(d.getMinutes()).padStart(2, "0");
+  const bulan = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  const p = jakartaParts(d);
+  return Number(p.d) + " " + bulan[Number(p.m) - 1] + " " + p.y + ", " + p.hh + "." + p.mm;
 }
 function daysSince(iso){
   if (!iso) return 0;
@@ -570,6 +882,7 @@ function toast(msg){
 function statusPill(status){
   const map = {
     "Cold": "pill-cold",
+    "Warm": "pill-warm",
     "Hot": "pill-hot",
     "Sukses Transaksi": "pill-sukses",
     "Tidak Lanjut": "pill-tidak"
@@ -602,13 +915,44 @@ function thumbHtml(p, size){
 /* ---------------- State ---------------- */
 let auth = null, db = null;
 let leads = [];
-let templates = { fu1: DEFAULT_TEMPLATES.fu1, fu2: DEFAULT_TEMPLATES.fu2, fu3: DEFAULT_TEMPLATES.fu3 };
+let templates = { fu1: DEFAULT_TEMPLATES.fu1, fu2: DEFAULT_TEMPLATES.fu2, fu3: DEFAULT_TEMPLATES.fu3, reactivation: DEFAULT_TEMPLATES.reactivation, afterSales: DEFAULT_TEMPLATES.afterSales.map(function(x){ return { id: x.id, cat: x.cat, title: x.title, text: x.text }; }) };
 let templatesLoaded = false;
 let detailId = null;
 let prodResults = [];
 let prodBusy = false;
 let pastePreview = null;
-let unsubLeads = null, unsubTpl = null;
+let unsubLeads = null, unsubTpl = null, unsubSettings = null;
+let settingsDoc = null;
+let settingsLoaded = false;
+let currentView = "dashboard";
+let custMonth = "all";
+let custStatus = "";
+let repPeriod = "";
+let repCat = "leads";
+let asFilter = "all";
+let pendingPhoto = null;
+
+/* ---------------- Tema (terang/gelap/sistem) ---------------- */
+function storedTheme(){
+  try { return localStorage.getItem("crmTheme") || "system"; } catch (e) { return "system"; }
+}
+function applyTheme(choice){
+  let eff = choice;
+  if (choice === "system") {
+    try { eff = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } catch (e) { eff = "light"; }
+  }
+  document.documentElement.setAttribute("data-theme", eff);
+  document.querySelectorAll("[data-theme-opt]").forEach(function(b){
+    b.classList.toggle("current", b.getAttribute("data-theme-opt") === choice);
+  });
+}
+applyTheme(storedTheme());
+try {
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(){
+    const choice = (settingsDoc && settingsDoc.theme) ? settingsDoc.theme : storedTheme();
+    if (choice === "system") applyTheme("system");
+  });
+} catch (e) {}
 
 /* ---------------- Inisialisasi Firebase ---------------- */
 if (!CONFIGURED) {
@@ -629,7 +973,12 @@ if (!CONFIGURED) {
     } else {
       if (unsubLeads) { unsubLeads(); unsubLeads = null; }
       if (unsubTpl) { unsubTpl(); unsubTpl = null; }
+      if (unsubSettings) { unsubSettings(); unsubSettings = null; }
       leads = [];
+      settingsDoc = null;
+      settingsLoaded = false;
+      detailId = null;
+      $("gearMenu").classList.add("hidden");
       $("appScreen").classList.add("hidden");
       $("loginScreen").classList.remove("hidden");
     }
@@ -870,6 +1219,38 @@ if (CONFIGURED && auth) {
   });
 }
 
+/* ---------------- Template WA: gabung bawaan + Firestore ---------------- */
+function cloneDefaultTemplates(){
+  return {
+    fu1: DEFAULT_TEMPLATES.fu1,
+    fu2: DEFAULT_TEMPLATES.fu2,
+    fu3: DEFAULT_TEMPLATES.fu3,
+    reactivation: DEFAULT_TEMPLATES.reactivation,
+    afterSales: DEFAULT_TEMPLATES.afterSales.map(function(x){ return { id: x.id, cat: x.cat, title: x.title, text: x.text }; })
+  };
+}
+function mergeTemplates(d){
+  const t = cloneDefaultTemplates();
+  if (!d) return t;
+  ["fu1", "fu2", "fu3", "reactivation"].forEach(function(k){ if (d[k]) t[k] = d[k]; });
+  if (Array.isArray(d.afterSales)) {
+    t.afterSales = t.afterSales.map(function(def){
+      const found = d.afterSales.find(function(x){ return x && x.id === def.id; });
+      if (!found) return def;
+      return { id: def.id, cat: found.cat || def.cat, title: found.title || def.title, text: found.text || def.text };
+    });
+  }
+  return t;
+}
+function templateTextFor(which){
+  if (String(which).indexOf("as:") === 0) {
+    const id = String(which).slice(3);
+    const found = (templates.afterSales || []).find(function(x){ return x.id === id; });
+    return found ? found.text : "";
+  }
+  return templates[which] || "";
+}
+
 /* ---------------- Langganan data Firestore ---------------- */
 function subscribeData(){
   if (!db || unsubLeads) return;
@@ -878,8 +1259,7 @@ function subscribeData(){
     snap.forEach(function(doc){ arr.push(Object.assign({ id: doc.id }, doc.data())); });
     arr.sort(function(a, b){ return String(b.createdAt || "").localeCompare(String(a.createdAt || "")); });
     leads = arr;
-    renderToday();
-    renderPipeline();
+    renderAll();
     if (detailId && !$("detailModal").classList.contains("hidden") && !detailEditing()) renderDetail();
   }, function(error){
     toast("Gagal memuat data lead: " + (error.code || error.message || "error"));
@@ -887,18 +1267,27 @@ function subscribeData(){
 
   unsubTpl = db.collection("templates").doc("wa").onSnapshot(function(doc){
     if (doc.exists) {
-      const d = doc.data() || {};
-      templates = {
-        fu1: d.fu1 || DEFAULT_TEMPLATES.fu1,
-        fu2: d.fu2 || DEFAULT_TEMPLATES.fu2,
-        fu3: d.fu3 || DEFAULT_TEMPLATES.fu3
-      };
+      templates = mergeTemplates(doc.data() || {});
     } else {
-      templates = { fu1: DEFAULT_TEMPLATES.fu1, fu2: DEFAULT_TEMPLATES.fu2, fu3: DEFAULT_TEMPLATES.fu3 };
+      templates = cloneDefaultTemplates();
       db.collection("templates").doc("wa").set(templates).catch(function(){});
     }
     templatesLoaded = true;
-    fillTemplateForm();
+    if (detailId && !$("detailModal").classList.contains("hidden") && !detailEditing()) renderDetail();
+  }, function(){});
+
+  subscribeSettings();
+}
+function subscribeSettings(){
+  if (!db || unsubSettings) return;
+  unsubSettings = db.collection("settings").doc("main").onSnapshot(function(doc){
+    settingsDoc = doc.exists ? (doc.data() || {}) : {};
+    settingsLoaded = true;
+    const themeChoice = settingsDoc.theme || storedTheme();
+    try { localStorage.setItem("crmTheme", themeChoice); } catch (e) {}
+    applyTheme(themeChoice);
+    renderProfileHeader();
+    if (!$("settingsModal").classList.contains("hidden") && !settingsEditing()) fillSettingsForm();
   }, function(){});
 }
 function detailEditing(){
@@ -906,113 +1295,421 @@ function detailEditing(){
   if (!a) return false;
   return $("detailSheet").contains(a) && (a.tagName === "TEXTAREA" || a.tagName === "INPUT");
 }
-function fillTemplateForm(){
-  const map = { tplFu1: "fu1", tplFu2: "fu2", tplFu3: "fu3" };
-  Object.keys(map).forEach(function(id){
-    const el = $(id);
-    if (document.activeElement !== el) el.value = templates[map[id]];
-  });
+function settingsEditing(){
+  const a = document.activeElement;
+  if (!a) return false;
+  return $("settingsSheet").contains(a) && (a.tagName === "TEXTAREA" || a.tagName === "INPUT" || a.tagName === "SELECT");
 }
-$("saveTplBtn").addEventListener("click", function(){
-  if (!db) return;
-  templates = { fu1: $("tplFu1").value, fu2: $("tplFu2").value, fu3: $("tplFu3").value };
-  db.collection("templates").doc("wa").set(templates, { merge: true })
-    .then(function(){ toast("Template tersimpan."); })
-    .catch(function(e){ toast("Gagal menyimpan template: " + (e.code || "error")); });
+
+/* ---------------- Render semua + badge ---------------- */
+function renderAll(){
+  updateFuBadge();
+  renderDashboard();
+  renderFollowup();
+  renderCustomers();
+  renderLaporan();
+}
+function updateFuBadge(){
+  const t = todayStr();
+  const n = leads.filter(function(l){
+    return (l.status === "Cold" || l.status === "Hot") && l.nextFollowUp && l.nextFollowUp <= t;
+  }).length;
+  const badge = $("navBadge");
+  badge.textContent = n > 99 ? "99+" : String(n);
+  badge.classList.toggle("hidden", n === 0);
+}
+
+/* ---------------- Navigasi bawah ---------------- */
+function switchView(v){
+  currentView = v;
+  ["dashboard", "followup", "customers", "laporan"].forEach(function(k){
+    $("view-" + k).classList.toggle("hidden", k !== v);
+  });
+  document.querySelectorAll(".nav-btn").forEach(function(b){
+    b.classList.toggle("active", b.getAttribute("data-view") === v);
+  });
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll(".nav-btn").forEach(function(btn){
+  btn.addEventListener("click", function(){ switchView(btn.getAttribute("data-view")); });
 });
 
-/* ---------------- Tab ---------------- */
-document.querySelectorAll(".tab").forEach(function(btn){
-  btn.addEventListener("click", function(){
-    document.querySelectorAll(".tab").forEach(function(b){ b.classList.remove("active"); });
-    btn.classList.add("active");
-    const t = btn.getAttribute("data-tab");
-    $("tab-today").classList.toggle("hidden", t !== "today");
-    $("tab-pipeline").classList.toggle("hidden", t !== "pipeline");
-    $("tab-templates").classList.toggle("hidden", t !== "templates");
+/* ---------------- Helper lead: progres, aktivitas, Cold Basi, kadens ---------------- */
+function isActiveLead(l){ return l.status === "Cold" || l.status === "Warm" || l.status === "Hot"; }
+function progresOf(l){
+  if (l.progres != null && String(l.progres).trim() !== "") return l.progres;
+  return l.kebutuhan || "";
+}
+function activityDateOf(l){
+  const raw = l.lastActivity || l.updatedAt || l.createdAt;
+  if (!raw) return todayStr();
+  const s = String(raw);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  const d = new Date(s);
+  if (isNaN(d.getTime())) return todayStr();
+  return dstr(d);
+}
+/* Cold Basi adalah kategori tampilan turunan, bukan status tersimpan:
+   status Cold/Warm DAN aktivitas terakhir lebih dari 14 hari sebelum hari ini. */
+function isColdBasi(l){
+  if (l.status !== "Cold" && l.status !== "Warm") return false;
+  return activityDateOf(l) < addDaysStr(todayStr(), -14);
+}
+function displayPills(l){
+  let h = statusPill(l.status);
+  if (isColdBasi(l)) h += ' <span class="pill pill-basi">Cold Basi</span>';
+  return h;
+}
+function monthOf(l){ return l.month || monthFromIso(l.createdAt) || ""; }
+function createdDateOf(l){
+  if (!l.createdAt) return todayStr();
+  const d = new Date(l.createdAt);
+  return isNaN(d.getTime()) ? todayStr() : dstr(d);
+}
+const CADENCE_STAGES = [1, 3, 7, 14, 30];
+function cadenceInfo(l){
+  const base = createdDateOf(l);
+  const t = todayStr();
+  for (let i = 0; i < CADENCE_STAGES.length; i++) {
+    const sd = addDaysStr(base, CADENCE_STAGES[i]);
+    if (sd >= t) return { stage: "H+" + CADENCE_STAGES[i], date: sd, done: false };
+  }
+  return { stage: "H+30", date: addDaysStr(base, 30), done: true };
+}
+function suggestNextDate(l){
+  const map = { "Hot": 2, "Warm": 5, "Cold": 10 };
+  return addDaysStr(todayStr(), map[l.status] || 5);
+}
+function relLabel(s){
+  const t = todayStr();
+  if (!s) return "";
+  if (s === t) return "Hari ini";
+  const diff = Math.round((new Date(s + "T00:00:00") - new Date(t + "T00:00:00")) / 86400000);
+  if (diff < 0) return "Terlambat " + Math.abs(diff) + " hari";
+  return "Dalam " + diff + " hari";
+}
+function byFuDate(a, b){ return String(a.nextFollowUp || "").localeCompare(String(b.nextFollowUp || "")); }
+function groupFollowUps(arr){
+  const t = todayStr(), week = addDaysStr(t, 7);
+  const g = { overdue: [], today: [], upcoming: [], basi: [], rest: [] };
+  arr.forEach(function(l){
+    if (isColdBasi(l)) { g.basi.push(l); return; }
+    if (!isActiveLead(l) || !l.nextFollowUp) { g.rest.push(l); return; }
+    if (l.nextFollowUp < t) g.overdue.push(l);
+    else if (l.nextFollowUp === t) g.today.push(l);
+    else if (l.nextFollowUp <= week) g.upcoming.push(l);
+    else g.rest.push(l);
   });
-});
+  g.overdue.sort(byFuDate); g.today.sort(byFuDate); g.upcoming.sort(byFuDate);
+  return g;
+}
+function groupBlock(title, arr, emptyMsg){
+  let h = '<h2 class="section-title">' + title + ' <span class="count">' + arr.length + "</span></h2>";
+  if (!arr.length) h += '<div class="empty">' + emptyMsg + "</div>";
+  else h += '<div class="lead-list">' + arr.map(function(l){ return leadCardHtml(l); }).join("") + "</div>";
+  return h;
+}
+const BULAN_PANJANG = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+function fmtMonth(ym){
+  if (!ym) return "-";
+  const parts = String(ym).split("-");
+  const y = parts[0], m = Number(parts[1]);
+  if (!y || !m || m < 1 || m > 12) return esc(ym);
+  return BULAN_PANJANG[m - 1] + " " + y;
+}
+function monthsInData(){
+  const set = {};
+  leads.forEach(function(l){ const m = monthOf(l); if (m) set[m] = true; });
+  return Object.keys(set).sort().reverse();
+}
+function prevMonthStr(ym){
+  const y = Number(String(ym).slice(0, 4)), m = Number(String(ym).slice(5, 7));
+  if (!y || !m) return "";
+  const d = new Date(Date.UTC(y, m - 2, 1));
+  return d.getUTCFullYear() + "-" + String(d.getUTCMonth() + 1).padStart(2, "0");
+}
 
 /* ---------------- Render: kartu lead ---------------- */
-function leadCardHtml(lead){
+function leadCardHtml(lead, extraLine){
   const p = (lead.products && lead.products.length) ? lead.products[0] : null;
-  let fu = "";
-  if (lead.nextFollowUp && isActiveLead(lead)) {
-    const cls = (lead.nextFollowUp < todayStr() && lead.status !== "Sukses Transaksi" && lead.status !== "Tidak Lanjut") ? "fu-date fu-overdue" : "fu-date";
-    fu = '<br>Follow-up: <span class="' + cls + '">' + fmtDate(lead.nextFollowUp) + " (" + relDay(lead.nextFollowUp) + ")</span>";
+  const thumb = p ? thumbHtml(p) : '<div class="thumb">' + esc((lead.nama || "?").trim().charAt(0).toUpperCase() || "?") + "</div>";
+  let dateLine = "";
+  if (lead.status === "Sukses Transaksi") {
+    const td = String(lead.transactionDate || lead.dealAt || "").slice(0, 10);
+    if (td) dateLine = "<br>Transaksi: <b>" + fmtDate(td) + "</b>";
+  } else if (lead.nextFollowUp && isActiveLead(lead)) {
+    const overdue = lead.nextFollowUp < todayStr();
+    dateLine = '<br>Follow-up: <span class="fu-date' + (overdue ? " fu-overdue" : "") + '">' + fmtDate(lead.nextFollowUp) + " (" + relLabel(lead.nextFollowUp) + ")</span>";
   }
-  const prodLine = p ? "<br>Produk incaran: <b>" + esc(p.name) + "</b>" : "";
-  return '<button type="button" class="lead-card" onclick="openDetail(\'' + lead.id + '\')">' +
-    (p ? thumbHtml(p) : "") +
+  const prog = progresOf(lead);
+  const prodLine = p ? "<br>Produk incaran: <b>" + esc(p.name) + "</b>" + (lead.products.length > 1 ? " +" + (lead.products.length - 1) + " lainnya" : "") : "";
+  const cad = isActiveLead(lead) ? ' <span class="pill pill-soft">' + cadenceInfo(lead).stage + "</span>" : "";
+  return '<button type="button" class="lead-card" onclick="openDetail(\'' + lead.id + '\')">' + thumb +
     '<span class="lead-main">' +
-      '<span class="lead-name">' + esc(lead.nama) + " " + statusPill(lead.status) + "</span>" +
+      '<span class="lead-name">' + esc(lead.nama) + " " + displayPills(lead) + cad + "</span>" +
       '<span class="lead-meta">' +
         (lead.sumber ? esc(lead.sumber) + " &middot; " : "") +
         (lead.estimasi ? "<b>" + fmtRp(lead.estimasi) + "</b>" : "") +
-        (lead.kebutuhan ? "<br>" + esc(lead.kebutuhan) : "") +
-        prodLine + fu +
+        (prog ? "<br>" + esc(prog) : "") +
+        prodLine + dateLine + (extraLine || "") +
       "</span>" +
     "</span></button>";
 }
 
-/* ---------------- Render: tab Hari Ini ---------------- */
-function isActiveLead(l){ return l.status === "Cold" || l.status === "Hot"; }
-function renderToday(){
+/* ---------------- Render: Dashboard (bulan berjalan saja) ---------------- */
+function dashBox(num, lbl){
+  return '<div class="dash-box"><div class="num">' + num + '</div><div class="lbl">' + lbl + "</div></div>";
+}
+function renderDashboard(){
+  const cm = currentMonthStr();
   const t = todayStr();
-  const week = addDaysStr(t, 7);
-  const sumActive = leads.filter(isActiveLead);
-  const pipelineVal = sumActive.reduce(function(s, l){ return s + (Number(l.estimasi) || 0); }, 0);
-  const now = new Date();
-  const deals = leads.filter(function(l){
-    if (l.status !== "Sukses Transaksi") return false;
-    const ref = l.dealAt || l.updatedAt || "";
-    const d = new Date(ref);
-    return !isNaN(d.getTime()) && d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  const monthLeads = leads.filter(function(l){ return monthOf(l) === cm; });
+  const potential = monthLeads.filter(isActiveLead).length;
+  const dueNow = monthLeads.filter(function(l){
+    return (l.status === "Cold" || l.status === "Hot") && l.nextFollowUp && l.nextFollowUp <= t;
+  }).length;
+  const closings = leads.filter(function(l){
+    return l.status === "Sukses Transaksi" && String(l.transactionDate || l.dealAt || "").slice(0, 7) === cm;
   });
-  $("sumActive").textContent = sumActive.length;
-  $("sumPipeline").textContent = fmtRp(pipelineVal);
-  $("sumDeals").textContent = deals.length;
-  const dealsVal = deals.reduce(function(s, l){ return s + (Number(l.estimasi) || 0); }, 0);
-  $("sumDealsLbl").textContent = deals.length ? "Deal Bulan Ini · " + fmtRp(dealsVal) : "Deal Bulan Ini";
-
-  const overdue = leads.filter(function(l){ return isActiveLead(l) && l.nextFollowUp && l.nextFollowUp < t; });
-  const dueToday = leads.filter(function(l){ return isActiveLead(l) && l.nextFollowUp === t; });
-  const upcoming = leads.filter(function(l){ return isActiveLead(l) && l.nextFollowUp && l.nextFollowUp > t && l.nextFollowUp <= week; });
-  const stale = leads.filter(function(l){
-    return l.status === "Cold" && daysSince(l.updatedAt || l.createdAt) > 14;
+  const omzet = closings.reduce(function(s, l){ return s + (Number(l.estimasi) || 0); }, 0);
+  $("dashStats").innerHTML =
+    '<div class="dash-grid">' +
+    dashBox(monthLeads.length, "Dihubungi Bulan Ini") +
+    dashBox(potential, "Potensial (Cold/Warm/Hot)") +
+    dashBox(dueNow, "Follow-up Jatuh Tempo") +
+    dashBox(closings.length, "Closing Bulan Ini") +
+    '<div class="dash-box wide"><div class="num">' + fmtRp(omzet) + '</div><div class="lbl">Omzet Bulan Ini</div></div>' +
+    "</div>";
+  const dueList = monthLeads.filter(function(l){
+    return (l.status === "Cold" || l.status === "Hot") && l.nextFollowUp && l.nextFollowUp <= t;
   });
-  overdue.sort(function(a, b){ return String(a.nextFollowUp).localeCompare(String(b.nextFollowUp)); });
-  upcoming.sort(function(a, b){ return String(a.nextFollowUp).localeCompare(String(b.nextFollowUp)); });
-
-  function block(title, pillCls, arr, emptyMsg){
-    let h = '<h2 class="section-title">' + title + ' <span class="count">' + arr.length + "</span></h2>";
-    if (!arr.length) h += '<div class="empty">' + emptyMsg + "</div>";
-    else h += '<div class="lead-list">' + arr.map(leadCardHtml).join("") + "</div>";
-    return h;
-  }
-  $("todayLists").innerHTML =
-    block("Terlambat", "", overdue, "Tidak ada follow-up yang terlambat. Kerja bagus!") +
-    block("Hari Ini", "", dueToday, "Belum ada follow-up yang jatuh tempo hari ini.") +
-    block("7 Hari Ke Depan", "", upcoming, "Tidak ada follow-up terjadwal dalam 7 hari ke depan.") +
-    block("Cold Basi (&gt;14 hari)", "", stale, "Tidak ada lead Cold yang terbengkalai lebih dari 14 hari.");
+  dueList.sort(byFuDate);
+  $("dashToday").innerHTML = groupBlock("Jatuh Tempo Bulan Ini", dueList, "Tidak ada follow-up yang jatuh tempo. Kerja bagus!");
 }
 
-/* ---------------- Render: tab Pipeline ---------------- */
-function renderPipeline(){
-  const q = ($("pipeSearch").value || "").toLowerCase();
-  const f = $("pipeFilter").value;
+/* ---------------- Render: Follow-Up (bulan berjalan saja) ---------------- */
+function renderFollowup(){
+  const cm = currentMonthStr();
+  const t = todayStr();
+  const items = leads.filter(function(l){ return monthOf(l) === cm; });
+  const g = groupFollowUps(items);
+  const checkDateOf = function(l){ return addDaysStr(String(l.transactionDate || l.dealAt || "").slice(0, 10), 5); };
+  const checks = leads.filter(function(l){
+    if (l.status !== "Sukses Transaksi") return false;
+    const td = String(l.transactionDate || l.dealAt || "").slice(0, 10);
+    if (!td) return false;
+    const cd = checkDateOf(l);
+    return cd >= cm + "-01" && cd <= addDaysStr(t, 7);
+  });
+  checks.sort(function(a, b){ return checkDateOf(a).localeCompare(checkDateOf(b)); });
+  let h = "";
+  h += groupBlock("Terlambat", g.overdue, "Tidak ada follow-up yang terlambat. Kerja bagus!");
+  h += groupBlock("Hari Ini", g.today, "Belum ada follow-up yang jatuh tempo hari ini.");
+  h += groupBlock("7 Hari Ke Depan", g.upcoming, "Tidak ada follow-up terjadwal dalam 7 hari ke depan.");
+  h += groupBlock("Cold Basi", g.basi, "Tidak ada lead Cold/Warm yang terbengkalai lebih dari 14 hari.");
+  h += '<h2 class="section-title">Cek Kepuasan <span class="count">' + checks.length + "</span></h2>";
+  if (!checks.length) {
+    h += '<div class="empty">Belum ada jadwal cek kepuasan dalam waktu dekat.</div>';
+  } else {
+    h += '<div class="lead-list">' + checks.map(function(l){
+      return leadCardHtml(l, "<br>Cek kepuasan: <b>" + fmtDate(checkDateOf(l)) + "</b>");
+    }).join("") + "</div>";
+  }
+  $("fuLists").innerHTML = h;
+}
+
+/* ---------------- Render: Customer ---------------- */
+function renderCustMonths(){
+  const months = monthsInData();
+  let h = '<button type="button" class="seg-btn' + (custMonth === "all" ? " active" : "") + '" data-month="all">Semua Bulan</button>';
+  months.forEach(function(m){
+    h += '<button type="button" class="seg-btn' + (custMonth === m ? " active" : "") + '" data-month="' + m + '">' + fmtMonth(m) + "</button>";
+  });
+  $("custMonthSeg").innerHTML = h;
+  document.querySelectorAll("#custMonthSeg .seg-btn").forEach(function(b){
+    b.addEventListener("click", function(){ custMonth = b.getAttribute("data-month"); renderCustomers(); });
+  });
+}
+function renderCustomers(){
+  renderCustMonths();
+  const q = ($("custSearch").value || "").toLowerCase().trim();
+  const f = custStatus;
   const arr = leads.filter(function(l){
-    if (f && l.status !== f) return false;
+    if (custMonth !== "all" && monthOf(l) !== custMonth) return false;
+    if (f === "__basi") { if (!isColdBasi(l)) return false; }
+    else if (f && l.status !== f) return false;
     if (!q) return true;
-    const hay = [l.nama, l.kebutuhan, l.sumber, l.wa].join(" ").toLowerCase();
+    const prodNames = (l.products || []).map(function(p){ return p.name; }).join(" ");
+    const hay = [l.nama, progresOf(l), l.sumber, l.wa, prodNames].join(" ").toLowerCase();
     return hay.indexOf(q) !== -1;
   });
-  $("pipelineList").innerHTML = arr.length
-    ? arr.map(leadCardHtml).join("")
-    : '<div class="empty">Tidak ada lead yang cocok. Coba kata kunci atau filter lain, atau tambah lead baru.</div>';
+  const g = groupFollowUps(arr);
+  let h = "";
+  h += groupBlock("Terlambat", g.overdue, "Tidak ada yang terlambat.");
+  h += groupBlock("Hari Ini", g.today, "Tidak ada yang jatuh tempo hari ini.");
+  h += groupBlock("7 Hari Ke Depan", g.upcoming, "Tidak ada jadwal dalam 7 hari ke depan.");
+  h += groupBlock("Cold Basi", g.basi, "Tidak ada Cold Basi.");
+  h += groupBlock("Semua Lainnya", g.rest, "Tidak ada lead lain.");
+  $("custLists").innerHTML = h;
 }
-$("pipeSearch").addEventListener("input", renderPipeline);
-$("pipeFilter").addEventListener("change", renderPipeline);
+$("custSearch").addEventListener("input", renderCustomers);
+$("custFilter").addEventListener("change", function(){ custStatus = $("custFilter").value; renderCustomers(); });
+
+/* ---------------- Render: Laporan ---------------- */
+function repRow(label, value, sub){
+  return '<div class="rep-row"><div>' + label + (sub ? '<div class="rep-sub">' + sub + "</div>" : "") + '</div><div class="rv">' + value + "</div></div>";
+}
+function renderLaporan(){
+  const months = monthsInData();
+  if (!repPeriod || months.indexOf(repPeriod) === -1) {
+    repPeriod = months.indexOf(currentMonthStr()) !== -1 ? currentMonthStr() : (months[0] || currentMonthStr());
+  }
+  let h = "";
+  months.forEach(function(m){
+    h += '<button type="button" class="seg-btn' + (repPeriod === m ? " active" : "") + '" data-period="' + m + '">' + fmtMonth(m) + "</button>";
+  });
+  if (!months.length) {
+    h = '<button type="button" class="seg-btn active" data-period="' + repPeriod + '">' + fmtMonth(repPeriod) + "</button>";
+  }
+  $("repPeriodSeg").innerHTML = h;
+  document.querySelectorAll("#repPeriodSeg .seg-btn").forEach(function(b){
+    b.addEventListener("click", function(){ repPeriod = b.getAttribute("data-period"); renderLaporan(); });
+  });
+  document.querySelectorAll("#repCats .cat-btn").forEach(function(b){
+    b.classList.toggle("active", b.getAttribute("data-cat") === repCat);
+  });
+  const periodLeads = leads.filter(function(l){ return monthOf(l) === repPeriod; });
+  let content = "";
+  if (repCat === "leads") content = repLeadsHtml(periodLeads);
+  else if (repCat === "minat") content = repMinatHtml(periodLeads);
+  else if (repCat === "transaksi") content = repTransaksiHtml();
+  else content = repDatabaseHtml(periodLeads);
+  $("repContent").innerHTML = content;
+}
+document.querySelectorAll("#repCats .cat-btn").forEach(function(b){
+  b.addEventListener("click", function(){ repCat = b.getAttribute("data-cat"); renderLaporan(); });
+});
+function repLeadsHtml(periodLeads){
+  const prev = prevMonthStr(repPeriod);
+  const prevLeads = leads.filter(function(l){ return monthOf(l) === prev; });
+  const countBy = function(arr, s){ return arr.filter(function(l){ return l.status === s; }).length; };
+  const closings = countBy(periodLeads, "Sukses Transaksi");
+  const prevClosings = countBy(prevLeads, "Sukses Transaksi");
+  const diff = function(a, b){ const d = a - b; return (d > 0 ? "+" : "") + d + " vs " + fmtMonth(prev); };
+  const open = periodLeads.filter(isActiveLead).length;
+  const ratio = periodLeads.length ? Math.round((closings / periodLeads.length) * 100) : 0;
+  let h = '<div class="card"><h3 style="margin-bottom:6px">Leads &middot; ' + fmtMonth(repPeriod) + "</h3>";
+  h += repRow("Total lead baru", periodLeads.length, diff(periodLeads.length, prevLeads.length));
+  ["Cold", "Warm", "Hot", "Sukses Transaksi", "Tidak Lanjut"].forEach(function(s){
+    h += repRow(s, countBy(periodLeads, s), "");
+  });
+  h += repRow("Closing", closings, diff(closings, prevClosings));
+  h += repRow("Rasio follow-up ke transaksi", ratio + "%", open + " lead masih terbuka");
+  h += "</div>";
+  return h;
+}
+const MINAT_CATS = [
+  { key: "sofa", label: "Sofa", kws: ["sofa", "couch"] },
+  { key: "divan", label: "Divan", kws: ["divan"] },
+  { key: "dining", label: "Meja Makan", kws: ["meja makan", "dining table", "dining", "meja dinner"] },
+  { key: "tv", label: "Meja TV / TV Cabinet", kws: ["meja tv", "tv cabinet", "bufet tv", "rak tv", "tv stand"] },
+  { key: "mattress", label: "Kasur / Mattress", kws: ["kasur", "mattress", "spring bed", "matras"] },
+  { key: "lemari", label: "Lemari", kws: ["lemari", "wardrobe"] },
+  { key: "meja", label: "Meja", kws: ["meja"] },
+  { key: "kursi", label: "Kursi", kws: ["kursi", "chair"] },
+  { key: "rak", label: "Rak / Storage", kws: ["rak", "storage", "kabinet", "cabinet", "bufet", "credenza"] },
+  { key: "lampu", label: "Lampu", kws: ["lampu", "lamp"] }
+];
+function minatCatOf(name){
+  const n = String(name || "").toLowerCase();
+  for (let i = 0; i < MINAT_CATS.length; i++) {
+    for (let k = 0; k < MINAT_CATS[i].kws.length; k++) {
+      if (n.indexOf(MINAT_CATS[i].kws[k]) !== -1) return MINAT_CATS[i];
+    }
+  }
+  return { key: "lainnya", label: "Lainnya", kws: [] };
+}
+function repMinatHtml(periodLeads){
+  const buckets = {};
+  periodLeads.forEach(function(l){
+    (l.products || []).forEach(function(p){
+      const c = minatCatOf(p.name);
+      if (!buckets[c.key]) buckets[c.key] = { label: c.label, customers: {}, products: {} };
+      buckets[c.key].customers[l.id] = true;
+      buckets[c.key].products[p.name] = true;
+    });
+  });
+  const keys = Object.keys(buckets);
+  let h = '<div class="card"><h3 style="margin-bottom:6px">Minat Produk &middot; ' + fmtMonth(repPeriod) + "</h3>";
+  if (!keys.length) {
+    h += '<p class="muted small" style="margin-top:8px;line-height:1.5">Belum ada produk incaran pada periode ini.</p>';
+  } else {
+    keys.sort(function(a, b){ return Object.keys(buckets[b].customers).length - Object.keys(buckets[a].customers).length; });
+    keys.forEach(function(k){
+      const b = buckets[k];
+      const custCount = Object.keys(b.customers).length;
+      const prodNames = Object.keys(b.products).slice(0, 4).join(", ");
+      h += repRow(esc(b.label), custCount + " customer", esc(prodNames));
+    });
+  }
+  h += "</div>";
+  return h;
+}
+function repTransaksiHtml(){
+  const closings = leads.filter(function(l){
+    return l.status === "Sukses Transaksi" && String(l.transactionDate || l.dealAt || "").slice(0, 7) === repPeriod;
+  });
+  const omzet = closings.reduce(function(s, l){ return s + (Number(l.estimasi) || 0); }, 0);
+  const avg = closings.length ? Math.round(omzet / closings.length) : 0;
+  let h = '<div class="card"><h3 style="margin-bottom:6px">Transaksi &amp; Closing &middot; ' + fmtMonth(repPeriod) + "</h3>";
+  h += repRow("Total closing", closings.length, "");
+  h += repRow("Total omzet", fmtRp(omzet), "");
+  h += repRow("Rata-rata nilai transaksi", fmtRp(avg), "");
+  h += "</div>";
+  if (closings.length) {
+    closings.sort(function(a, b){ return String(b.transactionDate || b.dealAt || "").localeCompare(String(a.transactionDate || a.dealAt || "")); });
+    h += '<div class="lead-list" style="margin-top:14px">' + closings.map(function(l){ return leadCardHtml(l); }).join("") + "</div>";
+  } else {
+    h += '<div class="empty" style="margin-top:14px">Belum ada transaksi pada periode ini.</div>';
+  }
+  return h;
+}
+function repDatabaseHtml(periodLeads){
+  const total = periodLeads.length;
+  const open = periodLeads.filter(isActiveLead).length;
+  let h = '<div class="card"><h3 style="margin-bottom:6px">Database Customer &middot; ' + fmtMonth(repPeriod) + "</h3>";
+  h += repRow("Total customer", total, "");
+  h += repRow("Masih terbuka (Cold/Warm/Hot)", open, "");
+  h += repRow("Sukses Transaksi", periodLeads.filter(function(l){ return l.status === "Sukses Transaksi"; }).length, "");
+  h += "</div>";
+  if (total) {
+    const sorted = periodLeads.slice().sort(function(a, b){ return String(b.createdAt || "").localeCompare(String(a.createdAt || "")); });
+    h += '<div class="lead-list" style="margin-top:14px">' + sorted.map(function(l){ return leadCardHtml(l); }).join("") + "</div>";
+  } else {
+    h += '<div class="empty" style="margin-top:14px">Belum ada customer pada periode ini.</div>';
+  }
+  return h;
+}
+
+/* ---------------- Profil & header ---------------- */
+const DEFAULT_PROFILE = { nama: "Arif Hidayat", idKaryawan: "", email: "", noHp: "", jabatan: "Sales Design Advisor", store: "", tanggalBergabung: "", photo: "" };
+function currentProfile(){
+  const p = (settingsDoc && settingsDoc.profile) || {};
+  const out = {};
+  Object.keys(DEFAULT_PROFILE).forEach(function(k){ out[k] = p[k] != null ? p[k] : DEFAULT_PROFILE[k]; });
+  return out;
+}
+function renderProfileHeader(){
+  const photo = currentProfile().photo;
+  const btn = $("profilePhotoBtn");
+  if (!btn) return;
+  if (photo) {
+    $("profilePhotoImg").src = photo;
+    btn.classList.remove("hidden");
+  } else {
+    btn.classList.add("hidden");
+  }
+}
 </script>
 
 <script>
@@ -1023,7 +1720,11 @@ $("pipeFilter").addEventListener("change", renderPipeline);
    ============================================================ */
 function getLead(id){ return leads.find(function(l){ return l.id === id; }) || null; }
 function openModal(id){ $(id).classList.remove("hidden"); document.body.style.overflow = "hidden"; }
-function closeModal(id){ $(id).classList.add("hidden"); if ($("leadModal").classList.contains("hidden") && $("detailModal").classList.contains("hidden") && $("passwordModal").classList.contains("hidden")) document.body.style.overflow = ""; }
+function closeModal(id){
+  $(id).classList.add("hidden");
+  const anyOpen = Array.prototype.some.call(document.querySelectorAll(".overlay"), function(o){ return !o.classList.contains("hidden"); });
+  if (!anyOpen) document.body.style.overflow = "";
+}
 document.querySelectorAll("[data-close]").forEach(function(el){
   el.addEventListener("click", function(){ closeModal(el.getAttribute("data-close")); });
 });
@@ -1035,7 +1736,18 @@ document.querySelectorAll(".overlay").forEach(function(ov){
 $("addLeadBtn").addEventListener("click", function(){
   $("leadForm").reset();
   $("fId").value = "";
-  $("fStatus").value = "Cold";
+  setFormStatus("Cold");
+  $("fNext").value = addDaysStr(todayStr(), 1);
+  fNextTouched = false;
+  formProducts = [];
+  fProdResults = [];
+  fPastePreview = null;
+  $("fProdSelected").innerHTML = "";
+  $("fProdResults").innerHTML = "";
+  $("fProdStatus").textContent = "";
+  $("fPasteArea").innerHTML = "";
+  $("fProdQuery").value = "";
+  $("fProdUrl").value = "";
   $("leadFormBadge").textContent = "Lead Baru";
   $("leadFormTitle").textContent = "Tambah Lead";
   $("deleteLeadBtn").classList.add("hidden");
@@ -1048,10 +1760,20 @@ function openEditLead(id){
   $("fNama").value = l.nama || "";
   $("fWa").value = l.wa || "";
   $("fSumber").value = l.sumber || "";
-  $("fKebutuhan").value = l.kebutuhan || "";
+  $("fProgres").value = progresOf(l);
   $("fEstimasi").value = l.estimasi || "";
-  $("fStatus").value = l.status || "Cold";
+  setFormStatus(l.status || "Cold");
   $("fNext").value = l.nextFollowUp || "";
+  fNextTouched = false;
+  formProducts = (l.products || []).map(function(p){ return { name: p.name || "", price: p.price || 0, listPrice: p.listPrice || null, image: p.image || "", url: p.url || "", sku: p.sku || "" }; });
+  fProdResults = [];
+  fPastePreview = null;
+  $("fProdResults").innerHTML = "";
+  $("fProdStatus").textContent = "";
+  $("fPasteArea").innerHTML = "";
+  $("fProdQuery").value = "";
+  $("fProdUrl").value = "";
+  renderFormProducts();
   $("leadFormBadge").textContent = "Edit Lead";
   $("leadFormTitle").textContent = "Edit Lead";
   $("deleteLeadBtn").classList.remove("hidden");
@@ -1064,31 +1786,46 @@ $("leadForm").addEventListener("submit", function(e){
   const id = $("fId").value;
   const nowIso = new Date().toISOString();
   const status = $("fStatus").value;
+  let nextVal = $("fNext").value || null;
+  const old = id ? getLead(id) : null;
+  let manual = false;
+  if (id) {
+    manual = fNextTouched || (old && nextVal !== (old.nextFollowUp || null)) || !!(old && old.followUpManual);
+  } else {
+    manual = fNextTouched;
+    if (!nextVal && !fNextTouched) nextVal = addDaysStr(todayStr(), 1);
+  }
   const data = {
     nama: $("fNama").value.trim(),
-    wa: $("fWa").value.trim(),
+    wa: normWa($("fWa").value.trim()),
     sumber: $("fSumber").value.trim(),
-    kebutuhan: $("fKebutuhan").value.trim(),
+    progres: $("fProgres").value.trim(),
     estimasi: Number($("fEstimasi").value) || 0,
     status: status,
-    nextFollowUp: $("fNext").value || null,
-    updatedAt: nowIso
+    nextFollowUp: nextVal,
+    followUpManual: manual,
+    products: formProducts.slice(),
+    updatedAt: nowIso,
+    lastActivity: todayStr()
   };
   if (!data.nama || !data.wa) { toast("Nama dan nomor WA wajib diisi."); return; }
   if (id) {
-    const old = getLead(id);
+    /* Migrasi: tulis progres, berhenti menulis kebutuhan. */
+    data.kebutuhan = firebase.firestore.FieldValue.delete();
     if (old) {
-      if (status === "Sukses Transaksi" && old.status !== "Sukses Transaksi") data.dealAt = todayStr();
-      if (status !== "Sukses Transaksi" && old.status === "Sukses Transaksi") data.dealAt = null;
+      if (!old.month) data.month = monthFromIso(old.createdAt) || currentMonthStr();
+      if (status === "Sukses Transaksi" && old.status !== "Sukses Transaksi") { data.transactionDate = todayStr(); data.dealAt = todayStr(); }
+      if (status !== "Sukses Transaksi" && old.status === "Sukses Transaksi") { data.transactionDate = null; data.dealAt = null; }
     }
     db.collection("leads").doc(id).update(data)
       .then(function(){ toast("Lead tersimpan."); closeModal("leadModal"); })
       .catch(function(err){ toast("Gagal menyimpan: " + (err.code || "error")); });
   } else {
-    data.products = [];
     data.followUps = [];
     data.createdAt = nowIso;
-    data.dealAt = status === "Sukses Transaksi" ? todayStr() : null;
+    data.month = currentMonthStr();
+    data.transactionDate = status === "Sukses Transaksi" ? todayStr() : null;
+    data.dealAt = data.transactionDate;
     db.collection("leads").add(data)
       .then(function(){ toast("Lead baru ditambahkan."); closeModal("leadModal"); })
       .catch(function(err){ toast("Gagal menambah lead: " + (err.code || "error")); });
@@ -1109,9 +1846,9 @@ function setStatus(id, status){
   if (!db) return;
   const l = getLead(id);
   if (!l) return;
-  const data = { status: status, updatedAt: new Date().toISOString() };
-  if (status === "Sukses Transaksi" && l.status !== "Sukses Transaksi") data.dealAt = todayStr();
-  if (status !== "Sukses Transaksi" && l.status === "Sukses Transaksi") data.dealAt = null;
+  const data = { status: status, updatedAt: new Date().toISOString(), lastActivity: todayStr() };
+  if (status === "Sukses Transaksi" && l.status !== "Sukses Transaksi") { data.transactionDate = todayStr(); data.dealAt = todayStr(); }
+  if (status !== "Sukses Transaksi" && l.status === "Sukses Transaksi") { data.transactionDate = null; data.dealAt = null; }
   db.collection("leads").doc(id).update(data)
     .then(function(){ toast("Status diubah ke " + status + "."); })
     .catch(function(err){ toast("Gagal mengubah status: " + (err.code || "error")); });
@@ -1134,8 +1871,10 @@ function fillTemplate(tpl, lead){
     text = text.split("\n").filter(function(line){ return line.indexOf("{produk}") === -1; }).join("\n");
     text = text.split(/(?<=[.!?])\s+/).filter(function(s){ return s.indexOf("{produk}") === -1; }).join(" ");
   }
+  const prog = progresOf(lead) || "kebutuhan interiornya";
   text = text.replace(/\{nama\}/g, lead.nama || "");
-  text = text.replace(/\{kebutuhan\}/g, lead.kebutuhan || "kebutuhan interiornya");
+  text = text.replace(/\{kebutuhan\}/g, prog);
+  text = text.replace(/\{progres\}/g, prog);
   text = text.replace(/\{produk\}/g, p ? p.name : "");
   return text.replace(/\n{3,}/g, "\n\n").trim();
 }
@@ -1144,7 +1883,7 @@ function chatWa(id, which){
   if (!l) return;
   const num = normWa(l.wa);
   if (!num || num.length < 9) { toast("Nomor WA lead ini tidak valid."); return; }
-  const text = fillTemplate(templates[which] || "", l);
+  const text = fillTemplate(templateTextFor(which), l);
   window.open("https://wa.me/" + num + "?text=" + encodeURIComponent(text), "_blank");
 }
 
@@ -1152,10 +1891,12 @@ function renderDetail(){
   const l = getLead(detailId);
   const sheet = $("detailSheet");
   if (!l) { sheet.innerHTML = '<div class="empty">Lead tidak ditemukan.</div>'; return; }
-  const STATUSES = ["Cold", "Hot", "Sukses Transaksi", "Tidak Lanjut"];
+  const STATUSES = ["Cold", "Warm", "Hot", "Sukses Transaksi", "Tidak Lanjut"];
   const statusBtns = STATUSES.map(function(s){
     return '<button type="button" class="status-btn' + (l.status === s ? " current" : "") + '" onclick="setStatus(\'' + l.id + '\',\'' + s + '\')">' + s + "</button>";
   }).join("");
+  const basi = isColdBasi(l);
+  const cad = cadenceInfo(l);
   const history = (l.followUps || []).slice().reverse();
   const historyHtml = history.length ? history.map(function(f){
     return '<div class="history-item"><span class="h-date">' + esc(fmtDateTime(f.date)) + "</span><br>" +
@@ -1171,42 +1912,57 @@ function renderDetail(){
         (p.url ? '<a class="btn btn-sm" href="' + esc(p.url) + '" target="_blank" rel="noopener">Buka Produk</a>' : "") +
         '<button type="button" class="btn btn-sm btn-danger" onclick="removeProduct(' + i + ')">Hapus</button>' +
       "</div></div></div>";
-  }).join("") : '<p class="muted small">Belum ada produk incaran. Cari dari dekoruma.com di bawah ini.</p>';
+  }).join("") : '<p class="muted small">Belum ada produk incaran. Cari dari Katalog Dekoruma di bawah ini.</p>';
+  const suggested = suggestNextDate(l);
+
+  let waBtns = '<button type="button" class="btn btn-teal" onclick="chatWa(\'' + l.id + '\',\'fu1\')">Chat WA &middot; FU 1</button>' +
+    '<button type="button" class="btn btn-teal2" onclick="chatWa(\'' + l.id + '\',\'fu2\')">FU 2</button>' +
+    '<button type="button" class="btn" onclick="chatWa(\'' + l.id + '\',\'fu3\')">FU 3</button>';
+  if (basi) waBtns += '<button type="button" class="btn btn-mustard" onclick="chatWa(\'' + l.id + '\',\'reactivation\')">Reaktivasi</button>';
+  if (l.status === "Sukses Transaksi") waBtns += '<button type="button" class="btn" onclick="scrollToTpl()">Template After Sales</button>';
+  waBtns += '<button type="button" class="btn" onclick="openEditLead(\'' + l.id + '\')">Edit Lead</button>';
+
+  let kvRows = "<dt>Nomor WA</dt><dd>" + esc(l.wa || "-") + "</dd>" +
+    "<dt>Sumber</dt><dd>" + esc(l.sumber || "-") + "</dd>" +
+    "<dt>Progres</dt><dd>" + esc(progresOf(l) || "-") + "</dd>" +
+    "<dt>Estimasi</dt><dd>" + (l.estimasi ? fmtRp(l.estimasi) : "-") + "</dd>";
+  if (l.status === "Sukses Transaksi") {
+    const td = String(l.transactionDate || l.dealAt || "").slice(0, 10);
+    kvRows += "<dt>Transaksi</dt><dd>" + (td ? fmtDate(td) : "-") + "</dd>";
+    if (td) kvRows += "<dt>Cek Kepuasan</dt><dd>" + fmtDate(addDaysStr(td, 5)) + "</dd>";
+  } else {
+    kvRows += "<dt>Follow-up</dt><dd>" + (l.nextFollowUp ? fmtDate(l.nextFollowUp) + " (" + relLabel(l.nextFollowUp) + ")" : "Belum dijadwalkan") + "</dd>";
+  }
+  if (isActiveLead(l)) {
+    kvRows += "<dt>Tahap</dt><dd>" + cad.stage + " &middot; " + fmtDate(cad.date) + (cad.done ? " (kadens selesai)" : "") + "</dd>";
+  }
+  kvRows += "<dt>Dibuat</dt><dd>" + fmtDateTime(l.createdAt) + "</dd>";
 
   sheet.innerHTML =
     '<div class="sheet-head"><div><span class="pill pill-mustard">Detail Lead</span>' +
-    '<h2 style="margin-top:7px">' + esc(l.nama) + '</h2><div style="margin-top:6px">' + statusPill(l.status) + "</div></div>" +
+    '<h2 style="margin-top:7px">' + esc(l.nama) + '</h2><div style="margin-top:6px">' + displayPills(l) + "</div></div>" +
     '<button class="close-x" onclick="closeDetail()" aria-label="Tutup">&times;</button></div>' +
 
-    '<div class="detail-block"><dl class="kv">' +
-      "<dt>Nomor WA</dt><dd>" + esc(l.wa || "-") + "</dd>" +
-      "<dt>Sumber</dt><dd>" + esc(l.sumber || "-") + "</dd>" +
-      "<dt>Kebutuhan</dt><dd>" + esc(l.kebutuhan || "-") + "</dd>" +
-      "<dt>Estimasi</dt><dd>" + (l.estimasi ? fmtRp(l.estimasi) : "-") + "</dd>" +
-      "<dt>Follow-up</dt><dd>" + (l.nextFollowUp ? fmtDate(l.nextFollowUp) + " (" + relDay(l.nextFollowUp) + ")" : "Belum dijadwalkan") + "</dd>" +
-      "<dt>Dibuat</dt><dd>" + fmtDateTime(l.createdAt) + "</dd>" +
-    "</dl>" +
-    '<div class="footer-actions" style="margin-top:13px">' +
-      '<button type="button" class="btn btn-teal" onclick="chatWa(\'' + l.id + '\',\'fu1\')">Chat WA &middot; FU 1</button>' +
-      '<button type="button" class="btn btn-teal2" onclick="chatWa(\'' + l.id + '\',\'fu2\')">FU 2</button>' +
-      '<button type="button" class="btn" onclick="chatWa(\'' + l.id + '\',\'fu3\')">FU 3</button>' +
-      '<button type="button" class="btn" onclick="openEditLead(\'' + l.id + '\')">Edit Lead</button>' +
-    "</div></div>" +
+    '<div class="detail-block"><dl class="kv">' + kvRows + "</dl>" +
+    '<div class="footer-actions" style="margin-top:13px">' + waBtns + "</div></div>" +
 
-    '<div class="detail-block"><h3>Ubah Status</h3><div class="status-row">' + statusBtns + "</div></div>" +
+    '<div class="detail-block"><h3>Ubah Status</h3><div class="status-row">' + statusBtns + "</div>" +
+    (basi ? '<p class="muted small" style="margin-top:9px;line-height:1.5">Lead ini Cold Basi (tanpa aktivitas lebih dari 14 hari). Ubah ke Warm/Hot atau catat aktivitas untuk memulihkannya.</p>' : "") + "</div>" +
 
     '<div class="detail-block"><h3>Jadwalkan Follow-up</h3>' +
       '<div class="inline-form"><input type="date" id="schedDate" value="' + esc(l.nextFollowUp || "") + '">' +
-      '<button type="button" class="btn btn-teal btn-sm" onclick="saveSchedule()">Simpan Jadwal</button></div></div>' +
+      '<button type="button" class="btn btn-teal btn-sm" onclick="saveSchedule()">Simpan Jadwal</button></div>' +
+      '<p class="muted small" style="margin-top:8px;line-height:1.5">Tanggal yang dijadwalkan di sini tidak akan diubah otomatis.</p></div>' +
 
     '<div class="detail-block"><h3>Catat Follow-up</h3>' +
       '<div class="inline-form"><textarea id="fuNote" placeholder="Hasil follow-up, contoh: sudah dibalas, minta katalog sofa, masih pikir-pikir..."></textarea></div>' +
-      '<div class="inline-form" style="margin-top:9px"><input type="date" id="fuNext" aria-label="Tanggal follow-up berikutnya">' +
+      '<div class="inline-form" style="margin-top:9px"><input type="date" id="fuNext" value="' + suggested + '" aria-label="Tanggal follow-up berikutnya">' +
       '<button type="button" class="btn btn-teal btn-sm" onclick="saveFollowUp()">Simpan Catatan</button></div>' +
+      '<p class="muted small" style="margin-top:8px;line-height:1.5">Saran jadwal berikutnya: ' + fmtDate(suggested) + ' (interval status ' + esc(l.status) + '). Kamu bisa mengubahnya.</p>' +
       '<div style="margin-top:10px">' + historyHtml + "</div></div>" +
 
     '<div class="detail-block"><h3>Produk Incaran</h3>' + prodsHtml +
-      '<h3 style="margin-top:16px">Cari di dekoruma.com</h3>' +
+      '<h3 style="margin-top:16px">Cari di Katalog Dekoruma</h3>' +
       '<div class="inline-form"><input type="text" id="prodQuery" placeholder="Kata kunci, contoh: sofa bed, meja makan, lemari">' +
       '<button type="button" class="btn btn-teal btn-sm" id="prodSearchBtn" onclick="runProductSearch()">Cari Produk</button></div>' +
       '<div id="prodStatus" class="search-status muted"></div><div id="prodResults"></div>' +
@@ -1214,7 +1970,11 @@ function renderDetail(){
       '<div class="inline-form"><input type="url" id="prodUrl" placeholder="https://www.dekoruma.com/p/...">' +
       '<button type="button" class="btn btn-sm" onclick="runPasteUrl()">Ambil dari Tautan</button></div>' +
       '<div id="pasteArea"></div>' +
-    "</div>";
+    "</div>" +
+
+    tplSectionHtml(l, basi);
+
+  wireAsChips();
 }
 function detailBusy(b){
   prodBusy = b;
@@ -1224,7 +1984,7 @@ function detailBusy(b){
 function saveSchedule(){
   if (!db || !detailId) return;
   const v = $("schedDate").value || null;
-  db.collection("leads").doc(detailId).update({ nextFollowUp: v, updatedAt: new Date().toISOString() })
+  db.collection("leads").doc(detailId).update({ nextFollowUp: v, followUpManual: true, updatedAt: new Date().toISOString(), lastActivity: todayStr() })
     .then(function(){ toast(v ? "Jadwal follow-up disimpan." : "Jadwal follow-up dikosongkan."); })
     .catch(function(e){ toast("Gagal menyimpan jadwal: " + (e.code || "error")); });
 }
@@ -1237,7 +1997,12 @@ function saveFollowUp(){
   const nextDate = $("fuNext").value || null;
   const entry = { date: new Date().toISOString(), note: note, nextDate: nextDate };
   const arr = (l.followUps || []).concat([entry]);
-  db.collection("leads").doc(detailId).update({ followUps: arr, nextFollowUp: nextDate, updatedAt: new Date().toISOString() })
+  const update = { followUps: arr, updatedAt: new Date().toISOString(), lastActivity: todayStr() };
+  if (nextDate) {
+    update.nextFollowUp = nextDate;
+    if (nextDate !== suggestNextDate(l)) update.followUpManual = true;
+  }
+  db.collection("leads").doc(detailId).update(update)
     .then(function(){ toast("Catatan follow-up tersimpan."); })
     .catch(function(e){ toast("Gagal menyimpan catatan: " + (e.code || "error")); });
 }
@@ -1247,7 +2012,7 @@ function removeProduct(idx){
   if (!l) return;
   const arr = (l.products || []).slice();
   arr.splice(idx, 1);
-  db.collection("leads").doc(detailId).update({ products: arr, updatedAt: new Date().toISOString() })
+  db.collection("leads").doc(detailId).update({ products: arr, updatedAt: new Date().toISOString(), lastActivity: todayStr() })
     .then(function(){ toast("Produk incaran dihapus."); })
     .catch(function(e){ toast("Gagal menghapus produk: " + (e.code || "error")); });
 }
@@ -1259,7 +2024,7 @@ function saveProductToLead(p){
   const dup = arr.some(function(x){ return (p.sku && x.sku && x.sku === p.sku) || (p.url && x.url === p.url); });
   if (dup) { toast("Produk ini sudah tersimpan di lead ini."); return; }
   arr.push({ name: p.name || "", price: p.price || 0, listPrice: p.listPrice || null, image: p.image || "", url: p.url || "", sku: p.sku || "" });
-  db.collection("leads").doc(detailId).update({ products: arr, updatedAt: new Date().toISOString() })
+  db.collection("leads").doc(detailId).update({ products: arr, updatedAt: new Date().toISOString(), lastActivity: todayStr() })
     .then(function(){ toast("Produk incaran tersimpan."); })
     .catch(function(e){ toast("Gagal menyimpan produk: " + (e.code || "error")); });
 }
@@ -1606,6 +2371,375 @@ async function runPasteUrl(){
 function savePastePreview(){
   if (pastePreview) { saveProductToLead(pastePreview); pastePreview = null; $("pasteArea").innerHTML = ""; }
 }
+
+/* ============================================================
+   Bagian 3: produk di formulir lead, editor template di detail,
+   dan Pengaturan (profil, notifikasi, tema, sinkronisasi).
+   ============================================================ */
+
+/* ---------------- Status & produk di formulir lead ---------------- */
+let formProducts = [];
+let fProdResults = [];
+let fPastePreview = null;
+let fNextTouched = false;
+
+function setFormStatus(s){
+  $("fStatus").value = s;
+  document.querySelectorAll("#fStatusPills .status-btn").forEach(function(b){
+    b.classList.toggle("current", b.getAttribute("data-status") === s);
+  });
+}
+document.querySelectorAll("#fStatusPills .status-btn").forEach(function(b){
+  b.addEventListener("click", function(){ setFormStatus(b.getAttribute("data-status")); });
+});
+$("fNext").addEventListener("change", function(){ fNextTouched = true; });
+$("fProdSearchBtn").addEventListener("click", fRunSearch);
+$("fPasteBtn").addEventListener("click", fRunPasteUrl);
+$("fProdQuery").addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); fRunSearch(); } });
+
+function renderFormProducts(){
+  const el = $("fProdSelected");
+  if (!formProducts.length) { el.innerHTML = ""; return; }
+  el.innerHTML = formProducts.map(function(p, i){
+    return '<div class="prod-item">' + thumbHtml(p) +
+      '<div class="prod-info"><div class="prod-name">' + esc(p.name) + "</div>" +
+      "<div>" + (p.listPrice ? '<span class="price-list">' + fmtRp(p.listPrice) + "</span>" : "") + '<span class="price">' + (p.price ? fmtRp(p.price) : "Harga belum terbaca") + "</span></div>" +
+      '<div class="prod-actions"><button type="button" class="btn btn-sm btn-danger" onclick="fRemoveFormProduct(' + i + ')">Hapus</button></div></div></div>';
+  }).join("");
+}
+function fRemoveFormProduct(idx){
+  formProducts.splice(idx, 1);
+  renderFormProducts();
+}
+function fProductResultHtml(p, idx){
+  return '<div class="prod-item">' + thumbHtml(p) +
+    '<div class="prod-info"><div class="prod-name">' + esc(p.name) + "</div>" +
+    "<div>" + (p.listPrice ? '<span class="price-list">' + fmtRp(p.listPrice) + "</span>" : "") + '<span class="price">' + (p.price ? fmtRp(p.price) : "Harga belum terbaca") + "</span></div>" +
+    '<div class="prod-actions">' +
+      '<button type="button" class="btn btn-sm btn-teal" onclick="fAddFormProduct(' + idx + ')">Tambah</button>' +
+      (p.url ? '<a class="btn btn-sm" href="' + esc(p.url) + '" target="_blank" rel="noopener">Buka</a>' : "") +
+    "</div></div></div>";
+}
+function fAddFormProduct(idx){
+  const p = fProdResults[idx];
+  if (!p) return;
+  const dup = formProducts.some(function(x){ return (p.sku && x.sku && x.sku === p.sku) || (p.url && x.url === p.url); });
+  if (dup) { toast("Produk ini sudah ada di formulir."); return; }
+  formProducts.push({ name: p.name || "", price: p.price || 0, listPrice: p.listPrice || null, image: p.image || "", url: p.url || "", sku: p.sku || "" });
+  renderFormProducts();
+}
+function fRunSearch(){
+  const q = $("fProdQuery").value.trim();
+  const statusEl = $("fProdStatus");
+  const resEl = $("fProdResults");
+  if (!q) { statusEl.textContent = "Isi dulu kata kuncinya, contoh: sofa bed."; return; }
+  const btn = $("fProdSearchBtn");
+  btn.disabled = true; btn.textContent = "Mencari...";
+  statusEl.textContent = 'Mencari "' + q + '" di Katalog Dekoruma...';
+  resEl.innerHTML = "";
+  searchDekoruma(q).then(function(res){
+    fProdResults = res;
+    if (res.length) {
+      statusEl.textContent = "Ditemukan " + res.length + " produk dari Katalog Dekoruma:";
+      resEl.innerHTML = res.map(fProductResultHtml).join("");
+    } else {
+      statusEl.textContent = 'Tidak ada produk yang cocok dengan "' + q + '". Coba kata lain, misalnya nama produknya atau jenisnya.';
+    }
+  }).catch(function(){
+    statusEl.textContent = "Pencarian Katalog Dekoruma sedang tidak bisa dijangkau. Coba lagi sebentar, atau pakai cara tempel tautan produk di bawah.";
+  }).finally(function(){ btn.disabled = false; btn.textContent = "Cari Produk"; });
+}
+function fRunPasteUrl(){
+  const url = $("fProdUrl").value.trim();
+  const area = $("fPasteArea");
+  if (!url || url.indexOf("dekoruma.com") === -1) {
+    area.innerHTML = '<p class="search-status" style="color:var(--red)">Tempel tautan produk dekoruma.com yang valid dulu ya.</p>';
+    return;
+  }
+  area.innerHTML = '<p class="search-status muted">Mengambil data produk dari tautan...</p>';
+  const sku = skuFromUrl(url);
+  const showPreview = function(p){
+    fPastePreview = p;
+    area.innerHTML = '<div class="prod-item">' + thumbHtml(p) +
+      '<div class="prod-info"><div class="prod-name">' + esc(p.name) + "</div>" +
+      "<div>" + (p.listPrice ? '<span class="price-list">' + fmtRp(p.listPrice) + "</span>" : "") + '<span class="price">' + (p.price ? fmtRp(p.price) : "Harga belum terbaca") + "</span></div>" +
+      '<div class="prod-actions"><button type="button" class="btn btn-sm btn-teal" onclick="fSavePastePreview()">Tambah Produk Ini</button>' +
+      '<a class="btn btn-sm" href="' + esc(p.url) + '" target="_blank" rel="noopener">Buka</a></div></div></div>';
+  };
+  const viaPage = function(){
+    fetchViaProxiesFast(url).then(function(html){
+      if (!html) {
+        area.innerHTML = '<p class="search-status" style="color:var(--red)">Tautan sedang tidak bisa dijangkau. Coba lagi sebentar, atau cari produknya lewat pencarian di atas.</p>';
+        return;
+      }
+      showPreview(parseProductPage(html, url));
+    });
+  };
+  if (sku) {
+    algoliaSearch(sku, 5).then(function(hits){
+      const exact = hits.find(function(p){ return p.sku === sku; });
+      if (exact) showPreview(exact); else viaPage();
+    }).catch(viaPage);
+  } else {
+    viaPage();
+  }
+}
+function fSavePastePreview(){
+  if (!fPastePreview) return;
+  const p = fPastePreview;
+  const dup = formProducts.some(function(x){ return (p.sku && x.sku && x.sku === p.sku) || (p.url && x.url === p.url); });
+  if (dup) { toast("Produk ini sudah ada di formulir."); return; }
+  formProducts.push({ name: p.name || "", price: p.price || 0, listPrice: p.listPrice || null, image: p.image || "", url: p.url || "", sku: p.sku || "" });
+  fPastePreview = null;
+  $("fPasteArea").innerHTML = "";
+  $("fProdUrl").value = "";
+  renderFormProducts();
+}
+
+/* ---------------- Editor template di Detail Lead ---------------- */
+function scrollToTpl(){
+  const el = $("tplSection");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function tplEditorHtml(key, label, value, chatKey){
+  let h = '<div class="tpl-editor"><label>' + label + "</label>" +
+    '<textarea data-tpl="' + key + '">' + esc(value) + "</textarea>" +
+    '<div class="tpl-actions">' +
+    '<button type="button" class="btn btn-sm" onclick="copyTemplate(\'' + key + '\')">Salin</button>';
+  if (chatKey) h += '<button type="button" class="btn btn-sm btn-teal" onclick="chatWa(\'' + detailId + '\',\'' + chatKey + '\')">Chat WA</button>';
+  h += "</div></div>";
+  return h;
+}
+function tplSectionHtml(l, basi){
+  let h = '<div class="detail-block" id="tplSection"><h3>Template WA</h3>';
+  h += '<p class="muted small" style="line-height:1.5">Placeholder: {nama}, {produk}. Template tersimpan di Firestore dan ikut di semua perangkat.</p>';
+  if (l.status === "Sukses Transaksi") {
+    h += '<div class="chip-row"><button type="button" class="chip' + (asFilter === "all" ? " active" : "") + '" data-as-filter="all">Semua</button>';
+    AFTER_SALES_CATS.forEach(function(c){
+      h += '<button type="button" class="chip' + (asFilter === c.id ? " active" : "") + '" data-as-filter="' + c.id + '">' + c.label + "</button>";
+    });
+    h += "</div>";
+    (templates.afterSales || []).forEach(function(t){
+      const hide = asFilter !== "all" && t.cat !== asFilter;
+      h += '<div class="as-card' + (hide ? " hidden" : "") + '" data-as-cat="' + esc(t.cat) + '">' +
+        tplEditorHtml("as:" + t.id, t.title, t.text, "as:" + t.id) + "</div>";
+    });
+  } else {
+    h += tplEditorHtml("fu1", "FU 1 — Sapaan ringan", templates.fu1, "fu1");
+    h += tplEditorHtml("fu2", "FU 2 — Dorongan + produk", templates.fu2, "fu2");
+    h += tplEditorHtml("fu3", "FU 3 — Penutup / urgensi sopan", templates.fu3, "fu3");
+    if (basi) {
+      h += tplEditorHtml("reactivation", "Reaktivasi — Cold Basi", templates.reactivation, "reactivation");
+    }
+  }
+  h += '<div class="footer-actions" style="margin-top:14px"><button type="button" class="btn btn-teal" onclick="saveDetailTemplates()">Simpan Template</button></div>';
+  h += "</div>";
+  return h;
+}
+function wireAsChips(){
+  document.querySelectorAll("[data-as-filter]").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      asFilter = chip.getAttribute("data-as-filter");
+      document.querySelectorAll("[data-as-filter]").forEach(function(c){
+        c.classList.toggle("active", c.getAttribute("data-as-filter") === asFilter);
+      });
+      document.querySelectorAll(".as-card").forEach(function(card){
+        const show = asFilter === "all" || card.getAttribute("data-as-cat") === asFilter;
+        card.classList.toggle("hidden", !show);
+      });
+    });
+  });
+}
+function saveDetailTemplates(){
+  if (!db) return;
+  const areas = document.querySelectorAll('#detailSheet textarea[data-tpl]');
+  areas.forEach(function(a){
+    const k = a.getAttribute("data-tpl");
+    if (k.indexOf("as:") === 0) {
+      const id = k.slice(3);
+      const item = (templates.afterSales || []).find(function(x){ return x.id === id; });
+      if (item) item.text = a.value;
+    } else {
+      templates[k] = a.value;
+    }
+  });
+  db.collection("templates").doc("wa").set(templates, { merge: true })
+    .then(function(){ toast("Template tersimpan."); })
+    .catch(function(e){ toast("Gagal menyimpan template: " + (e.code || "error")); });
+}
+function copyTemplate(key){
+  const l = getLead(detailId);
+  if (!l) return;
+  const filled = fillTemplate(templateTextFor(key), l);
+  const done = function(){ toast("Template tersalin."); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(filled).then(done).catch(function(){ fallbackCopy(filled); done(); });
+  } else {
+    fallbackCopy(filled); done();
+  }
+}
+function fallbackCopy(txt){
+  const ta = document.createElement("textarea");
+  ta.value = txt;
+  ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+/* ---------------- Pengaturan ---------------- */
+function openSettings(){
+  $("gearMenu").classList.add("hidden");
+  fillSettingsForm();
+  openModal("settingsModal");
+}
+function renderSetPhotoThumb(photo){
+  const thumb = $("setPhotoThumb");
+  const p = currentProfile();
+  if (photo) {
+    thumb.innerHTML = '<img src="' + esc(photo) + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block">';
+  } else {
+    thumb.textContent = (p.nama || "A").trim().charAt(0).toUpperCase() || "A";
+  }
+}
+function fillSettingsForm(){
+  const p = currentProfile();
+  $("setNama").value = p.nama || "";
+  $("setIdKaryawan").value = p.idKaryawan || "";
+  $("setEmail").value = p.email || "";
+  $("setHp").value = p.noHp || "";
+  $("setJabatan").value = p.jabatan || "";
+  $("setStore").value = p.store || "";
+  $("setGabung").value = p.tanggalBergabung || "";
+  pendingPhoto = null;
+  renderSetPhotoThumb(p.photo);
+  const n = (settingsDoc && settingsDoc.notif) || {};
+  $("ntfMaster").checked = n.master !== false;
+  $("ntfFollowup").checked = n.followup !== false;
+  $("ntfDaily").checked = n.daily !== false;
+  $("ntfTime").value = n.time || "07:40";
+  $("ntfType").value = n.type || "push";
+  const themeChoice = (settingsDoc && settingsDoc.theme) || storedTheme();
+  document.querySelectorAll("[data-theme-opt]").forEach(function(b){
+    b.classList.toggle("current", b.getAttribute("data-theme-opt") === themeChoice);
+  });
+  const lastSync = settingsDoc && settingsDoc.lastSyncAt;
+  const reqSync = settingsDoc && settingsDoc.syncRequestedAt;
+  let syncText = "Belum ada data sinkronisasi.";
+  if (lastSync) syncText = "Sinkronisasi terakhir: " + fmtDateTime(lastSync) + ".";
+  if (reqSync) syncText += " Permintaan terakhir tercatat: " + fmtDateTime(reqSync) + ".";
+  $("syncStatus").textContent = syncText;
+  $("setProfileError").classList.add("hidden");
+}
+$("setPhotoInput").addEventListener("change", function(){
+  const file = this.files && this.files[0];
+  if (!file) return;
+  if (!file.type || file.type.indexOf("image/") !== 0) { toast("Pilih file gambar ya."); return; }
+  const reader = new FileReader();
+  reader.onload = function(){
+    const img = new Image();
+    img.onload = function(){
+      const max = 512;
+      let w = img.naturalWidth, h = img.naturalHeight;
+      const scale = Math.min(1, max / Math.max(w, h));
+      w = Math.round(w * scale); h = Math.round(h * scale);
+      const canvas = document.createElement("canvas");
+      canvas.width = w; canvas.height = h;
+      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+      pendingPhoto = canvas.toDataURL("image/jpeg", 0.85);
+      renderSetPhotoThumb(pendingPhoto);
+      toast("Foto siap disimpan. Ketuk Simpan Profil.");
+    };
+    img.onerror = function(){ toast("Gambar tidak bisa dibaca."); };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+$("setPhotoRemove").addEventListener("click", function(){
+  pendingPhoto = "";
+  renderSetPhotoThumb("");
+});
+$("setProfileSave").addEventListener("click", function(){
+  if (!db) return;
+  const err = $("setProfileError");
+  err.classList.add("hidden");
+  const nama = $("setNama").value.trim();
+  const email = $("setEmail").value.trim();
+  const hp = $("setHp").value.trim();
+  if (!nama) { err.textContent = "Nama lengkap wajib diisi."; err.classList.remove("hidden"); return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = "Format email tidak valid."; err.classList.remove("hidden"); return; }
+  const digits = hp.replace(/\D/g, "");
+  if (hp && (digits.length < 9 || digits.length > 15)) { err.textContent = "Nomor HP harus 9-15 digit."; err.classList.remove("hidden"); return; }
+  const existing = currentProfile();
+  const profile = {
+    nama: nama,
+    idKaryawan: $("setIdKaryawan").value.trim(),
+    email: email,
+    noHp: hp,
+    jabatan: $("setJabatan").value.trim(),
+    store: $("setStore").value.trim(),
+    tanggalBergabung: $("setGabung").value || "",
+    photo: pendingPhoto !== null ? pendingPhoto : (existing.photo || "")
+  };
+  db.collection("settings").doc("main").set({ profile: profile }, { merge: true })
+    .then(function(){ pendingPhoto = null; toast("Profil tersimpan."); })
+    .catch(function(e){ toast("Gagal menyimpan profil: " + (e.code || "error")); });
+});
+$("ntfSaveBtn").addEventListener("click", function(){
+  if (!db) return;
+  const notif = {
+    master: $("ntfMaster").checked,
+    followup: $("ntfFollowup").checked,
+    daily: $("ntfDaily").checked,
+    time: $("ntfTime").value || "07:40",
+    type: $("ntfType").value || "push"
+  };
+  db.collection("settings").doc("main").set({ notif: notif }, { merge: true })
+    .then(function(){ toast("Pengaturan notifikasi tersimpan."); })
+    .catch(function(e){ toast("Gagal menyimpan: " + (e.code || "error")); });
+});
+document.querySelectorAll("[data-theme-opt]").forEach(function(b){
+  b.addEventListener("click", function(){
+    const choice = b.getAttribute("data-theme-opt");
+    try { localStorage.setItem("crmTheme", choice); } catch (e) {}
+    applyTheme(choice);
+    if (db) db.collection("settings").doc("main").set({ theme: choice }, { merge: true }).catch(function(){});
+  });
+});
+$("syncBtn").addEventListener("click", function(){
+  if (!db) return;
+  const nowIso = new Date().toISOString();
+  db.collection("settings").doc("main").set({ syncRequestedAt: nowIso }, { merge: true })
+    .then(function(){
+      $("syncStatus").textContent = "Permintaan sinkronisasi tercatat: " + fmtDateTime(nowIso) + ". Sinkronisasi dari sheet dijalankan oleh skrip terjadwal terpisah.";
+      toast("Permintaan sinkronisasi tercatat.");
+    })
+    .catch(function(e){ toast("Gagal mencatat permintaan: " + (e.code || "error")); });
+});
+$("setChangePwBtn").addEventListener("click", function(){ openPasswordModal(); });
+$("gearBtn").addEventListener("click", function(e){
+  e.stopPropagation();
+  $("gearMenu").classList.toggle("hidden");
+});
+document.addEventListener("click", function(e){
+  const menu = $("gearMenu");
+  if (!menu.classList.contains("hidden") && !menu.contains(e.target)) menu.classList.add("hidden");
+});
+$("gearSettings").addEventListener("click", openSettings);
+$("gearAbout").addEventListener("click", function(){
+  openSettings();
+  setTimeout(function(){
+    const el = $("setVersionSection");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 60);
+});
+$("profilePhotoBtn").addEventListener("click", openSettings);
+$("setLogoutBtn").addEventListener("click", function(){
+  if (!window.confirm("Keluar dari aplikasi? Kamu harus masuk lagi untuk melanjutkan.")) return;
+  closeModal("settingsModal");
+  if (auth) auth.signOut();
+});
 </script>
 <script>
 /* PWA: daftarkan service worker + tombol pasang aplikasi */
